@@ -14,6 +14,7 @@ import { NavigationBar, Header } from "@/widget";
 import { PAGE_URL } from "@/shared";
 
 const Home = lazy(() => import("@/pages/home/HomePage"));
+const MyCompany = lazy(() => import("@/pages/mycompany/MyCompanyPage"));
 const NotFound = lazy(() => import("@/pages/notfound/NotFoundPage"));
 
 const ProductInfo = lazy(
@@ -46,9 +47,10 @@ const PageRouter = () => (
             <Route>
               <Route index element={<Navigate to={PAGE_URL.Home} replace />} />
               <Route path={PAGE_URL.Home} element={<Home />} />
-
+              <Route path={PAGE_URL.MyCompany} element={<MyCompany />} />
               <Route path="*" element={<NotFound />} />
             </Route>
+
             <Route element={<NavigationBar state={"PRODUCT"} />}>
               <Route path={PAGE_URL.ProductInfo} element={<ProductInfo />} />
               <Route

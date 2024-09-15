@@ -28,7 +28,7 @@ export const NavigationBar = ({
         <RowLine />
         {state === "PRODUCT"
           ? productNavigate.map((element) =>
-              "/" + element.path === location.pathname ? (
+              element.path === location.pathname ? (
                 <SelectLabel
                   onClick={() => {
                     navigate(element.path);
@@ -49,7 +49,7 @@ export const NavigationBar = ({
               )
             )
           : investmentNavigate.map((element) =>
-              "/" + element.path === location.pathname ? (
+              element.path === location.pathname ? (
                 <SelectLabel
                   onClick={() => {
                     navigate(element.path);
@@ -92,7 +92,7 @@ const Background = styled.div`
   flex-direction: column;
 
   padding-left: 20px;
-  padding-top: 60px;
+  padding-top: 48px;
 
   gap: 10px;
 `;

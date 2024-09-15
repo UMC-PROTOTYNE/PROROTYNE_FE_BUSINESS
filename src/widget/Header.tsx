@@ -1,13 +1,48 @@
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+
 import styled from "@emotion/styled";
-import { Outlet } from "react-router-dom";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { PAGE_URL } from "@/shared";
+
+const Labels = [
+  { label: "체험 관리", path: PAGE_URL.InvestmentInfo },
+  { label: "체험 관리", path: PAGE_URL.InvestmentManagement },
+  { label: "시제품 추가", path: PAGE_URL.ProductInfo },
+  { label: "시제품 추가", path: PAGE_URL.ProductReview },
+  { label: "체험 생성", path: PAGE_URL.InvestmentSchedule },
+  { label: "시제품/체험 관리 목록", path: PAGE_URL.Home },
+  { label: "회사 정보 관리", path: PAGE_URL.MyCompany },
+];
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const label =
+    Labels.find((element) => element.path === location.pathname)?.label ??
+    "404";
+
   return (
     <>
       <Background>
         <SubContainer>
-          <Logo src="/logo/defualt.png" alt="logo" />
-          <h2>하이</h2>
+          <Logo
+            onClick={() => {
+              navigate(PAGE_URL.Home);
+            }}
+            src="/logo/defualt.png"
+            alt="logo"
+          />
+          <h2>{label}</h2>
+        </SubContainer>
+        <SubContainer>
+          <h2>기업 이름</h2>
+          <ArrowForwardIosIcon
+            onClick={() => {
+              navigate(PAGE_URL.MyCompany);
+            }}
+          />
+          <SignOutButton>로그아웃</SignOutButton>
         </SubContainer>
       </Background>
 
@@ -66,4 +101,25 @@ const SubContainer = styled.div`
   align-items: center;
 
   margin: 0 20px 0 20px;
+
+  > svg {
+    margin-top: 2px;
+
+    margin-left: -25px;
+  }
+`;
+
+const SignOutButton = styled.button`
+  height: 36px;
+  width: 104px;
+
+  background-color: #958883;
+
+  border-radius: 2px;
+
+  font-weight: bold;
+  color: white;
+  font-size: 20px;
+
+  text-align: center;
 `;

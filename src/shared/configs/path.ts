@@ -3,12 +3,12 @@ export enum PAGE_URL {
   SignUp = "/signup",
   Home = "/home",
 
-  MyCompany = "mycompany",
+  MyCompany = "/mycompany",
 
-  ProductInfo = "product/info",
-  ProductReview = "product/review",
+  ProductInfo = "/product/info",
+  ProductReview = "/product/review",
 
-  InvestmentInfo = "investment/info",
-  InvestmentManagement = "investment/management",
-  InvestmentSchedule = "investment/schedule",
+  InvestmentInfo = "/investment/info",
+  InvestmentManagement = "/investment/management",
+  InvestmentSchedule = "/investment/schedule",
 }
