@@ -10,7 +10,7 @@ import AppStyles from "./AppStyles";
 import AuthRouter from "./AuthRouter";
 
 import { Loading } from "@/entities";
-import { NavigationBar } from "@/widget";
+import { NavigationBar, Header } from "@/widget";
 import { PAGE_URL } from "@/shared";
 
 const Home = lazy(() => import("@/pages/home/HomePage"));
@@ -40,13 +40,12 @@ const PageRouter = () => (
       <AppStyles />
       <AuthRouter>
         <Routes>
-          <Route>
+          <Route path={PAGE_URL.SignIn} element={<SignIn />} />
+          <Route path={PAGE_URL.SignUp} element={<SignUp />} />
+          <Route element={<Header />}>
             <Route>
               <Route index element={<Navigate to={PAGE_URL.Home} replace />} />
               <Route path={PAGE_URL.Home} element={<Home />} />
-
-              <Route path={PAGE_URL.SignIn} element={<SignIn />} />
-              <Route path={PAGE_URL.SignUp} element={<SignUp />} />
 
               <Route path="*" element={<NotFound />} />
             </Route>

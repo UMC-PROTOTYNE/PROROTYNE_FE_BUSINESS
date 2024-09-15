@@ -3,6 +3,8 @@ export enum PAGE_URL {
   SignUp = "/signup",
   Home = "/home",
 
+  MyCompany = "mycompany",
+
   ProductInfo = "product/info",
   ProductReview = "product/review",
 

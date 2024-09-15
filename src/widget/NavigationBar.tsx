@@ -1,9 +1,8 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 
-import { RowLine } from "@/entities";
-
 import { PAGE_URL } from "@/shared";
+import { RowLine } from "@/entities";
 
 const productNavigate = [
   { label: "제품 정보", path: PAGE_URL.ProductInfo },
@@ -26,7 +25,6 @@ export const NavigationBar = ({
   return (
     <>
       <Background>
-        <Header>{state === "PRODUCT" ? "시제품 관리" : "체험 관리"}</Header>
         <RowLine />
         {state === "PRODUCT"
           ? productNavigate.map((element) =>
@@ -88,13 +86,13 @@ const Background = styled.div`
   left: 0;
   top: 0;
 
-  background-color: #f2f3f4;
+  background-color: #f6f5ff;
 
   display: flex;
   flex-direction: column;
 
   padding-left: 20px;
-  padding-top: 80px;
+  padding-top: 60px;
 
   gap: 10px;
 `;
@@ -102,25 +100,21 @@ const Background = styled.div`
 const Container = styled.main`
   position: fixed;
 
-  height: 100vh;
+  height: calc(100vh - 200px);
   width: calc(100vw - 200px);
 
   left: 200px;
-  top: 0;
+  top: 48px;
 
   overflow-y: auto;
 `;
 
-const Header = styled.span`
-  font-weight: bold;
+const Label = styled.span`
+  color: gray;
   font-size: 16px;
 `;
 
-const Label = styled.span`
-  font-size: 14px;
-`;
-
 const SelectLabel = styled(Label)`
-  color: #0500ff;
+  color: black;
   font-weight: bold;
 `;
