@@ -1,5 +1,12 @@
 export enum PAGE_URL {
   SignIn = "/signin",
-  Redirect = "/oauth",
+  SignUp = "/signup",
   Home = "/home",
+
+  ProductInfo = "product/info",
+  ProductReview = "product/review",
+
+  InvestmentInfo = "investment/info",
+  InvestmentManagement = "investment/management",
+  InvestmentSchedule = "investment/schedule",
 }
