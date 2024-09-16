@@ -27,7 +27,7 @@ export const BlueBorderButton = styled.button<{ width?: string, height?: string 
   border: 1px solid #0500FF;
   border-radius: 8px;
   width: ${(props) => props.width || "100%"};
-  height: ${(props) => props.height || "40px"};
+  height: ${(props) => props.height || "20px"};
   padding: 10px 0px;
   display: flex;
   justify-content: center;
