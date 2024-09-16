@@ -11,6 +11,7 @@ export const gray: ColorSteps = {
 export const colors: ColorTypes = {
   main: "#0500FF",
   sub: "#FEEB3C",
+  back: "#F6F5FF",
   black: "#222",
   white: "#FFF",
   gray,

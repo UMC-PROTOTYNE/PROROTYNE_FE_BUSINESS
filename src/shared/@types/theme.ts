@@ -8,6 +8,7 @@ interface ColorStepTypes {
 interface ColorValueTypes {
   main: ColorValue;
   sub: ColorValue;
+  back: ColorValue;
   black: ColorValue;
   white: ColorValue;
 }

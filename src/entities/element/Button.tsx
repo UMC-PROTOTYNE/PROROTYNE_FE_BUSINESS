@@ -15,7 +15,9 @@ export const Button = ({
   children,
 }: PropsWithChildren<ButtonProps>) => {
   return (
-    <ButtonWrapper {...{ variant, disabled, onClick }}>
+    <ButtonWrapper
+      {...{ variant, disabled, onClick, type: onClick ? "button" : "submit" }} // onClick 이벤트가 있으면 button, 없으면 submit
+    >
       {children}
     </ButtonWrapper>
   );
@@ -25,7 +27,7 @@ const ButtonWrapper = styled.button<{ variant: string | undefined }>`
   background-color: ${(props) =>
     props.variant === "outlined" ? "transparent" : colors.main};
   width: 100%;
-  height: 48px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
