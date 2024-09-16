@@ -22,3 +22,14 @@ export const Button = styled.button`
   border-radius: 8px;
   border-color: #6482eb;
 `;
+
+export const BlueBorderButton = styled.button<{ width?: string }>`
+  border: 1px solid #0500FF;
+  border-radius: 8px;
+  width: ${(props) => props.width || "100%"};
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  color: #0500FF;
+  cursor: pointer;
+`;
