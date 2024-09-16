@@ -27,47 +27,36 @@ const Test = () => {
         InputTitle,
         InputDatePicker
       } from "@/entities";`}
+
+      {/* Buttons */}
+      {/* 부모 컴포넌트의 크기 상속 */}
       <Buttons>
-        <form // 이 경우 onClick 이벤트가 있으므로 submit 작동 안함
+        <form
           onSubmit={(e) => {
             e.preventDefault();
             console.log("submit success");
           }}
         >
-          <Button
+          <Button // 이 경우 onClick 이벤트가 있으므로 submit 작동 안함
             onClick={() => {
               console.log("Default");
             }}
           >
             Default
           </Button>
+          <Button disabled>Default-disabled</Button>
+          <Button // 이 경우 Button에 onClick 이벤트가 없으므로 submit 작동
+            variant="outlined"
+          >
+            Outlined
+          </Button>
+          <Button variant="outlined" disabled>
+            Outlined-disabled
+          </Button>
         </form>
-        <Button
-          onClick={() => {
-            console.log("Default-disabled");
-          }}
-          disabled
-        >
-          Default-disabled
-        </Button>
-        <form // 이 경우 Button에 onClick 이벤트가 없으므로 submit 작동
-          onSubmit={(e) => {
-            e.preventDefault();
-            console.log("submit success");
-          }}
-        >
-          <Button variant="outlined">Outlined</Button>
-        </form>
-        <Button
-          onClick={() => {
-            console.log("Outlined-disabled");
-          }}
-          variant="outlined"
-          disabled
-        >
-          Outlined-disabled
-        </Button>
       </Buttons>
+
+      {/* Dropdown */}
       <DropdownWrapper>
         <Dropdown
           items={[
@@ -80,6 +69,8 @@ const Test = () => {
           }}
         />
       </DropdownWrapper>
+
+      {/* Inputs */}
       <InputWrapper>
         <InputDefault
           {...{
@@ -151,11 +142,10 @@ const Test = () => {
 export default Test;
 
 const Buttons = styled.div`
-  display: flex;
   margin-top: 50px;
-  gap: 10px;
   & form {
-    width: 100%;
+    display: flex;
+    gap: 10px;
   }
 `;
 
