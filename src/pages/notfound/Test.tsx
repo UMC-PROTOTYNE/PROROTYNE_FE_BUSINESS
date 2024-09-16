@@ -111,29 +111,46 @@ const Test = () => {
       </InputWrapper>
       <ColorPalette>
         {"import { colors } from '@/shared'"}
-        {Object.values(colors)
-          .slice(0, 5)
-          .map((color) => (
-            <div>
-              <Color color={color} />
-              <p>
-                colors.
-                {Object.keys(colors).find((key) => colors[key] === color) || ""}
-              </p>
-            </div>
-          ))}
-        {Object.values(colors.gray).map((color) => (
-          <div>
-            <Color color={color} />
-            <p>
-              colors.gray[
-              {Object.keys(colors.gray).find(
-                (key) => colors.gray[key] === color
-              ) || ""}
-              ]{" "}
-            </p>
-          </div>
-        ))}
+        <div>
+          <Color color={colors.main} />
+          <p>colors.main</p>
+        </div>
+        <div>
+          <Color color={colors.sub} />
+          <p>colors.sub</p>
+        </div>
+        <div>
+          <Color color={colors.back} />
+          <p>colors.back</p>
+        </div>
+        <div>
+          <Color color={colors.black} />
+          <p>colors.black</p>
+        </div>
+        <div>
+          <Color color={colors.white} />
+          <p>colors.white</p>
+        </div>
+        <div>
+          <Color color={colors.gray[1]} />
+          <p>colors.gray[1]</p>
+        </div>
+        <div>
+          <Color color={colors.gray[2]} />
+          <p>colors.gray[2]</p>
+        </div>
+        <div>
+          <Color color={colors.gray[3]} />
+          <p>colors.gray[3]</p>
+        </div>
+        <div>
+          <Color color={colors.gray[4]} />
+          <p>colors.gray[4]</p>
+        </div>
+        <div>
+          <Color color={colors.gray[5]} />
+          <p>colors.gray[5]</p>
+        </div>
       </ColorPalette>
     </>
   );
@@ -164,12 +181,11 @@ const InputWrapper = styled.div`
 
 const ColorPalette = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 10px;
   margin-top: 50px;
   & div {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
     align-items: center;
   }
 `;
