@@ -1,9 +1,13 @@
 import { Logo } from "@/widget";
+import { SignButton } from "@/entities";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router";
 const SignInContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;
 const SignInSubContainer = styled.div`
   display: flex;
@@ -25,18 +29,7 @@ const Input = styled.input`
   font-size: 16px;
   color: #d9d9d9;
 `;
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  margin: 10px 0px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  width: 400px;
-  font-size: 16px;
-  color: white;
-  background-color: #0500FF;
-  cursor: pointer;
-`;
+
 const SignupContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -51,6 +44,7 @@ const SignIn = styled.div`
   cursor: pointer;
 `;
 const SignInPage = () => {
+  const navigate = useNavigate();
   return (
     <SignInContainer>
       <SignInSubContainer>
@@ -58,14 +52,14 @@ const SignInPage = () => {
         <Form>
           <Input placeholder="아이디" />
           <Input placeholder="비밀번호" />
-          <Button>로그인</Button>
+          <SignButton>로그인</SignButton>
         </Form>
         <SignupContainer>
           <Register>
             기업 등록
           </Register>
           |
-          <SignIn>
+          <SignIn onClick={() => navigate("/signup")}>
             회원 가입
           </SignIn>
         </SignupContainer>
