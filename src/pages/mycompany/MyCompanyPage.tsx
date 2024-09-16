@@ -35,7 +35,7 @@ const MyCompanyPage = () => {
   return (
     <CompanyContainer>
       <CompanySubContainer>
-        <h2>기업명</h2>
+        <h1>기업명</h1>
         <CompanyBorder>
           <Description>
             <Title>사업자 등록 번호</Title>
