@@ -2,15 +2,15 @@ import styled from "@emotion/styled";
 import { BlueBorderButton } from "@/entities";
 const PrototypeContainer = styled.div`
     display: flex;
-    width: 840px;
+    width: 100%;
     justify-content: space-between;
-    margin: 20px 5px;
+    margin: 20px 0px;
     border: 1px solid #D9D9D9;
     border-radius: 8px;
-    padding: 5px 10px;
+    padding: 5px 0px;
 `;
 const Image = styled.img`
-
+    margin-left: 10px;
 `;
 const DescriptionContainer = styled.div`
     display: flex;
@@ -30,6 +30,7 @@ const ButtonContainer = styled.div`
     width: 200px;
     display: flex;
     flex-direction: column;
+    margin-right: 10px;
     justify-content: center;
 `;
 const DeleteButton = styled.button`
