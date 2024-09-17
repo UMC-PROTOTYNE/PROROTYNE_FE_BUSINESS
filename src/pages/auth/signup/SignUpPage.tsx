@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { BlueBorderButton, SignButton } from "@/entities";
 import { ComboBox } from "@/widget";
 import { useState } from "react";
-
+import DaumPostcode from "react-daum-postcode";
+import { set } from "react-hook-form";
 const SignUpContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -44,11 +45,52 @@ const ComboBoxContainer = styled.div`
   display: flex;
 `;
 
+const AddressDetailBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AddressDetailContainer = styled.div`
+  width: 400px;
+  height: 400px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border: 1px solid #D9D9D9;
+`;
+
 const SignUpPage = () => {
   const [progress, setProgress] = useState(0);
+  const [address, setAddress] = useState(false);
+  const [inputAddress, setInputAddress] = useState("");
+
   return (
     <SignUpContainer>
       <SignUpSubContainer>
+        {address && (
+          <AddressDetailBackground onClick={() => {
+            setAddress(false);
+          }
+          }>
+            <AddressDetailContainer>
+              <DaumPostcode onComplete={(data) => {
+                setAddress(false);
+                setInputAddress(data.address);
+              }}/>
+            </AddressDetailContainer>
+          </AddressDetailBackground>
+        )}
         <LogoContainer>
           <Logo src="./public/logo/defualt.png" alt="logo" />
         </LogoContainer>
@@ -75,8 +117,8 @@ const SignUpPage = () => {
           주소
         </SubTitle>
         <AddressContainer>
-          <Input placeholder="우편번호"/>
-          <BlueBorderButton width="150px" height="15px">주소 찾기</BlueBorderButton>
+          <Input placeholder="우편번호" value={inputAddress}/>
+          <BlueBorderButton width="150px" height="15px" onClick={() => setAddress(true)}>주소 찾기</BlueBorderButton>
         </AddressContainer>
         <Input placeholder="상세 주소"/>
         <ComboBoxContainer>
