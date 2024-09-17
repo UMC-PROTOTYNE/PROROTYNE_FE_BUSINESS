@@ -45,8 +45,8 @@ const HomePage = () => {
                 <>
                 </>
                 }
-                {isPrototype ? <Prototype isPrototype={isPrototype} image="./public/temp.svg" name="마라탕후루" ticket={3} regist="2024.02.02" category="식품" ongoing={3} releaseDate="2024.01.01"/> :
-                    <Prototype isPrototype={isPrototype} image="./public/temp.svg" name="마라탕루" step="신청자 모집 기간" regist="2024.02.02" category="식품" terminateDate="2024.05.04"/>}
+                {isPrototype ? <Prototype isPrototype={isPrototype} image="./temp.svg" name="마라탕후루" ticket={3} regist="2024.02.02" category="식품" ongoing={3} releaseDate="2024.01.01"/> :
+                    <Prototype isPrototype={isPrototype} image="./temp.svg" name="마라탕루" step="신청자 모집 기간" regist="2024.02.02" category="식품" terminateDate="2024.05.04"/>}
             </HomePageSubContainer>
         </HomePageContainer>
     );

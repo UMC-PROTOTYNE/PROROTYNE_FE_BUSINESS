@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-
+import { useState } from "react";
 const CompanyContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -31,35 +31,53 @@ const Contact = styled.div`
   margin-top: 20px;
   font-size: 14px;
 `;
+interface Company {
+  name: string;
+  businessNumber: string;
+  phone: string;
+  email: string;
+  address: string;
+  industry: string;
+  scale: string;
+}
 const MyCompanyPage = () => {
+  const [company, setCompany] = useState<Company>({
+    name: "기업이름",
+    businessNumber: "12345abcde",
+    phone: "01012345678",
+    email: "hs@naver.com",
+    address: "서울시 동작구 흑석동 123-12",
+    industry: "식품",
+    scale: "규모",
+  });
   return (
     <CompanyContainer>
       <CompanySubContainer>
-        <h1>기업명</h1>
+        <h1>{company.name}</h1>
         <CompanyBorder>
           <Description>
             <Title>사업자 등록 번호</Title>
-            <div>사업자</div>
+            <div>{company.businessNumber}</div>
           </Description>
           <Description>
             <Title>전화번호</Title>
-            <div>사업자</div>
+            <div>{company.phone}</div>
           </Description>
           <Description>
             <Title>이메일</Title>
-            <div>사업자</div>
+            <div>{company.email}</div>
           </Description>
           <Description>
             <Title>주소</Title>
-            <div>사업자시 사업자동 109호</div>
+            <div>{company.address}</div>
           </Description>
           <Description>
             <Title>업종</Title>
-            <div>사업자</div>
+            <div>{company.industry}</div>
           </Description>
           <Description>
             <Title>기업 규모</Title>
-            <div>사업자</div>
+            <div>{company.scale}</div>
           </Description>
         </CompanyBorder>
         <Contact>

@@ -27,7 +27,6 @@ const Input = styled.input`
   border-radius: 5px;
   width: 400px;
   font-size: 16px;
-  color: #d9d9d9;
 `;
 
 const SignupContainer = styled.div`
