@@ -14,3 +14,4 @@ export { GrayBackground } from "./screen/GrayBackground";
 export { Loading } from "./screen/Loading";
 
 export { RowLine } from "./ui/Line";
+export { StatusInfo } from "./ui/StatusInfo";
