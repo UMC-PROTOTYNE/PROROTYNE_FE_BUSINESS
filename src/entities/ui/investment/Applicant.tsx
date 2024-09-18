@@ -1,4 +1,4 @@
-import { Dropdown } from "@/entities/element/Dropdown";
+import { Dropdown } from "@/entities";
 import { colors } from "@/shared";
 import styled from "@emotion/styled";
 
