@@ -1,16 +1,34 @@
 import { Applicant, StatusInfo, Survey } from "@/entities";
 import { colors } from "@/shared";
 import styled from "@emotion/styled";
-import { Route, Routes, NavLink } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { PAGE_URL } from "@/shared";
+import { useEffect } from "react";
 
 const ManagementPage = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 체험 현황 및 관리 페이지 진입 시 신청자 목록으로 이동
+    if (currentPath === "/investment/management") {
+      navigate("applicant", { replace: true });
+    }
+  }, [currentPath, navigate]);
+
   return (
     <Wrapper>
       <Title>체험 현황 및 관리</Title>
       <StatusInfo />
       <RouteWrapper>
-        <div>
+        <RouteHeader>
           <NavStyle to={PAGE_URL.InvestmentManagement + "/applicant"}>
             신청자 목록
           </NavStyle>
@@ -18,7 +36,7 @@ const ManagementPage = () => {
             설문조사
           </NavStyle>
           <div>체험 대상자들과 후기를 확인하고 체험 단계를 조절하세요!</div>
-        </div>
+        </RouteHeader>
         <Routes>
           <Route path="/applicant" element={<Applicant />} />
           <Route path="/survey" element={<Survey />} />
@@ -46,17 +64,17 @@ const Title = styled.h1`
 const RouteWrapper = styled.div`
   width: 100%;
   border: 1px solid ${colors.gray[1]};
-  padding-bottom: 20px;
+`;
 
+const RouteHeader = styled.div`
+  display: flex;
+  width: 100%;
   & div {
-    display: flex;
     width: 100%;
-    & div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: ${colors.main};
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${colors.main};
   }
 `;
 
