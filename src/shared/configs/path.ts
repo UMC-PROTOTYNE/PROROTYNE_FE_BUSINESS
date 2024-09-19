@@ -11,4 +11,6 @@ export enum PAGE_URL {
   InvestmentInfo = "/investment/info",
   InvestmentManagement = "/investment/management",
   InvestmentSchedule = "/investment/schedule",
+
+  Test = "/test",
 }

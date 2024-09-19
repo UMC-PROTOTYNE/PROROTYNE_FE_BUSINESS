@@ -2,7 +2,7 @@ import { Global, css } from "@emotion/react";
 
 const Styles = css`
   * {
-    font-family: "Spoqa Han Sans Neo", "sans-seri";
+    font-family: "Pretendard", "sans-seri";
   }
   body {
     overflow-x: hidden;
