@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { BlueBorderButton, SignButton, Input } from "@/entities";
+import { BlueBorderButton, SignButton, Input, ValidAlert } from "@/entities";
 import { ComboBox } from "@/widget";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
@@ -65,20 +65,61 @@ const AddressDetailContainer = styled.div`
   border: 1px solid #D9D9D9;
 `;
 
+
 const SignUpPage = () => {
   const [progress, setProgress] = useState(0);
   const [address, setAddress] = useState(false);
   const [inputAddress, setInputAddress] = useState("");
 
   const [companyName, setCompanyName] = useState("");
+  const [companyNameValid, setCompanyNameValid] = useState(true);
   const [businessNumber, setBusinessNumber] = useState("");
+  const [businessNumberValid, setBusinessNumberValid] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumberValid, setPhoneNumberValid] = useState(true);
   const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(true);
   const [detailedAddress, setDetailedAddress] = useState("");
+  const [detailedAddressValid, setDetailedAddressValid] = useState(true);
+  const [businessType, setBusinessType] = useState("");
+  const [businessTypeValid, setBusinessTypeValid] = useState(true);
+  const [businessSize, setBusinessSize] = useState("");
+  const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
+  const [usernameValid, setUsernameValid] = useState(true);
   const [password, setPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
   
+  const validation = () => {
+    const isValid = {
+      companyName: companyName !== "",
+      businessNumber: businessNumber !== "",
+      phoneNumber: phoneNumber !== "",
+      email: email !== "",
+      detailedAddress: inputAddress !== "" && detailedAddress !== "",
+      businessType: businessType !== "",
+      businessSize: businessSize !== "",
+    };
+
+    setCompanyNameValid(isValid.companyName);
+    setBusinessNumberValid(isValid.businessNumber);
+    setPhoneNumberValid(isValid.phoneNumber);
+    setEmailValid(isValid.email);
+    setDetailedAddressValid(isValid.detailedAddress);
+    setBusinessTypeValid(isValid.businessType);
+    setBusinessSizeValid(isValid.businessSize);
+
+    return Object.values(isValid).every((v) => v === true);
+  };
+
+  const handleContinue = () => {
+    if (validation()) {
+      setProgress(progress + 1);
+    }
+  };
+
   return (
     <SignUpContainer>
       <SignUpSubContainer>
@@ -96,7 +137,7 @@ const SignUpPage = () => {
           </AddressDetailBackground>
         )}
         <LogoContainer>
-          <Logo src="./public/logo/defualt.png" alt="logo" />
+          <Logo src="./logo/defualt.png" alt="logo" />
         </LogoContainer>
         {progress === 0 ? <Description>{`시제품 등록을 위해
 기업 정보가 필요해요!`}</Description> : <Description>{`아이디 비밀번호 생성`}</Description>}
@@ -105,18 +146,22 @@ const SignUpPage = () => {
           기업명
         </SubTitle>
         <Input placeholder="기업명을 작성해 주세요" value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
+        <ValidAlert valid={companyNameValid}>* 기업명을 작성해 주세요</ValidAlert>
         <SubTitle>
           사업자 등록번호(10자리)
         </SubTitle>
         <Input placeholder="사업자 등록번호를 입력해 주세요" value={businessNumber} onChange={(e) => setBusinessNumber(e.target.value)}/>
+        <ValidAlert valid={businessNumberValid}>* 사업자 등록번호를 입력해 주세요</ValidAlert>
         <SubTitle>
           전화번호
         </SubTitle>
         <Input placeholder="전화번호를 작성해주세요" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+        <ValidAlert valid={phoneNumberValid}>* 전화번호를 작성해주세요</ValidAlert>
         <SubTitle>
           이메일
         </SubTitle>
         <Input placeholder="이메일을 작성해주세요" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <ValidAlert valid={emailValid}>* 이메일을 작성해주세요</ValidAlert>
         <SubTitle>
           주소
         </SubTitle>
@@ -125,11 +170,12 @@ const SignUpPage = () => {
           <BlueBorderButton width="150px" height="15px" onClick={() => setAddress(true)}>주소 찾기</BlueBorderButton>
         </AddressContainer>
         <Input placeholder="상세 주소" value={detailedAddress} onChange={(e) => setDetailedAddress(e.target.value)}/>
+        <ValidAlert valid={detailedAddressValid}>* 주소를 입력해 주세요</ValidAlert>
         <ComboBoxContainer>
-          <ComboBox type="businessType"/>
-          <ComboBox type="size"/>
+          <ComboBox type="businessType" setValue={setBusinessType} valid={businessTypeValid}/>
+          <ComboBox type="size" setValue={setBusinessSize} valid={businessSizeValid}/>
         </ComboBoxContainer>
-        <SignButton onClick={() => setProgress(progress + 1)}>계속하기</SignButton> </> :
+        <SignButton onClick={handleContinue}>계속하기</SignButton> </> :
         <>
         <SubTitle>
           아이디
