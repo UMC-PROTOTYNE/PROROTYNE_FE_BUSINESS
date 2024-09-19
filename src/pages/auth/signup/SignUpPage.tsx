@@ -37,6 +37,7 @@ const AddressContainer = styled.div`
 `;
 const ComboBoxContainer = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 const AddressDetailBackground = styled.div`

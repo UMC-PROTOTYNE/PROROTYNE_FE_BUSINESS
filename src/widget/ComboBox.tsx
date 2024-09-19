@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 const ComboBoxSubContainer = styled.div`
     margin-right: 20px;
+    width: 100%;
 `;
 const Select = styled.select`
-    width: 180px;
+    width: 100%;
     background: #F6F5FF;
     border: 1px solid gray;
     border-radius: 5px;

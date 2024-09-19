@@ -39,7 +39,7 @@ export const SignButton = styled.button`
   justify-content: center;
   margin: 40px 0px;
   padding: 10px 0px;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 100%;
   font-size: 16px;
   color: white;
