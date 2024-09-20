@@ -67,7 +67,7 @@ const PageRouter = () => (
                 element={<InvestmentInfo />}
               />
               <Route
-                path={PAGE_URL.InvestmentManagement}
+                path={PAGE_URL.InvestmentManagement + "/*"}
                 element={<InvestmentManagement />}
               />
               <Route

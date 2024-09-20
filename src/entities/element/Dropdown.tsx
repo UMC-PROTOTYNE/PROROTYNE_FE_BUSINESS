@@ -5,10 +5,13 @@ import { colors } from "@/shared/configs/colors";
 interface DropdownProps {
   items: { item: string; value: string }[];
   setItem: (item: string) => void;
+  defaultItem?: string; // defaultItem 추가
 }
-export const Dropdown = ({ items, setItem }: DropdownProps) => {
+export const Dropdown = ({ items, setItem, defaultItem }: DropdownProps) => {
   const [isDropdownView, setDropdownView] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(items[0].item);
+  const [selectedItem, setSelectedItem] = useState(
+    defaultItem || items[0].item
+  );
 
   const handleClickContainer = () => {
     setDropdownView(!isDropdownView);
@@ -49,19 +52,20 @@ export const Dropdown = ({ items, setItem }: DropdownProps) => {
 
 const DropdownWrapper = styled.div`
   position: relative;
-  height: 100%;
+  min-height: 24px;
   width: 100%;
 `;
 
 const DropdownButton = styled.button<{ isDropdownView: boolean }>`
   display: flex;
-  height: 100%;
+  min-height: 24px;
   width: 100%;
   padding: 0 10px;
   justify-content: space-between;
   align-items: center;
   background-color: ${colors.back};
   color: ${colors.black};
+  border: 1px solid ${colors.black};
   border-radius: 5px;
   font-size: 11px;
   cursor: pointer;
@@ -75,6 +79,7 @@ const DropdownButton = styled.button<{ isDropdownView: boolean }>`
 `;
 
 const DropdownContents = styled.div`
+  z-index: 50;
   position: absolute;
   display: flex;
   width: 100%;
@@ -82,6 +87,7 @@ const DropdownContents = styled.div`
   top: 120%;
   flex-direction: column;
   justify-content: center;
+  border: 1px solid ${colors.gray[3]};
   align-items: center;
   font-size: 11px;
   cursor: pointer;
