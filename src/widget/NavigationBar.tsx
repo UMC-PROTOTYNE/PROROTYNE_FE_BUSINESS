@@ -100,7 +100,7 @@ const Background = styled.div`
 const Container = styled.main`
   position: fixed;
 
-  height: calc(100vh - 200px);
+  height: 100%;
   width: calc(100vw - 200px);
 
   left: 200px;
