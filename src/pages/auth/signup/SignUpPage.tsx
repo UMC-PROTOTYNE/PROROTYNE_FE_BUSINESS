@@ -3,6 +3,7 @@ import { BlueBorderButton, SignButton, Input, ValidAlert } from "@/entities";
 import { ComboBox } from "@/widget";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
+import { useNavigate } from "react-router";
 
 const SignUpContainer = styled.div`
   display: flex;  
@@ -39,7 +40,10 @@ const ComboBoxContainer = styled.div`
   display: flex;
   width: 100%;
 `;
-
+const ComboBoxSubContainer = styled.div`
+    margin-right: 20px;
+    width: 100%;
+`;
 const AddressDetailBackground = styled.div`
   position: fixed;
   top: 0;
@@ -67,6 +71,8 @@ const AddressDetailContainer = styled.div`
 
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+
   const [progress, setProgress] = useState(0);
   const [address, setAddress] = useState(false);
   const [inputAddress, setInputAddress] = useState("");
@@ -113,10 +119,27 @@ const SignUpPage = () => {
 
     return Object.values(isValid).every((v) => v === true);
   };
+  const signupValid = () => {
+    const isValid = {
+      username: username !== "",
+      password: password !== "",
+      confirmPassword: confirmPassword !== "",
+    };
+    setUsernameValid(isValid.username);
+    setPasswordValid(isValid.password);
+    setConfirmPasswordValid(isValid.confirmPassword);
 
+    return Object.values(isValid).every((v) => v === true);
+  }
   const handleContinue = () => {
     if (validation()) {
       setProgress(progress + 1);
+    }
+  };
+  const handleSuccess = () => {
+    if (signupValid()) {
+      alert("회원가입이 완료되었습니다");
+      navigate("/signin");
     }
   };
 
@@ -172,8 +195,14 @@ const SignUpPage = () => {
         <Input placeholder="상세 주소" value={detailedAddress} onChange={(e) => setDetailedAddress(e.target.value)}/>
         <ValidAlert valid={detailedAddressValid}>* 주소를 입력해 주세요</ValidAlert>
         <ComboBoxContainer>
-          <ComboBox type="businessType" setValue={setBusinessType} valid={businessTypeValid}/>
-          <ComboBox type="size" setValue={setBusinessSize} valid={businessSizeValid}/>
+          <ComboBoxSubContainer>
+            <ComboBox type="businessType" setValue={setBusinessType}/>
+            <ValidAlert valid={businessTypeValid}>* 업종을 선택해 주세요</ValidAlert>
+          </ComboBoxSubContainer>
+          <ComboBoxSubContainer>
+            <ComboBox type="size" setValue={setBusinessSize}/>
+            <ValidAlert valid={businessSizeValid}>* 기업 규모를 선택해 주세요</ValidAlert>
+          </ComboBoxSubContainer>
         </ComboBoxContainer>
         <SignButton onClick={handleContinue}>계속하기</SignButton> </> :
         <>
@@ -184,15 +213,18 @@ const SignUpPage = () => {
           <Input placeholder="8자 이상, 대,소문자, 숫자" value={username} onChange={(e) => setUsername(e.target.value)}/>
           <BlueBorderButton width="150px" height="15px">중복 확인</BlueBorderButton>
         </AddressContainer>
+        <ValidAlert valid={usernameValid}>* 아이디을 작성해주세요</ValidAlert>
         <SubTitle>
           비밀번호
         </SubTitle>
         <Input placeholder="특수문자 포함 10자 이상" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <ValidAlert valid={passwordValid}>* 비밀번호를 작성해주세요</ValidAlert>
         <SubTitle>
           비밀번호 확인
         </SubTitle>
         <Input placeholder="다시 한번 입력해주세요" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
-        <SignButton>회원가입 완료</SignButton>
+        <ValidAlert valid={confirmPasswordValid}>* 비밀번호를 확인해주세요</ValidAlert>
+        <SignButton onClick={handleSuccess}>회원가입 완료</SignButton>
         </>}
       </SignUpSubContainer>
     </SignUpContainer>

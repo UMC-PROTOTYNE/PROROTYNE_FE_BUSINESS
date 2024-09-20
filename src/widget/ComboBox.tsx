@@ -1,10 +1,6 @@
 import styled from "@emotion/styled";
-import { ValidAlert } from "@/entities";
-import { useEffect } from "react";
-const ComboBoxSubContainer = styled.div`
-    margin-right: 20px;
-    width: 100%;
-`;
+
+
 const Select = styled.select`
     width: 100%;
     background: #F6F5FF;
@@ -17,10 +13,10 @@ const SubTitle = styled.div`
   font-weight: bold;
   margin: 20px 0px 10px 0px;
 `;
-export const ComboBox = ({type, setValue, valid}: {type: string, setValue: any, valid: boolean}) => {
+export const ComboBox = ({type, setValue}: {type: string, setValue: any}) => {
 
     return (
-        <ComboBoxSubContainer>
+        <>
             <SubTitle>
                 { type === "businessType" ? "업종" : "기업 규모" }
             </SubTitle>
@@ -31,8 +27,7 @@ export const ComboBox = ({type, setValue, valid}: {type: string, setValue: any, 
                 <option value="1">1</option>
                 <option value="2">2</option>
             </Select>
-            <ValidAlert valid={valid}></ValidAlert>
-        </ComboBoxSubContainer>
+        </>
     );
 };
 export default ComboBox;
