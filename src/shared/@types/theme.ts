@@ -11,6 +11,7 @@ interface ColorValueTypes {
   back: ColorValue;
   black: ColorValue;
   white: ColorValue;
+  error: ColorValue;
 }
 
 export type ColorTypes = ColorStepTypes & ColorValueTypes;

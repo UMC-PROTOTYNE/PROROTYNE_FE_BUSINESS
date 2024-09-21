@@ -37,6 +37,7 @@ const ManagementPage = () => {
           </NavStyle>
           <div>체험 대상자들과 후기를 확인하고 체험 단계를 조절하세요!</div>
         </RouteHeader>
+        <div style={{ height: "50px" }}></div>
         <Routes>
           <Route path="/applicant" element={<Applicant />} />
           <Route path="/survey" element={<Survey />} />
@@ -64,11 +65,19 @@ const Title = styled.h1`
 const RouteWrapper = styled.div`
   width: 100%;
   border: 1px solid ${colors.gray[1]};
+
+  height: 55vh;
+
+  overflow-y: auto;
 `;
 
 const RouteHeader = styled.div`
   display: flex;
   width: 100%;
+
+  position: fixed;
+  z-index: 10;
+
   & div {
     width: 100%;
     display: flex;
