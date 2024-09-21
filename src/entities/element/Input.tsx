@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { colors } from "@/shared";
 import { Button } from "./Button";
+import { useState } from "react";
 
 export const Input = styled.input`
   margin: 10px 0px 10px 0px;
@@ -10,12 +11,18 @@ export const Input = styled.input`
   border-bottom: 1px solid gray;
 `;
 
-
 interface InputProps {
   value: string;
   setValue: (value: string) => void | ((value: number) => void);
   type?: string;
   placeholder?: string;
+}
+
+interface TextareaProps {
+  value: string;
+  setValue: (value: string) => void | ((value: number) => void);
+  placeholder?: string;
+  rows?: number;
 }
 
 interface InputTitleProps extends InputProps {
@@ -38,6 +45,11 @@ interface InputDatePickerProps {
   placeholder?: string;
 }
 
+interface InputImageProps {
+  title: string;
+  setFile: (files: File[]) => void;
+}
+
 export const InputDefault = ({
   value,
   setValue,
@@ -51,6 +63,26 @@ export const InputDefault = ({
           placeholder,
           type: type || "text",
           value,
+          onChange: (e) => setValue(e.target.value),
+        }}
+      />
+    </InputWrapper>
+  );
+};
+
+export const InputTextarea = ({
+  value,
+  setValue,
+  placeholder,
+  rows = 3,
+}: TextareaProps) => {
+  return (
+    <InputWrapper>
+      <Textarea
+        {...{
+          placeholder,
+          value,
+          rows,
           onChange: (e) => setValue(e.target.value),
         }}
       />
@@ -143,6 +175,41 @@ export const InputDatePicker = ({
   );
 };
 
+export const InputImage = ({ setFile }: InputImageProps) => {
+  const [previews, setPreview] = useState<string[]>([]);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    setFile(files);
+    if (files.length > 0) {
+      const previews = files.map((file) => URL.createObjectURL(file));
+      setPreview(previews);
+    } else {
+      setPreview([]);
+    }
+  };
+  return (
+    <InputWrapper>
+      <ImageWrapper>
+        {previews.map((preview, index) => (
+          <ImagePreview key={index}>
+            <img src={preview} alt={`uploaded-${index}`} />
+          </ImagePreview>
+        ))}
+        <UploadButton>
+          <input
+            type="file"
+            accept="image/*"
+            multiple // 여러 파일을 선택할 수 있게 설정
+            onChange={handleImageUpload}
+          />
+          <PlusIcon>+</PlusIcon>
+        </UploadButton>
+      </ImageWrapper>
+    </InputWrapper>
+  );
+};
+
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -171,6 +238,19 @@ const InputWrapper = styled.div`
   }
 `;
 
+const Textarea = styled.textarea`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid ${colors.gray[2]};
+  border-radius: 4px;
+  resize: none; /* 사용자가 크기를 변경할 수 있도록 설정 */
+  outline: none;
+
+  ::placeholder {
+    color: ${colors.gray[2]};
+  }
+`;
+
 const Title = styled.h2`
   width: 100%;
   font-size: 16px;
@@ -196,4 +276,41 @@ const InputDatePickerWrapper = styled.p`
     border: 1px solid ${colors.gray[2]};
     border-radius: 5px;
   }
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+`;
+
+const ImagePreview = styled.img`
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const UploadButton = styled.div`
+  width: 80px;
+  height: 80px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+`;
+
+const PlusIcon = styled.div`
+  font-size: 32px;
+  color: #fff;
 `;
