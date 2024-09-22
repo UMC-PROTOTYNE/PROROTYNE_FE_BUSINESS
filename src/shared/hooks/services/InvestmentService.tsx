@@ -3,14 +3,23 @@ import { AxiosResponse } from "axios";
 import { API } from "@/shared";
 
 export const InvestmentService = () => {
-  const signIn = async (investmentId: number) => {
+  const UserList = async (investmentId: string | undefined) => {
     const {
       data: { result },
     } = (await API.get(
-      `/enterprise/user/list/${investmentId}`
+      `/user/list/${investmentId}`
     )) as AxiosResponse<Investment.UserListReqDto>;
     return result;
   };
 
-  return { signIn };
+  const InvestmentInfo = async (investmentId: string | undefined) => {
+    const {
+      data: { result },
+    } = (await API.get(
+      `/events/${investmentId}`
+    )) as AxiosResponse<Investment.InvestmentInfoReqDto>;
+    return result;
+  };
+
+  return { UserList, InvestmentInfo };
 };

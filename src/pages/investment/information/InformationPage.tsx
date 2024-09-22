@@ -1,10 +1,25 @@
 import { StatusInfo } from "@/entities";
-import { colors } from "@/shared";
+import { colors, InvestmentService } from "@/shared";
 import styled from "@emotion/styled";
-// import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const InformationPage = () => {
-  // const params = useParams();
+  const params = useParams();
+
+  const [info, setInfo] = useState<Investment.InvestmentInfoReqDto>();
+
+  useEffect(() => {
+    InvestmentService()
+      .InvestmentInfo(params.investmentId)
+      .then((result) => {
+        setInfo({ result });
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(info);
+  }, [info]);
 
   return (
     <Wrapper>
@@ -12,21 +27,21 @@ const InformationPage = () => {
       <StatusInfo />
       <RouteWrapper>
         <AnswerContainer>
-          {images.map((element, index) => (
+          {info?.result.productImages.map((element, index) => (
             <ImageBlock key={index} src={element}></ImageBlock>
           ))}
         </AnswerContainer>
         <div>
           <h3>시제품 명</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.productName}</p>
         </div>
         <div>
           <h3>설명</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.contents}</p>
         </div>
         <div>
           <h3>카테고리</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{}</p>
         </div>
         <div>
           <h3>티켓 개수</h3>

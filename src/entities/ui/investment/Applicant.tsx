@@ -2,6 +2,7 @@ import { Button, Dropdown, InputTitle } from "@/entities";
 import { colors, InvestmentService } from "@/shared";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface ApplicantData {
   id: number;
@@ -139,10 +140,11 @@ const ApplicantItem = ({
 export const Applicant = () => {
   const [applicantData, setApplicantData] =
     useState<Investment.UserListReqDto>();
+  const params = useParams();
 
   useEffect(() => {
     InvestmentService()
-      .signIn(1)
+      .UserList(params.investmentId)
       .then((result) => {
         setApplicantData({ result });
       });
