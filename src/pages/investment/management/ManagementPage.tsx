@@ -7,18 +7,19 @@ import {
   NavLink,
   useLocation,
   useNavigate,
+  useParams,
 } from "react-router-dom";
-import { PAGE_URL } from "@/shared";
 import { useEffect } from "react";
 
 const ManagementPage = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
     // 체험 현황 및 관리 페이지 진입 시 신청자 목록으로 이동
-    if (currentPath === "/investment/management") {
+    if (currentPath === "/investment/" + params.investmentId + "/management") {
       navigate("applicant", { replace: true });
     }
   }, [currentPath, navigate]);
@@ -29,10 +30,14 @@ const ManagementPage = () => {
       <StatusInfo />
       <RouteWrapper>
         <RouteHeader>
-          <NavStyle to={PAGE_URL.InvestmentManagement + "/applicant"}>
+          <NavStyle
+            to={"/investment/" + params.investmentId + "/management/applicant"}
+          >
             신청자 목록
           </NavStyle>
-          <NavStyle to={PAGE_URL.InvestmentManagement + "/survey"}>
+          <NavStyle
+            to={"/investment/" + params.investmentId + "/management/survey"}
+          >
             설문조사
           </NavStyle>
           <div>체험 대상자들과 후기를 확인하고 체험 단계를 조절하세요!</div>

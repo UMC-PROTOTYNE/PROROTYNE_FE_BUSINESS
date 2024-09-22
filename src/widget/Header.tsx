@@ -5,10 +5,8 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { PAGE_URL } from "@/shared";
 
 const Labels = [
-  { label: "체험 관리", path: PAGE_URL.InvestmentInfo },
-  { label: "체험 관리", path: PAGE_URL.InvestmentManagement },
-  { label: "시제품 추가", path: PAGE_URL.ProductInfo },
-  { label: "시제품 추가", path: PAGE_URL.ProductReview },
+  { label: "체험 관리", path: "/investment" },
+  { label: "시제품 추가", path: "/product" },
   { label: "체험 생성", path: PAGE_URL.InvestmentSchedule },
   { label: "시제품/체험 관리 목록", path: PAGE_URL.Home },
   { label: "회사 정보 관리", path: PAGE_URL.MyCompany },

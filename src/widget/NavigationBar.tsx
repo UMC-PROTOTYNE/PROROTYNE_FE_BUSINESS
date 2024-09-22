@@ -1,17 +1,16 @@
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 
-import { PAGE_URL } from "@/shared";
 import { RowLine } from "@/entities";
 
 const productNavigate = [
-  { label: "제품 정보", path: PAGE_URL.ProductInfo },
-  { label: "설문 조사", path: PAGE_URL.ProductReview },
+  { label: "제품 정보", path: "/info" },
+  { label: "설문 조사", path: "/review" },
 ];
 
 const investmentNavigate = [
-  { label: "체험 정보", path: PAGE_URL.InvestmentInfo },
-  { label: "체험 현황 및 관리", path: PAGE_URL.InvestmentManagement },
+  { label: "체험 정보", path: "/info" },
+  { label: "체험 현황 및 관리", path: "/management" },
 ];
 
 export const NavigationBar = ({
@@ -21,8 +20,9 @@ export const NavigationBar = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const param = useParams();
 
-  console.log(location.pathname.split("/"));
+  const id = state === "PRODUCT" ? param.productId : param.investmentId;
 
   return (
     <>
@@ -33,7 +33,7 @@ export const NavigationBar = ({
               location.pathname.includes(element.path) ? (
                 <SelectLabel
                   onClick={() => {
-                    navigate(element.path);
+                    navigate("/product/" + id + element.path);
                   }}
                   key={element.label}
                 >
@@ -42,7 +42,7 @@ export const NavigationBar = ({
               ) : (
                 <Label
                   onClick={() => {
-                    navigate(element.path);
+                    navigate("/product/" + id + element.path);
                   }}
                   key={element.label}
                 >
@@ -54,7 +54,7 @@ export const NavigationBar = ({
               location.pathname.includes(element.path) ? (
                 <SelectLabel
                   onClick={() => {
-                    navigate(element.path);
+                    navigate("/investment/" + id + element.path);
                   }}
                   key={element.label}
                 >
@@ -63,7 +63,7 @@ export const NavigationBar = ({
               ) : (
                 <Label
                   onClick={() => {
-                    navigate(element.path);
+                    navigate("/investment/" + id + element.path);
                   }}
                   key={element.label}
                 >
