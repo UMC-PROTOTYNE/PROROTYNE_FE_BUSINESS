@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "@/shared";
+import { colors, useProductStore } from "@/shared";
 import { Button } from "./Button";
 import { useState } from "react";
 
@@ -277,19 +277,6 @@ const ImageWrapper = styled.div`
   gap: 10px;
 `;
 
-const ImagePreview = styled.img`
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 const UploadButton = styled.div`
   width: 80px;
   height: 80px;
@@ -309,4 +296,80 @@ const PlusIcon = styled.div`
   padding: 15px 30px;
   font-size: 32px;
   color: #fff;
+`;
+
+export const ImageQuestion = () => {
+  const addImage = useProductStore((state) => state.addImage);
+  const images = useProductStore((state) => state.images);
+
+  console.log(images);
+
+  return (
+    <>
+      <ImageContainer>
+        {images.map((image, index) => (
+          <ImageBlock key={index} src={URL.createObjectURL(image)}></ImageBlock>
+        ))}
+        {images.length < 3 ? (
+          <>
+            <AddImageBlock htmlFor="upload">+</AddImageBlock>
+            <input
+              type="file"
+              id="upload"
+              style={{ display: "none" }}
+              name="upload"
+              accept="image/*"
+              capture="environment"
+              onChange={(event) => {
+                console.log("!!");
+                if (event.target.files) addImage(event.target.files[0]);
+              }}
+            ></input>
+          </>
+        ) : null}
+      </ImageContainer>
+    </>
+  );
+};
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+
+  justify-content: flex-start;
+
+  margin-top: 8px;
+`;
+
+const ImageBlock = styled.div`
+  width: 101px;
+  height: 101px;
+
+  background-image: url(${(props: { src: string }) => props.src});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 10px;
+
+  margin-right: 10px;
+`;
+
+const AddImageBlock = styled.label`
+  width: 101px;
+  height: 101px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 50px;
+
+  background-color: #d9d9d9;
+
+  border-radius: 10px;
+
+  color: white;
 `;

@@ -11,7 +11,7 @@ export {
   InputImage,
 } from "./element/Input";
 
-export { Input } from "./element/Input";
+export { Input, ImageQuestion } from "./element/Input";
 
 export { Background } from "./screen/Background";
 export { GrayBackground } from "./screen/GrayBackground";

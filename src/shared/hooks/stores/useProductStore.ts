@@ -9,6 +9,8 @@ export const useProductStore = create<Product.Store>()(
     notes: "",
     category: "",
 
+    launchedDate: null,
+
     question1: "",
     question2: "",
     question3: "",
@@ -17,8 +19,22 @@ export const useProductStore = create<Product.Store>()(
 
     images: [],
 
-    setInfo: ({ productName, contents, reqTickets, notes, category }) => {
-      set(() => ({ productName, contents, reqTickets, notes, category }));
+    setInfo: (
+      productName,
+      contents,
+      reqTickets,
+      notes,
+      category,
+      launchedDate
+    ) => {
+      set(() => ({
+        productName,
+        contents,
+        reqTickets,
+        notes,
+        category,
+        launchedDate,
+      }));
     },
 
     addImage: (file) => {

@@ -10,3 +10,4 @@ export {
 export { colors } from "./configs/colors";
 
 export { useUserStore } from "./hooks/stores/useUserStore";
+export { useProductStore } from "./hooks/stores/useProductStore";

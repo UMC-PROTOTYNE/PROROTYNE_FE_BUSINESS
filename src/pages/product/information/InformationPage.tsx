@@ -1,7 +1,16 @@
 import styled from "@emotion/styled";
-import { Button, Input, Dropdown, InputTextarea, InputImage } from "@/entities";
+import {
+  Button,
+  Input,
+  Dropdown,
+  InputTextarea,
+  InputImage,
+  ImageQuestion,
+} from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+
+import { useProductStore } from "@/shared";
 
 interface FormInput {
   productName: string;
@@ -86,6 +95,9 @@ const Label = styled.label`
 `;
 
 const InformationPage = () => {
+  //Import Store
+  //const setInfo = useProductStore((state) => state.setInfo);
+
   const { register, handleSubmit, watch, setValue } = useForm<FormInput>();
   const [selectedValue, setSelectedValue] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -137,11 +149,9 @@ const InformationPage = () => {
             {element.type === "dropdown" && element.options && (
               <Dropdown items={element.options} setItem={setSelectedValue} />
             )}
-            {element.type === "file" && (
-              <InputImage setFile={handleImageUpload} />
-            )}
           </>
         ))}
+        <ImageQuestion />
         <Button>계속하기</Button>
       </Form>
     </Container>

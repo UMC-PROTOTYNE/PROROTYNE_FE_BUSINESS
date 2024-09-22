@@ -6,6 +6,8 @@ declare namespace Product {
     notes: string;
     category: string;
 
+    launchedDate: string | null; //0000-00-00
+
     question1: string;
     question2: string;
     question3: string;
@@ -14,13 +16,14 @@ declare namespace Product {
 
     images: File[];
 
-    setInfo: ({
+    setInfo: (
       productName: string,
       contents: string,
       reqTickets: number,
       notes: string,
       category: string,
-    }) => void;
+      launchedDate?: string
+    ) => void;
 
     addImage: (file: File) => void;
     reset: () => void;
