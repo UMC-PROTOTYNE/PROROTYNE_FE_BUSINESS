@@ -16,6 +16,7 @@ import { PAGE_URL } from "@/shared";
 const Home = lazy(() => import("@/pages/home/HomePage"));
 const MyCompany = lazy(() => import("@/pages/mycompany/MyCompanyPage"));
 const NotFound = lazy(() => import("@/pages/notfound/NotFoundPage"));
+const Test = lazy(() => import("@/pages/notfound/Test"));
 
 const ProductInfo = lazy(
   () => import("@/pages/product/information/InformationPage")
@@ -43,6 +44,7 @@ const PageRouter = () => (
         <Routes>
           <Route path={PAGE_URL.SignIn} element={<SignIn />} />
           <Route path={PAGE_URL.SignUp} element={<SignUp />} />
+          <Route path={PAGE_URL.Test} element={<Test />} />
           <Route element={<Header />}>
             <Route>
               <Route index element={<Navigate to={PAGE_URL.Home} replace />} />
@@ -65,7 +67,7 @@ const PageRouter = () => (
                 element={<InvestmentInfo />}
               />
               <Route
-                path={PAGE_URL.InvestmentManagement}
+                path={PAGE_URL.InvestmentManagement + "/*"}
                 element={<InvestmentManagement />}
               />
               <Route

@@ -1,3 +1,5 @@
 import { create } from "zustand";
 
-export const useUserStore = create<User.UserStore>(() => ({}));
+export const useUserStore = create<User.UserStore>(() => ({
+  isSignIn: true,
+}));
