@@ -19,7 +19,7 @@ export const Dropdown = ({ items, setItem, defaultItem }: DropdownProps) => {
 
   return (
     <DropdownWrapper
-      onMouseDown={(e) => {
+      onClick={(e) => {
         e.stopPropagation();
       }}
     >
