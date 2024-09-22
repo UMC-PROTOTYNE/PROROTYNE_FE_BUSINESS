@@ -41,28 +41,35 @@ const InformationPage = () => {
         </div>
         <div>
           <h3>카테고리</h3>
-          <p>{}</p>
+          <p>{info?.result.productInfo.category}</p>
         </div>
         <div>
           <h3>티켓 개수</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.reqTickets}개</p>
         </div>
         <div>
           <h3>추가 안내사항</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.notes}</p>
         </div>
         <hr />
         <div>
           <h3>체험 모집 기간</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>
+            {info?.result.dates.eventStart} ~ {info?.result.dates.eventEnd}
+          </p>
         </div>
         <div>
           <h3>대상자 발표일</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>
+            {info?.result.dates.releaseStart} ~ {info?.result.dates.releaseEnd}
+          </p>
         </div>
         <div>
           <h3>후기 작성 기간</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>
+            {info?.result.dates.feedbackStart} ~{" "}
+            {info?.result.dates.feedbackEnd}
+          </p>
         </div>
       </RouteWrapper>
     </Wrapper>
@@ -125,9 +132,3 @@ const RouteWrapper = styled.div`
     margin: 20px 0;
   }
 `;
-
-const images: string[] = [
-  "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-  "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-  "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-];

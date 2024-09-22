@@ -7,7 +7,7 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.get(
-      `/user/list/${investmentId}`
+      `/user/list/14`
     )) as AxiosResponse<Investment.UserListReqDto>;
     return result;
   };
@@ -16,7 +16,7 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.get(
-      `/events/${investmentId}`
+      `/events/14`
     )) as AxiosResponse<Investment.InvestmentInfoReqDto>;
     return result;
   };
