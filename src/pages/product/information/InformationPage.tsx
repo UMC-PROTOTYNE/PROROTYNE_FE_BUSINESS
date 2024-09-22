@@ -88,9 +88,12 @@ const Label = styled.label`
 const InformationPage = () => {
   const { register, handleSubmit, watch, setValue } = useForm<FormInput>();
   const [selectedValue, setSelectedValue] = useState("");
-  //const [imageFile, setImageFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
 
-  //const productImage = watch("image");
+  const handleImageUpload = (files: File[]) => {
+    setFiles(files);
+    setValue("image", files[0]);
+  };
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
@@ -134,7 +137,9 @@ const InformationPage = () => {
             {element.type === "dropdown" && element.options && (
               <Dropdown items={element.options} setItem={setSelectedValue} />
             )}
-            {element.type === "file" && <>productImage</>}
+            {element.type === "file" && (
+              <InputImage setFile={handleImageUpload} />
+            )}
           </>
         ))}
         <Button>계속하기</Button>

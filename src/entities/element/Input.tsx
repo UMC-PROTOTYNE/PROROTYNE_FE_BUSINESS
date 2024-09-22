@@ -46,7 +46,6 @@ interface InputDatePickerProps {
 }
 
 interface InputImageProps {
-  title: string;
   setFile: (files: File[]) => void;
 }
 
@@ -179,34 +178,28 @@ export const InputImage = ({ setFile }: InputImageProps) => {
   const [previews, setPreview] = useState<string[]>([]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files ? Array.from(e.target.files) : [];
-    setFile(files);
+    const files = e.target.files ? Array.from(e.target.files) : []; // 여러 파일을 배열로 처리
+    setFile(files); // 파일 배열로 상태 업데이트
     if (files.length > 0) {
-      const previews = files.map((file) => URL.createObjectURL(file));
+      const previews = files.map((file) => URL.createObjectURL(file)); // 각 파일의 미리보기 URL 생성
       setPreview(previews);
     } else {
       setPreview([]);
     }
   };
+
   return (
-    <InputWrapper>
-      <ImageWrapper>
-        {previews.map((preview, index) => (
-          <ImagePreview key={index}>
-            <img src={preview} alt={`uploaded-${index}`} />
-          </ImagePreview>
-        ))}
-        <UploadButton>
-          <input
-            type="file"
-            accept="image/*"
-            multiple // 여러 파일을 선택할 수 있게 설정
-            onChange={handleImageUpload}
-          />
-          <PlusIcon>+</PlusIcon>
-        </UploadButton>
-      </ImageWrapper>
-    </InputWrapper>
+    <ImageWrapper>
+      <UploadButton>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageUpload}
+        />
+        <PlusIcon>+</PlusIcon>
+      </UploadButton>
+    </ImageWrapper>
   );
 };
 
@@ -305,12 +298,15 @@ const UploadButton = styled.div`
 
   input {
     position: absolute;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     cursor: pointer;
   }
 `;
 
 const PlusIcon = styled.div`
+  padding: 15px 30px;
   font-size: 32px;
   color: #fff;
 `;
