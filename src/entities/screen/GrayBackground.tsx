@@ -15,7 +15,7 @@ export const GrayBackground = ({
 );
 
 const Background = styled.div`
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -27,7 +27,7 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 3;
+  z-index: 11;
 `;
 
 const Container = styled.div`
@@ -46,5 +46,5 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 4;
+  z-index: 12;
 `;

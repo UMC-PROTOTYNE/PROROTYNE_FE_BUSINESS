@@ -67,6 +67,7 @@ const Test = () => {
           setItem={(value) => {
             console.log(value);
           }}
+          value="string"
         />
       </DropdownWrapper>
 

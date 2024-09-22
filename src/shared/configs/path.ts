@@ -5,12 +5,12 @@ export enum PAGE_URL {
 
   MyCompany = "/mycompany",
 
-  ProductInfo = "/product/info",
-  ProductReview = "/product/review",
+  ProductInfo = "/product/:productId/info",
+  ProductReview = "/product/:productId/review",
 
-  InvestmentInfo = "/investment/info",
-  InvestmentManagement = "/investment/management",
-  InvestmentSchedule = "/investment/schedule",
+  InvestmentInfo = "/investment/:investmentId/info",
+  InvestmentManagement = "/investment/:investmentId/management",
+  InvestmentSchedule = "/investment/:investmentId/schedule",
 
   Test = "/test",
 }

@@ -6,6 +6,7 @@ interface ButtonProps {
   variant?: "default" | "outlined";
   disabled?: boolean;
   onClick?: () => void;
+  type?: string;
 }
 
 export const Button = ({
@@ -27,7 +28,7 @@ const ButtonWrapper = styled.button<{ variant: string | undefined }>`
   background-color: ${(props) =>
     props.variant === "outlined" ? "transparent" : colors.main};
   width: 100%;
-  height: 100%;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,15 +52,18 @@ const ButtonWrapper = styled.button<{ variant: string | undefined }>`
   }
 `;
 
-export const BlueBorderButton = styled.button<{ width?: string, height?: string }>`
-  border: 1px solid #0500FF;
+export const BlueBorderButton = styled.button<{
+  width?: string;
+  height?: string;
+}>`
+  border: 1px solid #0500ff;
   border-radius: 8px;
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "20px"};
   padding: 10px 0px;
   display: flex;
   justify-content: center;
-  color: #0500FF;
+  color: #0500ff;
   cursor: pointer;
 `;
 export const SignButton = styled.button`
@@ -72,6 +76,6 @@ export const SignButton = styled.button`
   width: 100%;
   font-size: 16px;
   color: white;
-  background-color: #0500FF;
+  background-color: #0500ff;
   cursor: pointer;
 `;

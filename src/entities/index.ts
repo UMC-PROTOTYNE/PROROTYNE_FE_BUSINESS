@@ -19,3 +19,6 @@ export { GrayBackground } from "./screen/GrayBackground";
 export { Loading } from "./screen/Loading";
 
 export { RowLine } from "./ui/Line";
+export { StatusInfo } from "./ui/investment/StatusInfo";
+export { Applicant } from "./ui/investment/Applicant";
+export { Survey } from "./ui/investment/Survey";
