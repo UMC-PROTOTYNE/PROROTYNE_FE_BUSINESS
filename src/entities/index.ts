@@ -8,6 +8,7 @@ export {
   InputButton,
   InputTitle,
   InputDatePicker,
+  InputSpecificDate,
   InputImage,
 } from "./element/Input";
 

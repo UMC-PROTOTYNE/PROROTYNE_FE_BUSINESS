@@ -45,6 +45,13 @@ interface InputDatePickerProps {
   placeholder?: string;
 }
 
+interface InputSpecificDateProps {
+  date: string;
+  setDate: (date: string) => void;
+  type?: string;
+  placeholder?: string;
+}
+
 interface InputImageProps {
   setFile: (files: File[]) => void;
 }
@@ -167,6 +174,25 @@ export const InputDatePicker = ({
             type: "date",
             value: date2,
             onChange: (e) => setDate2(e.target.value),
+          }}
+        />
+      </InputDatePickerWrapper>
+    </InputWrapper>
+  );
+};
+
+export const InputSpecificDate = ({
+  date,
+  setDate,
+}: InputSpecificDateProps) => {
+  return (
+    <InputWrapper>
+      <InputDatePickerWrapper>
+        <input
+          {...{
+            type: "date",
+            value: date,
+            onChange: (e) => setDate(e.target.value),
           }}
         />
       </InputDatePickerWrapper>

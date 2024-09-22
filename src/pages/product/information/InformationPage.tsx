@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 import {
+  Container,
   Button,
+  BlueBorderButton,
   Input,
   Dropdown,
   InputTextarea,
-  InputImage,
+  InputSpecificDate,
   ImageQuestion,
 } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,13 +20,14 @@ interface FormInput {
   ticketCount: number;
   appendDescription: string;
   category: string;
+  launchedDate: string;
   image: File;
 }
 
 const inputs: {
   id: keyof FormInput;
   label: string;
-  type: "text" | "textarea" | "number" | "dropdown" | "file";
+  type: "text" | "textarea" | "number" | "dropdown" | "date" | "file";
   placeholder?: string;
   options?: { item: string; value: string }[];
 }[] = [
@@ -65,17 +68,15 @@ const inputs: {
       { item: "장난감", value: "toy" },
     ],
   },
+  {
+    id: "launchedDate",
+    label: "출시 예정일",
+    type: "date",
+  },
   { id: "image", label: "제품 사진", type: "file" },
 ];
 
 //뷰티, 스포츠, 식품, 의류, 전자기기, 장난감
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
 
 const Form = styled.form`
   display: flex;
@@ -94,21 +95,32 @@ const Label = styled.label`
   margin-top: 20px;
 `;
 
+const LaunchDateWrapper = styled.div`
+  display: flex;
+  flex-dirction: row;
+  justify-content: flex-end;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 50%;
+  text-align: ;
+`;
+
 const InformationPage = () => {
   //Import Store
   //const setInfo = useProductStore((state) => state.setInfo);
 
   const { register, handleSubmit, watch, setValue } = useForm<FormInput>();
   const [selectedValue, setSelectedValue] = useState("");
-  const [files, setFiles] = useState<File[]>([]);
-
-  const handleImageUpload = (files: File[]) => {
-    setFiles(files);
-    setValue("image", files[0]);
-  };
+  const [dates, setDates] = useState<string>("");
+  const [buttonToggle, setButtonToggle] = useState(false);
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     console.log(data);
+  };
+
+  const handleButtonClick = () => {
+    setButtonToggle((prev) => !prev);
   };
 
   return (
@@ -149,9 +161,31 @@ const InformationPage = () => {
             {element.type === "dropdown" && element.options && (
               <Dropdown items={element.options} setItem={setSelectedValue} />
             )}
+            {element.type === "date" && (
+              <LaunchDateWrapper>
+                {!buttonToggle && (
+                  <InputSpecificDate
+                    key={element.id}
+                    date={dates}
+                    setDate={setDates}
+                  />
+                )}
+                {buttonToggle ? (
+                  <ButtonWrapper>
+                    <Button onClick={handleButtonClick}>미정</Button>
+                  </ButtonWrapper>
+                ) : (
+                  <BlueBorderButton onClick={handleButtonClick}>
+                    미정
+                  </BlueBorderButton>
+                )}
+              </LaunchDateWrapper>
+            )}
+            {element.type === "file" && <ImageQuestion />}
           </>
         ))}
-        <ImageQuestion />
+        <div style={{ height: "20px" }}></div>
+
         <Button>계속하기</Button>
       </Form>
     </Container>
