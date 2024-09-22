@@ -1,8 +1,8 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { PAGE_URL } from "@/shared";
+
+import { PAGE_URL, useCompanyStore } from "@/shared";
 
 const Labels = [
   { label: "체험 관리", path: "/investment" },
@@ -15,6 +15,8 @@ const Labels = [
 export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const name = useCompanyStore((state) => state.name);
 
   const label =
     Labels.find((element) => location.pathname.includes(element.path))?.label ??
@@ -34,7 +36,7 @@ export const Header = () => {
           <h2>{label}</h2>
         </SubContainer>
         <SubContainer>
-          <h2>기업 이름</h2>
+          <h2>{name}</h2>
           <ArrowForwardIosIcon
             onClick={() => {
               navigate(PAGE_URL.MyCompany);
