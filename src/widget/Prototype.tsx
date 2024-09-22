@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { BlueBorderButton } from "@/entities";
+import { useNavigate } from "react-router";
+
 const PrototypeContainer = styled.div`
     display: flex;
     width: 100%;
@@ -18,6 +20,7 @@ const DescriptionContainer = styled.div`
     justify-content: center;
     width: 180px;
     margin: 0px;
+    cursor: pointer;
 `;
 const Description = styled.div`
     margin: 5px 0px;
@@ -54,17 +57,27 @@ interface PrototypeInfo {
     terminateDate?: string;
 }
 export const Prototype = (
-    { isPrototype, image, name, ticket, step, regist, category, ongoing, releaseDate, terminateDate }
-    : PrototypeInfo) => {
+    { isPrototype, 
+        image, 
+        name, 
+        ticket, 
+        step, 
+        regist, 
+        category, 
+        ongoing, 
+        releaseDate, 
+        terminateDate } : PrototypeInfo) => {
+    const navigate = useNavigate();
+
     return (
         <PrototypeContainer>
             <Image src={image} />
-            <DescriptionContainer>
+            <DescriptionContainer onClick={() => navigate("/investment/1/info")}>
                 <Name>{name}</Name>
                 { isPrototype ? <Description>티켓: {ticket}개</Description> : <Description>단계: {step}</Description> }
                 <Description>등록일: {regist}</Description>
             </DescriptionContainer>
-            <DescriptionContainer>
+            <DescriptionContainer onClick={() => navigate("/investment/1/info")}>
                 <Description>카테고리: {category}</Description>
                 { isPrototype ? (<>
                 <Description>진행 중인 체험: {ongoing}개</Description>
@@ -72,7 +85,7 @@ export const Prototype = (
                 </>) : <Description>신청자 모집 종료: {terminateDate}</Description>}
             </DescriptionContainer>
             <ButtonContainer>
-                <BlueBorderButton>
+                <BlueBorderButton onClick={() => {isPrototype ? navigate("investment/1/info") : navigate("/investment/1/management")}}>
                     {isPrototype ? "체험 생성" : "체험 관리"}
                 </BlueBorderButton>
                 <DeleteButton>

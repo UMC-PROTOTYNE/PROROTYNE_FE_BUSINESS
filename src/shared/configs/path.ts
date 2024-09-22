@@ -8,9 +8,9 @@ export enum PAGE_URL {
   ProductInfo = "/product/:productId/info",
   ProductReview = "/product/:productId/review",
 
-  InvestmentInfo = "/investment/:investmentId/info",
-  InvestmentManagement = "/investment/:investmentId/management",
-  InvestmentSchedule = "/investment/:investmentId/schedule",
+  InvestmentInfo = "/investment/1/info",
+  InvestmentManagement = "/investment/1/management",
+  InvestmentSchedule = "/investment/1/schedule",
 
   Test = "/test",
 }

@@ -213,16 +213,7 @@ const SignUpPage = () => {
                 업종
             </SubTitle>
             <DropdownContainer>
-              <Dropdown
-                items={[
-                { item: "item1", value: "value1" },
-                { item: "item2", value: "value2" },
-                { item: "item3", value: "value3" },
-                ]}
-                setItem={(value) => {
-                  setBusinessType(value);
-                }}
-            />
+
             </DropdownContainer>
             <br/><br/><br/>
             <ValidAlert valid={businessTypeValid}>* 업종을 선택해 주세요</ValidAlert>
@@ -232,16 +223,7 @@ const SignUpPage = () => {
               기업 규모
             </SubTitle>
             <DropdownContainer>
-              <Dropdown
-                items={[
-                { item: "item1", value: "value1" },
-                { item: "item2", value: "value2" },
-                { item: "item3", value: "value3" },
-                ]}
-                setItem={(value) => {
-                  setBusinessSize(value);
-                }}
-              />
+
             </DropdownContainer>
             <br/><br/><br/>
             <ValidAlert valid={businessSizeValid}>* 기업 규모를 선택해 주세요</ValidAlert>
