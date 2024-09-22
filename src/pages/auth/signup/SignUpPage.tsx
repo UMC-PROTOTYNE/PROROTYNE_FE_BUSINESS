@@ -67,6 +67,7 @@ const AddressDetailContainer = styled.div`
   align-items: center;
   background: white;
   border: 1px solid #D9D9D9;
+  box-shadow: 4px 4px 4px rgba(0.3, 0.3, 0.3, 0.3);
 `;
 
 const DropdownContainer = styled.div`
