@@ -12,3 +12,4 @@ export { colors } from "./configs/colors";
 export { useCompanyStore } from "./hooks/stores/useCompanyStore";
 
 export { AuthService } from "./hooks/services/AuthService";
+export { ReviewService } from "./hooks/services/ReviewService";
