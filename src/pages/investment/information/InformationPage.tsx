@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { InputDatePicker, Button } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface FormInput {
   start: string;
@@ -42,6 +42,8 @@ const InformationPage = () => {
     reviewPeriod: { start: "", end: "" },
   });
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   const handleDateChange = (
     id: string,
     field: "start" | "end",
@@ -55,6 +57,24 @@ const InformationPage = () => {
       },
     }));
   };
+
+  useEffect(() => {
+    const newErrors: { [key: string]: string } = {};
+    let isInvalid = false;
+
+    Object.keys(dates).forEach((key) => {
+      const { start, end } = dates[key];
+
+      if (start && end && new Date(start) > new Date(end)) {
+        newErrors[key] = `${
+          inputs.find((input) => input.id === key)?.label
+        }의 종료 날짜가 시작 날짜보다 앞설 수 없습니다. `;
+        isInvalid = true;
+      }
+    });
+
+    setErrors(newErrors);
+  }, [dates]);
 
   const onSubmit: SubmitHandler<FormInput> = () => {
     console.log(dates); // 각 질문에 대한 날짜 출력
@@ -74,6 +94,8 @@ const InformationPage = () => {
               date2={dates[element.id].end}
               setDate2={(date) => handleDateChange(element.id, "end", date)}
             ></InputDatePicker>
+            {errors[element.id] && <Error>{errors[element.id]}</Error>}
+
             <Description>{element.description}</Description>
           </>
         ))}
@@ -110,6 +132,13 @@ const Description = styled.p`
   color: #090909;
   padding-left: 10px;
   white-space: pre-line;
+`;
+
+const Error = styled.p`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  padding-left: 10px;
 `;
 
 export default InformationPage;
