@@ -67,6 +67,7 @@ export const BlueBorderButton = styled.button<{
   cursor: pointer;
 `;
 export const SignButton = styled.button`
+  position: relative;
   display: flex;
   justify-content: center;
   margin: 40px 0px;

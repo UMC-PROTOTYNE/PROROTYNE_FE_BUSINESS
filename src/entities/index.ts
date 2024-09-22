@@ -1,4 +1,4 @@
-export { Container, CenterContainer } from "./element/Container";
+export { Container, CenterContainer, ValidAlert } from "./element/Container";
 export { LargeImage } from "./element/Image";
 export { 
   Button, 
