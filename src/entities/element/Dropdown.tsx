@@ -5,13 +5,10 @@ import { colors } from "@/shared/configs/colors";
 interface DropdownProps {
   items: { item: string; value: string }[];
   setItem: (item: string) => void;
-  defaultItem?: string; // defaultItem 추가
+  value: string; // defaultItem 추가
 }
-export const Dropdown = ({ items, setItem, defaultItem }: DropdownProps) => {
+export const Dropdown = ({ items, setItem, value }: DropdownProps) => {
   const [isDropdownView, setDropdownView] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(
-    defaultItem || items[0].item
-  );
 
   const handleClickContainer = () => {
     setDropdownView(!isDropdownView);
@@ -24,7 +21,7 @@ export const Dropdown = ({ items, setItem, defaultItem }: DropdownProps) => {
       }}
     >
       <DropdownButton onClick={handleClickContainer} {...{ isDropdownView }}>
-        {selectedItem}
+        {value}
         <img src="/icons/dropdownArr.svg" />
       </DropdownButton>
       {isDropdownView && (
@@ -33,13 +30,12 @@ export const Dropdown = ({ items, setItem, defaultItem }: DropdownProps) => {
             <>
               <div
                 onClick={() => {
-                  setSelectedItem(li.item);
                   setItem(li.value);
                   setDropdownView(false);
                 }}
                 key={i}
               >
-                <Content selected={selectedItem === li.item}>{li.item}</Content>
+                <Content selected={value === li.item}>{li.item}</Content>
               </div>
               {i !== items.length - 1 && <hr />}
             </>

@@ -1,4 +1,4 @@
-import { Dropdown } from "@/entities";
+import { Button, Dropdown, InputTitle } from "@/entities";
 import { colors } from "@/shared";
 import styled from "@emotion/styled";
 import { useState } from "react";
@@ -8,7 +8,7 @@ interface ApplicantData {
   userId: string;
   applyDate: string;
   winner: boolean;
-  deliveryStatus: string;
+  deliveryStatus: "배송 전" | "배송 후";
   review: boolean;
   additionalInfo: string;
 }
@@ -23,6 +23,45 @@ const ApplicantItem = ({
   additionalInfo,
 }: ApplicantData) => {
   const [modal, onModal] = useState<boolean>(false);
+  const [deliveryModal, onDeliveryModal] = useState<boolean>(false);
+  const [deliveryStatusState, setDeliveryStatus] =
+    useState<string>(deliveryStatus);
+  const [winnerState, setWinnerReview] = useState<boolean>(winner);
+
+  const DeliveryModal = () => {
+    const [deliveryCompany, setDeliveryCompany] = useState<string>("");
+    const [deliveryNumber, setDeliveryNumber] = useState<string>("");
+
+    return (
+      <ModalBackground onClick={() => onDeliveryModal(false)}>
+        <Modal
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <h1>배송 상태 변경</h1>
+          <InputTitle
+            title="택배사 입력"
+            value={deliveryCompany}
+            setValue={setDeliveryCompany}
+          />
+          <InputTitle
+            title="송장번호 입력"
+            value={deliveryNumber}
+            setValue={setDeliveryNumber}
+          />
+          <Button
+            onClick={() => {
+              setDeliveryStatus("배송 후");
+              onDeliveryModal(false);
+            }}
+          >
+            배송지 입력 완료
+          </Button>
+        </Modal>
+      </ModalBackground>
+    );
+  };
 
   const ApplicationModal = () => {
     return (
@@ -73,9 +112,9 @@ const ApplicantItem = ({
                 { item: "미당첨", value: "미당첨" },
               ]}
               setItem={(value) => {
-                console.log(value);
+                setWinnerReview(value === "당첨" ? true : false);
               }}
-              defaultItem={winner ? "당첨" : "미당첨"}
+              value={winnerState ? "당첨" : "미당첨"}
             />
           </div>
         </p>
@@ -84,19 +123,19 @@ const ApplicantItem = ({
           <Dropdown
             items={[
               { item: "배송 전", value: "배송 전" },
-              { item: "배송 중", value: "배송 중" },
-              { item: "배송 완료", value: "배송 완료" },
+              { item: "배송 후", value: "배송 후" },
             ]}
             setItem={(value) => {
-              console.log(value);
+              value === "배송 후" && onDeliveryModal(true);
             }}
-            defaultItem={deliveryStatus}
+            value={deliveryStatusState}
           />
         </p>
         <p>{review ? "작성" : "미작성"}</p>
         <p>{additionalInfo}</p>
       </Item>
       {modal && <ApplicationModal />}
+      {deliveryModal && <DeliveryModal />}
     </>
   );
 };
@@ -140,6 +179,10 @@ const Item = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${colors.gray[5]};
+  }
   p {
     flex: 1;
     display: flex;
@@ -243,7 +286,7 @@ const ApplicantData: ApplicantData[] = [
     userId: "test1",
     applyDate: "2021-10-10",
     winner: true,
-    deliveryStatus: "배송 전",
+    deliveryStatus: "배송 후",
     review: true,
     additionalInfo: "추가 정보",
   },
@@ -252,7 +295,7 @@ const ApplicantData: ApplicantData[] = [
     userId: "test2",
     applyDate: "2021-10-11",
     winner: false,
-    deliveryStatus: "배송 중",
+    deliveryStatus: "배송 전",
     review: false,
     additionalInfo: "추가 정보",
   },
@@ -261,7 +304,7 @@ const ApplicantData: ApplicantData[] = [
     userId: "test3",
     applyDate: "2021-10-12",
     winner: true,
-    deliveryStatus: "배송 중",
+    deliveryStatus: "배송 후",
     review: true,
     additionalInfo: "추가 정보",
   },
@@ -270,7 +313,7 @@ const ApplicantData: ApplicantData[] = [
     userId: "test4",
     applyDate: "2021-10-13",
     winner: false,
-    deliveryStatus: "배송 완료",
+    deliveryStatus: "배송 후",
     review: false,
     additionalInfo: "추가 정보",
   },
