@@ -15,4 +15,5 @@ export const colors: ColorTypes = {
   black: "#222",
   white: "#FFF",
   gray,
+  error: "#ff0000",
 };

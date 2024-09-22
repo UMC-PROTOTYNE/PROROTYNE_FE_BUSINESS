@@ -22,13 +22,15 @@ export const NavigationBar = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(location.pathname.split("/"));
+
   return (
     <>
       <Background>
         <RowLine />
         {state === "PRODUCT"
           ? productNavigate.map((element) =>
-              element.path === location.pathname ? (
+              location.pathname.includes(element.path) ? (
                 <SelectLabel
                   onClick={() => {
                     navigate(element.path);
@@ -49,7 +51,7 @@ export const NavigationBar = ({
               )
             )
           : investmentNavigate.map((element) =>
-              element.path === location.pathname ? (
+              location.pathname.includes(element.path) ? (
                 <SelectLabel
                   onClick={() => {
                     navigate(element.path);
@@ -100,7 +102,7 @@ const Background = styled.div`
 const Container = styled.main`
   position: fixed;
 
-  height: calc(100vh - 200px);
+  height: 100%;
   width: calc(100vw - 200px);
 
   left: 200px;

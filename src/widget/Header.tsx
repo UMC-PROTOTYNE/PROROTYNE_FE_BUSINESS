@@ -19,7 +19,7 @@ export const Header = () => {
   const location = useLocation();
 
   const label =
-    Labels.find((element) => element.path === location.pathname)?.label ??
+    Labels.find((element) => location.pathname.includes(element.path))?.label ??
     "404";
 
   return (
