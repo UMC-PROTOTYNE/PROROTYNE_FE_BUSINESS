@@ -22,7 +22,7 @@ export const NavigationBar = ({
   const location = useLocation();
   const param = useParams();
 
-  const id = state === "PRODUCT" ? param.productId : param.investmentId;
+  const id = state === "PRODUCT" ? "" : param.investmentId;
 
   return (
     <>
@@ -33,7 +33,7 @@ export const NavigationBar = ({
               location.pathname.includes(element.path) ? (
                 <SelectLabel
                   onClick={() => {
-                    navigate("/product/" + id + element.path);
+                    navigate("/product" + element.path);
                   }}
                   key={element.label}
                 >
@@ -42,7 +42,7 @@ export const NavigationBar = ({
               ) : (
                 <Label
                   onClick={() => {
-                    navigate("/product/" + id + element.path);
+                    navigate("/product" + element.path);
                   }}
                   key={element.label}
                 >
