@@ -9,4 +9,7 @@ export {
 } from "./configs/axios";
 export { colors } from "./configs/colors";
 
-export { useUserStore } from "./hooks/stores/useUserStore";
+export { useCompanyStore } from "./hooks/stores/useCompanyStore";
+export { useSignUpStore } from "./hooks/stores/useSignUpStore";
+
+export { AuthService } from "./hooks/services/AuthService";

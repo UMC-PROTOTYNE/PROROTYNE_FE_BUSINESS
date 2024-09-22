@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-export const useUserStore = create<User.UserStore>()(
+export const useSignUpStore = create<Company.SignUpStore>()(
   immer((set, get) => ({
     //State
     username: "",
@@ -15,7 +15,7 @@ export const useUserStore = create<User.UserStore>()(
     size: "",
     status: "대기",
 
-    setUserAllInfo: (value: any) => {
+    setUserAllInfo: (value) => {
       set((state) => {
         for (const key in value) {
           if (value[key as keyof typeof value]) {
@@ -26,6 +26,7 @@ export const useUserStore = create<User.UserStore>()(
         }
       });
     },
+
     getUserAllInfo: () => ({
       username: get().username,
       password: get().password,
@@ -38,6 +39,7 @@ export const useUserStore = create<User.UserStore>()(
       size: get().size,
       status: get().status,
     }),
+
     setUsername: (value) => {
       set(() => ({ username: value }));
     },
