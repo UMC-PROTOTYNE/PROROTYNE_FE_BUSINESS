@@ -1,10 +1,8 @@
 import styled from "@emotion/styled";
 import { BlueBorderButton, SignButton, Input, ValidAlert, Dropdown } from "@/entities";
-import { ComboBox } from "@/widget";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
-import { set } from "react-hook-form";
 
 const SignUpContainer = styled.div`
   display: flex;  

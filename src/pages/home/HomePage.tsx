@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { BlueBorderButton } from "@/entities";
 import { Prototype } from "@/widget";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const HomePageContainer = styled.div`
     display: flex;
@@ -26,6 +27,8 @@ const Select = styled.div<{ isActive: boolean }>`
 `;
 const HomePage = () => {
     const [isPrototype, setIsPrototype] = useState(true);
+    const navigate = useNavigate();
+
     return (
         <HomePageContainer>
             <HomePageSubContainer>
