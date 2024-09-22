@@ -4,6 +4,8 @@ import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
 import { set } from "react-hook-form";
+import { AuthService } from "@/shared/hooks/services/AuthService";
+import { useUserStore } from "@/shared";
 
 const SignUpContainer = styled.div`
   display: flex;  
@@ -88,6 +90,9 @@ const SignButtonContainer = styled.div`
 const SignUpPage = () => {
   const navigate = useNavigate();
 
+  const { signup } = AuthService();
+  const userStore = useUserStore((state) => state);
+
   const [progress, setProgress] = useState(0);
   const [address, setAddress] = useState(false);
   const [inputAddress, setInputAddress] = useState("");
@@ -140,22 +145,15 @@ const SignUpPage = () => {
       password: password !== "",
       confirmPassword: confirmPassword !== "",
     };
+
+    userStore.setUsername(username);
+    userStore.setPassword(password);
+    
     setUsernameValid(isValid.username);
     setPasswordValid(isValid.password);
     setConfirmPasswordValid(isValid.confirmPassword);
 
     return Object.values(isValid).every((v) => v === true);
-  }
-  const handleContinue = () => {
-    if (validation()) {
-      setProgress(progress + 1);
-    }
-  };
-  const handleSuccess = () => {
-    if (signupValid()) {
-      alert("회원가입이 완료되었습니다");
-      navigate("/signin");
-    }
   };
 
   return (
@@ -252,7 +250,20 @@ const SignUpPage = () => {
           </ComboBoxSubContainer>
         </ComboBoxContainer>
         <SignButtonContainer>
-          <SignButton onClick={handleContinue}>계속하기</SignButton> 
+          <SignButton onClick={
+                      () => {
+                        if (validation()) {
+                          setProgress(progress + 1);
+                        }
+                        userStore.setName(companyName);
+                        userStore.setRegNumber(businessNumber);
+                        userStore.setPhone(phoneNumber);
+                        userStore.setEmail(email);
+                        userStore.setAddress(inputAddress);
+                        userStore.setCategory(businessType);
+                        userStore.setSize(businessSize);
+                      }
+          }>계속하기</SignButton> 
         </SignButtonContainer>
         </> :
         <>
@@ -267,14 +278,20 @@ const SignUpPage = () => {
         <SubTitle>
           비밀번호
         </SubTitle>
-        <Input placeholder="특수문자 포함 10자 이상" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <Input type="password" placeholder="특수문자 포함 10자 이상" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <ValidAlert valid={passwordValid}>* 비밀번호를 작성해주세요</ValidAlert>
         <SubTitle>
           비밀번호 확인
         </SubTitle>
-        <Input placeholder="다시 한번 입력해주세요" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+        <Input type="password" placeholder="다시 한번 입력해주세요" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
         <ValidAlert valid={confirmPasswordValid}>* 비밀번호를 확인해주세요</ValidAlert>
-        <SignButton onClick={handleSuccess}>회원가입 완료</SignButton>
+        <SignButton onClick={() => {
+          if (signupValid()) {
+            signup();
+            alert("회원가입이 완료되었습니다");
+            navigate("/signin");
+          }
+        }}>회원가입 완료</SignButton>
         </>}
       </SignUpSubContainer>
     </SignUpContainer>
