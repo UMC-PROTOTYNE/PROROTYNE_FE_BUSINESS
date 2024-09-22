@@ -3,6 +3,7 @@ import { BlueBorderButton, SignButton, Input, ValidAlert, Dropdown } from "@/ent
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
+import { set } from "react-hook-form";
 
 const SignUpContainer = styled.div`
   display: flex;  
@@ -40,7 +41,7 @@ const ComboBoxContainer = styled.div`
   width: 100%;
 `;
 const ComboBoxSubContainer = styled.div`
-    margin-right: 20px;
+    margin-right: 50px;
     width: 152px;
 `;
 const AddressDetailBackground = styled.div`
@@ -100,9 +101,9 @@ const SignUpPage = () => {
   const [emailValid, setEmailValid] = useState(true);
   const [detailedAddress, setDetailedAddress] = useState("");
   const [detailedAddressValid, setDetailedAddressValid] = useState(true);
-  const [businessType, setBusinessType] = useState("");
+  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
   const [businessTypeValid, setBusinessTypeValid] = useState(true);
-  const [businessSize, setBusinessSize] = useState("");
+  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
   const [usernameValid, setUsernameValid] = useState(true);
@@ -118,8 +119,8 @@ const SignUpPage = () => {
       phoneNumber: phoneNumber !== "",
       email: email !== "",
       detailedAddress: inputAddress !== "" && detailedAddress !== "",
-      businessType: businessType !== "",
-      businessSize: businessSize !== "",
+      businessType: businessType !== "업종을 선택해 주세요",
+      businessSize: businessSize !== "기업 규모를 선택해 주세요",
     };
 
     setCompanyNameValid(isValid.companyName);
@@ -196,7 +197,7 @@ const SignUpPage = () => {
         <SubTitle>
           이메일
         </SubTitle>
-        <Input placeholder="이메일을 작성해주세요" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <Input placeholder="이메일을 작성해주세요" value={email} onChange={(e) => {setEmail(e.target.value)}}/>
         <ValidAlert valid={emailValid}>* 이메일을 작성해주세요</ValidAlert>
         <SubTitle>
           주소
@@ -213,9 +214,19 @@ const SignUpPage = () => {
                 업종
             </SubTitle>
             <DropdownContainer>
-
+              <Dropdown
+                items={[
+                  { item: "item1", value: "value1" },
+                  { item: "item2", value: "value2" },
+                  { item: "item3", value: "value3" },
+                ]}
+                setItem={(value) => {
+                  setBusinessType(value);
+                }}
+                value={businessType}
+              />
             </DropdownContainer>
-            <br/><br/><br/>
+            <br/><br/>
             <ValidAlert valid={businessTypeValid}>* 업종을 선택해 주세요</ValidAlert>
           </ComboBoxSubContainer>
           <ComboBoxSubContainer>
@@ -223,9 +234,19 @@ const SignUpPage = () => {
               기업 규모
             </SubTitle>
             <DropdownContainer>
-
+              <Dropdown
+                items={[
+                  { item: "item1", value: "value1" },
+                  { item: "item2", value: "value2" },
+                  { item: "item3", value: "value3" },
+                ]}
+                setItem={(value) => {
+                  setBusinessSize(value);
+                }}
+                value={businessSize}
+              />
             </DropdownContainer>
-            <br/><br/><br/>
+            <br/><br/>
             <ValidAlert valid={businessSizeValid}>* 기업 규모를 선택해 주세요</ValidAlert>
           </ComboBoxSubContainer>
         </ComboBoxContainer>
