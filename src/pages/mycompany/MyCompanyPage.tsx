@@ -41,7 +41,7 @@ interface Company {
   scale: string;
 }
 const MyCompanyPage = () => {
-  const [company, setCompany] = useState<Company>({
+  const [company] = useState<Company>({
     name: "기업이름",
     businessNumber: "12345abcde",
     phone: "01012345678",
@@ -81,7 +81,8 @@ const MyCompanyPage = () => {
           </Description>
         </CompanyBorder>
         <Contact>
-          기업 정보 수정을 원하시면 프로토타인 본사 (서울특별시 낭만구 낭만동 1004) 로 연락 바랍니다.
+          기업 정보 수정을 원하시면 프로토타인 본사 (서울특별시 낭만구 낭만동
+          1004) 로 연락 바랍니다.
         </Contact>
       </CompanySubContainer>
     </CompanyContainer>
