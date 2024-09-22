@@ -51,6 +51,10 @@ const PageRouter = () => (
               <Route path={PAGE_URL.Home} element={<Home />} />
               <Route path={PAGE_URL.MyCompany} element={<MyCompany />} />
               <Route path="*" element={<NotFound />} />
+              <Route
+                path={PAGE_URL.InvestmentSchedule}
+                element={<InvestmentSchedule />}
+              />
             </Route>
 
             <Route element={<NavigationBar state={"PRODUCT"} />}>
@@ -69,10 +73,6 @@ const PageRouter = () => (
               <Route
                 path={PAGE_URL.InvestmentManagement + "/*"}
                 element={<InvestmentManagement />}
-              />
-              <Route
-                path={PAGE_URL.InvestmentSchedule}
-                element={<InvestmentSchedule />}
               />
             </Route>
           </Route>

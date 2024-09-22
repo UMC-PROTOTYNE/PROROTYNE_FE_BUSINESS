@@ -61,7 +61,7 @@ const ReviewPage = () => {
           </>
         ))}
         <div style={{ height: "20px" }}></div>
-        <Button>저장하기</Button>
+        <Button>시제품 추가하기</Button>
       </Form>
     </Container>
   );
