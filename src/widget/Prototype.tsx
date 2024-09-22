@@ -10,7 +10,7 @@ const PrototypeContainer = styled.div`
     padding: 5px 0px;
 `;
 const Image = styled.img`
-    margin-left: 10px;
+    margin: 0px 10px 0px 10px;
 `;
 const DescriptionContainer = styled.div`
     display: flex;

@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { BlueBorderButton, SignButton, Input, ValidAlert } from "@/entities";
+import { BlueBorderButton, SignButton, Input, ValidAlert, Dropdown } from "@/entities";
 import { ComboBox } from "@/widget";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
+import { set } from "react-hook-form";
 
 const SignUpContainer = styled.div`
   display: flex;  
@@ -42,7 +43,7 @@ const ComboBoxContainer = styled.div`
 `;
 const ComboBoxSubContainer = styled.div`
     margin-right: 20px;
-    width: 100%;
+    width: 152px;
 `;
 const AddressDetailBackground = styled.div`
   position: fixed;
@@ -69,6 +70,20 @@ const AddressDetailContainer = styled.div`
   border: 1px solid #D9D9D9;
 `;
 
+const DropdownContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 152px;
+  height: 30px;
+  margin: 10px 10px 10px 0px;
+`;
+
+const SignButtonContainer = styled.div`
+  display: flex;
+  margin: 0px 0px 0px 0px;
+`;
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -196,15 +211,48 @@ const SignUpPage = () => {
         <ValidAlert valid={detailedAddressValid}>* 주소를 입력해 주세요</ValidAlert>
         <ComboBoxContainer>
           <ComboBoxSubContainer>
-            <ComboBox type="businessType" setValue={setBusinessType}/>
+            <SubTitle>
+                업종
+            </SubTitle>
+            <DropdownContainer>
+              <Dropdown
+                items={[
+                { item: "item1", value: "value1" },
+                { item: "item2", value: "value2" },
+                { item: "item3", value: "value3" },
+                ]}
+                setItem={(value) => {
+                  setBusinessType(value);
+                }}
+            />
+            </DropdownContainer>
+            <br/><br/><br/>
             <ValidAlert valid={businessTypeValid}>* 업종을 선택해 주세요</ValidAlert>
           </ComboBoxSubContainer>
           <ComboBoxSubContainer>
-            <ComboBox type="size" setValue={setBusinessSize}/>
+            <SubTitle>
+              기업 규모
+            </SubTitle>
+            <DropdownContainer>
+              <Dropdown
+                items={[
+                { item: "item1", value: "value1" },
+                { item: "item2", value: "value2" },
+                { item: "item3", value: "value3" },
+                ]}
+                setItem={(value) => {
+                  setBusinessSize(value);
+                }}
+              />
+            </DropdownContainer>
+            <br/><br/><br/>
             <ValidAlert valid={businessSizeValid}>* 기업 규모를 선택해 주세요</ValidAlert>
           </ComboBoxSubContainer>
         </ComboBoxContainer>
-        <SignButton onClick={handleContinue}>계속하기</SignButton> </> :
+        <SignButtonContainer>
+          <SignButton onClick={handleContinue}>계속하기</SignButton> 
+        </SignButtonContainer>
+        </> :
         <>
         <SubTitle>
           아이디
