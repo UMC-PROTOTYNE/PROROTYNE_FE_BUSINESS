@@ -26,6 +26,7 @@ const Select = styled.div<{ isActive: boolean }>`
 `;
 const HomePage = () => {
     const [isPrototype, setIsPrototype] = useState(true);
+
     return (
         <HomePageContainer>
             <HomePageSubContainer>
