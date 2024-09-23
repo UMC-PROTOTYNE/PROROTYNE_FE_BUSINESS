@@ -230,7 +230,6 @@ const InformationPage = () => {
           <Button disabled>계속하기</Button>
         )}
       </Form>
-      <Button onClick={handleSubmit}>계속하기</Button>
     </Container>
   );
 };
