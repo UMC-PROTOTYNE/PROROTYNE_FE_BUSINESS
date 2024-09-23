@@ -22,7 +22,7 @@ declare namespace Product {
       reqTickets: number,
       notes: string,
       category: string,
-      launchedDate?: string
+      launchedDate?: string | null
     ) => void;
 
     addImage: (file: File) => void;

@@ -13,15 +13,16 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { useProductStore } from "@/shared";
+import { useNavigate } from "react-router";
 
 interface FormInput {
   productName: string;
-  description: string;
-  ticketCount: number;
-  appendDescription: string;
+  contents: string;
+  reqTickets: number;
+  notes: string;
   category: string;
   launchedDate: string;
-  image: File;
+  images: File;
 }
 
 const inputs: {
@@ -38,19 +39,19 @@ const inputs: {
     placeholder: "15자 이내로 입력하세요.",
   },
   {
-    id: "description",
+    id: "contents",
     label: "설명",
     type: "textarea",
     placeholder: "시제품에 대해서 설명해주세요.",
   },
   {
-    id: "ticketCount",
+    id: "reqTickets",
     label: "티켓 개수",
     type: "number",
     placeholder: "티켓 개수를 입력해주세요.",
   },
   {
-    id: "appendDescription",
+    id: "notes",
     label: "추가 안내사항",
     type: "textarea",
     placeholder: "추가 안내사항에 대해 입력해주세요.",
@@ -73,7 +74,7 @@ const inputs: {
     label: "출시 예정일",
     type: "date",
   },
-  { id: "image", label: "제품 사진", type: "file" },
+  { id: "images", label: "제품 사진", type: "file" },
 ];
 
 //뷰티, 스포츠, 식품, 의류, 전자기기, 장난감
@@ -108,7 +109,9 @@ const ButtonWrapper = styled.div`
 
 const InformationPage = () => {
   //Import Store
-  //const setInfo = useProductStore((state) => state.setInfo);
+  const setInfo = useProductStore((state) => state.setInfo);
+  const addImage = useProductStore((state) => state.addImage);
+  const navigate = useNavigate();
 
   const { register, handleSubmit, watch, setValue } = useForm<FormInput>();
   const [selectedValue, setSelectedValue] = useState("");
@@ -116,7 +119,19 @@ const InformationPage = () => {
   const [buttonToggle, setButtonToggle] = useState(false);
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
+    setInfo(
+      data.productName,
+      data.contents,
+      data.reqTickets,
+      data.notes,
+      selectedValue,
+      buttonToggle ? null : dates
+    );
+
+    if (data.images instanceof File) addImage(data.images);
+
     console.log(data);
+    navigate("/product/review");
   };
 
   const handleButtonClick = () => {
@@ -125,7 +140,7 @@ const InformationPage = () => {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form>
         <Description>시제품 추가 1/2</Description>
         {inputs.map((element) => (
           <>
@@ -149,6 +164,7 @@ const InformationPage = () => {
                 id={element.id}
                 type="number"
                 placeholder={element.placeholder}
+                {...register(element.id)}
               />
             )}
             {element.type === "textarea" && (
@@ -156,10 +172,15 @@ const InformationPage = () => {
                 value={watch(element.id) as string}
                 setValue={(val) => setValue(element.id, val)}
                 placeholder={element.placeholder}
+                {...register(element.id)}
               />
             )}
             {element.type === "dropdown" && element.options && (
-              <Dropdown items={element.options} setItem={setSelectedValue} />
+              <Dropdown
+                items={element.options}
+                setItem={setSelectedValue}
+                {...register(element.id)}
+              />
             )}
             {element.type === "date" && (
               <LaunchDateWrapper>
@@ -168,6 +189,7 @@ const InformationPage = () => {
                     key={element.id}
                     date={dates}
                     setDate={setDates}
+                    {...register(element.id)}
                   />
                 )}
                 {buttonToggle ? (
@@ -186,7 +208,7 @@ const InformationPage = () => {
         ))}
         <div style={{ height: "20px" }}></div>
 
-        <Button>계속하기</Button>
+        <Button onClick={handleSubmit(onSubmit)}>계속하기</Button>
       </Form>
     </Container>
   );

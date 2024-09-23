@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { colors, useProductStore } from "@/shared";
 import { Button } from "./Button";
-import { useState } from "react";
 
 export const Input = styled.input`
   margin: 10px 0px 10px 0px;
@@ -50,10 +49,6 @@ interface InputSpecificDateProps {
   setDate: (date: string) => void;
   type?: string;
   placeholder?: string;
-}
-
-interface InputImageProps {
-  setFile: (files: File[]) => void;
 }
 
 export const InputDefault = ({
@@ -200,35 +195,6 @@ export const InputSpecificDate = ({
   );
 };
 
-export const InputImage = ({ setFile }: InputImageProps) => {
-  const [previews, setPreview] = useState<string[]>([]);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files ? Array.from(e.target.files) : []; // 여러 파일을 배열로 처리
-    setFile(files); // 파일 배열로 상태 업데이트
-    if (files.length > 0) {
-      const previews = files.map((file) => URL.createObjectURL(file)); // 각 파일의 미리보기 URL 생성
-      setPreview(previews);
-    } else {
-      setPreview([]);
-    }
-  };
-
-  return (
-    <ImageWrapper>
-      <UploadButton>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageUpload}
-        />
-        <PlusIcon>+</PlusIcon>
-      </UploadButton>
-    </ImageWrapper>
-  );
-};
-
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -295,33 +261,6 @@ const InputDatePickerWrapper = styled.p`
     border: 1px solid ${colors.gray[2]};
     border-radius: 5px;
   }
-`;
-
-const ImageWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-`;
-
-const UploadButton = styled.div`
-  width: 80px;
-  height: 80px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-
-  input {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-`;
-
-const PlusIcon = styled.div`
-  padding: 15px 30px;
-  font-size: 32px;
-  color: #fff;
 `;
 
 export const ImageQuestion = () => {

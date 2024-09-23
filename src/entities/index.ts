@@ -9,7 +9,6 @@ export {
   InputTitle,
   InputDatePicker,
   InputSpecificDate,
-  InputImage,
 } from "./element/Input";
 
 export { Input, ImageQuestion } from "./element/Input";
