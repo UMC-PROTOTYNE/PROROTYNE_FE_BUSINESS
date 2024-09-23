@@ -9,9 +9,7 @@ import {
   InputSpecificDate,
   ImageQuestion,
 } from "@/entities";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-
 import { useProductStore } from "@/shared";
 import { useNavigate } from "react-router";
 
@@ -21,8 +19,8 @@ interface FormInput {
   reqTickets: number;
   notes: string;
   category: string;
-  launchedDate: string;
-  images: File;
+  launchedDate: string | null;
+  images: File[];
 }
 
 const inputs: {
@@ -79,14 +77,6 @@ const inputs: {
 
 //뷰티, 스포츠, 식품, 의류, 전자기기, 장난감
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 100px;
-  width: 40%;
-`;
-
 const Description = styled.h2`
   white-space: pre-wrap;
 `;
@@ -107,35 +97,64 @@ const ButtonWrapper = styled.div`
   text-align: ;
 `;
 
+const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin-bottom: 100px;
+  width: 40%;
+`;
+
 const InformationPage = () => {
   //Import Store
   const setInfo = useProductStore((state) => state.setInfo);
   const addImage = useProductStore((state) => state.addImage);
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch, setValue } = useForm<FormInput>();
-  const [selectedValue, setSelectedValue] = useState("");
-  const [dates, setDates] = useState<string>("");
-  const [buttonToggle, setButtonToggle] = useState(false);
+  const [formData, setFormData] = useState<FormInput>({
+    productName: "",
+    contents: "",
+    reqTickets: 0,
+    notes: "",
+    category: "",
+    launchedDate: "",
+    images: [],
+  });
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    setInfo(
-      data.productName,
-      data.contents,
-      data.reqTickets,
-      data.notes,
-      selectedValue,
-      buttonToggle ? null : dates
+  const [scheduleYet, setScheduleYet] = useState(false);
+
+  const isFormValid = () => {
+    return (
+      formData.productName.trim() !== "" &&
+      formData.contents.trim() !== "" &&
+      formData.reqTickets > 0 &&
+      formData.notes.trim() !== "" &&
+      formData.category.trim() !== "" &&
+      (formData.launchedDate?.trim() !== "" || scheduleYet)
     );
-
-    if (data.images instanceof File) addImage(data.images);
-
-    console.log(data);
-    navigate("/product/review");
   };
 
-  const handleButtonClick = () => {
-    setButtonToggle((prev) => !prev);
+  const handleSubmit = () => {
+    const { productName, contents, reqTickets, notes, category, launchedDate } =
+      formData;
+
+    console.log(formData);
+    setInfo(productName, contents, reqTickets, notes, category, launchedDate);
+
+    if (formData.images instanceof File) addImage(formData.images);
+
+    navigate("/product/review", { state: formData });
+  };
+
+  const handleChange = (
+    field: keyof FormInput,
+    value: string | number | File | null
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   return (
@@ -151,12 +170,8 @@ const InformationPage = () => {
               <Input
                 id={element.id}
                 placeholder={element.placeholder}
-                {...register(element.id, {
-                  maxLength: {
-                    value: 15,
-                    message: "15자 이하로 입력해주세요.",
-                  },
-                })}
+                value={formData[element.id] as string}
+                onChange={(e) => handleChange(element.id, e.target.value)}
               />
             )}
             {element.type === "number" && (
@@ -164,42 +179,44 @@ const InformationPage = () => {
                 id={element.id}
                 type="number"
                 placeholder={element.placeholder}
-                {...register(element.id)}
+                value={formData[element.id] as string}
+                onChange={(e) => handleChange(element.id, e.target.value)}
               />
             )}
             {element.type === "textarea" && (
               <InputTextarea
-                value={watch(element.id) as string}
-                setValue={(val) => setValue(element.id, val)}
+                value={formData[element.id] as string}
                 placeholder={element.placeholder}
-                {...register(element.id)}
+                setValue={(val) => handleChange(element.id, val)}
               />
             )}
             {element.type === "dropdown" && element.options && (
               <Dropdown
                 items={element.options}
-                setItem={setSelectedValue}
-                {...register(element.id)}
+                setItem={(val) => handleChange(element.id, val)}
               />
             )}
             {element.type === "date" && (
               <LaunchDateWrapper>
-                {!buttonToggle && (
-                  <InputSpecificDate
-                    key={element.id}
-                    date={dates}
-                    setDate={setDates}
-                    {...register(element.id)}
-                  />
-                )}
-                {buttonToggle ? (
+                {scheduleYet ? (
                   <ButtonWrapper>
-                    <Button onClick={handleButtonClick}>미정</Button>
+                    <Button onClick={() => setScheduleYet((prev) => !prev)}>
+                      미정
+                    </Button>
                   </ButtonWrapper>
                 ) : (
-                  <BlueBorderButton onClick={handleButtonClick}>
-                    미정
-                  </BlueBorderButton>
+                  <>
+                    <InputSpecificDate
+                      key={element.id}
+                      date={formData.launchedDate}
+                      setDate={(val) => handleChange(element.id, val)}
+                    />
+                    <BlueBorderButton
+                      onClick={() => setScheduleYet((prev) => !prev)}
+                    >
+                      미정
+                    </BlueBorderButton>
+                  </>
                 )}
               </LaunchDateWrapper>
             )}
@@ -207,9 +224,13 @@ const InformationPage = () => {
           </>
         ))}
         <div style={{ height: "20px" }}></div>
-
-        <Button onClick={handleSubmit(onSubmit)}>계속하기</Button>
+        {isFormValid() ? (
+          <Button onClick={handleSubmit}>계속하기</Button>
+        ) : (
+          <Button disabled>계속하기</Button>
+        )}
       </Form>
+      <Button onClick={handleSubmit}>계속하기</Button>
     </Container>
   );
 };

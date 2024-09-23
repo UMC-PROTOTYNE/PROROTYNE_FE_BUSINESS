@@ -45,7 +45,7 @@ interface InputDatePickerProps {
 }
 
 interface InputSpecificDateProps {
-  date: string;
+  date: string | null;
   setDate: (date: string) => void;
   type?: string;
   placeholder?: string;
@@ -184,11 +184,9 @@ export const InputSpecificDate = ({
     <InputWrapper>
       <InputDatePickerWrapper>
         <input
-          {...{
-            type: "date",
-            value: date,
-            onChange: (e) => setDate(e.target.value),
-          }}
+          type="date"
+          value={date || ""}
+          onChange={(e) => setDate(e.target.value)} // = 뒤에는 중괄호로 감싸줍니다
         />
       </InputDatePickerWrapper>
     </InputWrapper>
