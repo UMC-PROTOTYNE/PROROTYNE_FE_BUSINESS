@@ -13,7 +13,7 @@ export const Survey = () => {
 
   console.log(param.investmentId);
 
-  const objectives: Review.Reviews["result"]["objectives"] = [
+  const objectives: Review.GetReviewsResDto["result"]["objectives"] = [
     {
       question: "매움의 정도를 기록해주세요",
       answers: [100, 200, 300, 100, 200],
@@ -32,7 +32,7 @@ export const Survey = () => {
     },
   ];
 
-  const subjective: Review.Reviews["result"]["subjective"] = {
+  const subjective: Review.GetReviewsResDto["result"]["subjective"] = {
     question: "맛있었나요?",
     answers: [
       { userId: "123123", answer: "너무 맛있었어요" },
@@ -65,7 +65,7 @@ export const Survey = () => {
 
   const repurchase = [1000, 300];
 
-  const images: Review.Reviews["result"]["images"] = [
+  const images: Review.GetReviewsResDto["result"]["images"] = [
     {
       userId: "123123",
       imageUrls: [
@@ -124,6 +124,7 @@ export const Survey = () => {
       ],
     },
   ];
+
   return (
     <>
       {modal ? <SurveyModal onClose={() => onModal(false)} id={modal} /> : null}
