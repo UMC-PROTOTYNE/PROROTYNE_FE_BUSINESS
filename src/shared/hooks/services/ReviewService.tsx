@@ -5,6 +5,7 @@ import { API } from "@/shared";
 
 export const ReviewService = () => {
   const URI = "/review";
+  let onPenalty = false;
 
   const useGetReviews = (id: string) => {
     return useQuery({
@@ -22,7 +23,7 @@ export const ReviewService = () => {
 
   const useGetReview = (investmentId: string, userId: string) => {
     return useQuery({
-      queryKey: ["reviews", investmentId, userId],
+      queryKey: ["reviews", investmentId, userId, onPenalty],
       queryFn: async () => {
         const { data } = (await API.get(
           `${URI}/${investmentId}/${userId}`
@@ -34,5 +35,15 @@ export const ReviewService = () => {
     });
   };
 
-  return { useGetReviews, useGetReview };
+  const grantPenalty = async (investmentId: string, userId: string) => {
+    const { data } = (await API.patch(
+      `${URI}/${investmentId}/${userId}`
+    )) as AxiosResponse<Review.GetReviewResDto>;
+
+    onPenalty = true;
+
+    return data;
+  };
+
+  return { useGetReviews, useGetReview, grantPenalty };
 };

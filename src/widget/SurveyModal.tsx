@@ -17,8 +17,9 @@ export const SurveyModal = ({
 }) => {
   const { investmentId } = useParams();
 
-  /* const { useGetReview } = ReviewService();
-  const { data, isLoading } = useGetReview(investmentId!, id);
+  const { useGetReview, grantPenalty } = ReviewService();
+
+  /* const { data, isLoading } = useGetReview(investmentId!, id, onPenalty);
 
   if (isLoading) {
     return <Loading />;
@@ -98,11 +99,20 @@ export const SurveyModal = ({
         </SubContainer>
 
         <ButtonGroup>
-          <Button primary>확인 완료</Button>
+          <Button primary onClick={onClose}>
+            확인 완료
+          </Button>
           {!result.penalty ? (
             <Button>페널티 부여</Button>
           ) : (
-            <Button penalty>페널티 부여 완료</Button>
+            <Button
+              penalty
+              onClick={() => {
+                grantPenalty(investmentId!, id);
+              }}
+            >
+              페널티 부여 완료
+            </Button>
           )}
         </ButtonGroup>
       </Container>
