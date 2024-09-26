@@ -4,14 +4,19 @@ import { useParams } from "react-router";
 import { useState } from "react";
 
 import { SurveyModal } from "@/widget";
-import { colors } from "@/shared";
+import { colors, ReviewService } from "@/shared";
 
 export const Survey = () => {
-  const [modal, onModal] = useState<string | false>(false);
-
   const param = useParams();
 
-  console.log(param.investmentId);
+  /* const { useGetReviews } = ReviewService();
+  const { data, isLoading } = useGetReviews(investmentId); 
+  
+  if (isLoading) {
+  return <LoadingComponent />;
+  }*/
+
+  const [modal, onModal] = useState<string | false>(false);
 
   const objectives: Review.GetReviewsResDto["result"]["objectives"] = [
     {
@@ -68,7 +73,7 @@ export const Survey = () => {
   const images: Review.GetReviewsResDto["result"]["images"] = [
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -76,7 +81,7 @@ export const Survey = () => {
     },
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -84,7 +89,7 @@ export const Survey = () => {
     },
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -93,7 +98,7 @@ export const Survey = () => {
 
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -101,7 +106,7 @@ export const Survey = () => {
     },
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -109,7 +114,7 @@ export const Survey = () => {
     },
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -117,7 +122,7 @@ export const Survey = () => {
     },
     {
       userId: "123123",
-      imageUrls: [
+      imageFiles: [
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
         "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
@@ -142,7 +147,7 @@ export const Survey = () => {
                 <YAxis />
                 <Tooltip />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <Bar dataKey="num" fill={colors.main} barSize={30} />
+                <Bar dataKey="num" fill={colors.sub2} barSize={30} />
               </BarChart>
             </>
           );
@@ -173,14 +178,14 @@ export const Survey = () => {
           <YAxis />
           <Tooltip />
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar dataKey="num" fill={colors.main} barSize={30} />
+          <Bar dataKey="num" fill={colors.sub2} barSize={30} />
         </BarChart>
 
         <Label>7. 첨부 이미지</Label>
         <AnswerContainer>
           {images.map((element) => (
             <>
-              {element.imageUrls.map((imageUrl, index) => (
+              {element.imageFiles.map((imageUrl, index) => (
                 <ImageBlock
                   key={imageUrl + index}
                   src={imageUrl}
