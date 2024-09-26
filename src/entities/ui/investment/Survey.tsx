@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { SurveyModal } from "@/widget";
 import { colors, ReviewService } from "@/shared";
+import { Loading } from "@/entities";
 
 export const Survey = () => {
   const param = useParams();
@@ -13,126 +14,23 @@ export const Survey = () => {
   const { data, isLoading } = useGetReviews(investmentId); 
   
   if (isLoading) {
-  return <LoadingComponent />;
+  return <Loading />;
   }*/
 
   const [modal, onModal] = useState<string | false>(false);
 
-  const objectives: Review.GetReviewsResDto["result"]["objectives"] = [
-    {
-      question: "매움의 정도를 기록해주세요",
-      answers: [100, 200, 300, 100, 200],
-    },
-    {
-      question: "매움의 정도를 기록해주세요",
-      answers: [100, 200, 300, 100, 200],
-    },
-    {
-      question: "매움의 정도를 기록해주세요",
-      answers: [100, 200, 300, 100, 200],
-    },
-    {
-      question: "매움의 정도를 기록해주세요",
-      answers: [100, 200, 300, 100, 200],
-    },
-  ];
-
-  const subjective: Review.GetReviewsResDto["result"]["subjective"] = {
-    question: "맛있었나요?",
-    answers: [
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-      { userId: "123123", answer: "너무 맛있었어요" },
-    ],
-  };
-
-  const repurchase = [1000, 300];
-
-  const images: Review.GetReviewsResDto["result"]["images"] = [
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-    {
-      userId: "123123",
-      imageFiles: [
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-        "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-      ],
-    },
-  ];
+  const questions = objectives.map((objective) => objective.question);
+  questions.push(subjective.question);
 
   return (
     <>
-      {modal ? <SurveyModal onClose={() => onModal(false)} id={modal} /> : null}
+      {modal ? (
+        <SurveyModal
+          onClose={() => onModal(false)}
+          id={modal}
+          questions={questions}
+        />
+      ) : null}
       <Container>
         {objectives.map((objective, index) => {
           const answers = objective.answers.map((answer, index) => ({
@@ -183,11 +81,11 @@ export const Survey = () => {
 
         <Label>7. 첨부 이미지</Label>
         <AnswerContainer>
-          {images.map((element) => (
+          {images.map((element, index1) => (
             <>
-              {element.imageFiles.map((imageUrl, index) => (
+              {element.imageFiles.map((imageUrl, index2) => (
                 <ImageBlock
-                  key={imageUrl + index}
+                  key={index1 + "-" + index2}
                   src={imageUrl}
                   onClick={() => onModal(element.userId)}
                 ></ImageBlock>
@@ -245,3 +143,117 @@ const ImageBlock = styled.div`
   margin-right: 10px;
   margin-top: 5px;
 `;
+
+//TEST
+
+const objectives: Review.GetReviewsResDto["result"]["objectives"] = [
+  {
+    question: "매움의 정도를 기록해주세요",
+    answers: [100, 200, 300, 100, 200],
+  },
+  {
+    question: "매움의 정도를 기록해주세요",
+    answers: [100, 200, 300, 100, 200],
+  },
+  {
+    question: "매움의 정도를 기록해주세요",
+    answers: [100, 200, 300, 100, 200],
+  },
+  {
+    question: "매움의 정도를 기록해주세요",
+    answers: [100, 200, 300, 100, 200],
+  },
+];
+
+const subjective: Review.GetReviewsResDto["result"]["subjective"] = {
+  question: "맛있었나요?",
+  answers: [
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+    { userId: "123123", answer: "너무 맛있었어요" },
+  ],
+};
+
+const repurchase = [1000, 300];
+
+const images: Review.GetReviewsResDto["result"]["images"] = [
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+  {
+    userId: "123123",
+    imageFiles: [
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+      "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
+    ],
+  },
+];

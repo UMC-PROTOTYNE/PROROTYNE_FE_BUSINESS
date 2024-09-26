@@ -26,7 +26,7 @@ export const ReviewService = () => {
       queryFn: async () => {
         const { data } = (await API.get(
           `${URI}/${investmentId}/${userId}`
-        )) as AxiosResponse<Review.GetReviewsResDto>;
+        )) as AxiosResponse<Review.GetReviewResDto>;
 
         return data;
       },

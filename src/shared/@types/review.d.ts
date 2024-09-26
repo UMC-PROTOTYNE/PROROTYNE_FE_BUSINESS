@@ -23,11 +23,10 @@ declare namespace Review {
 
       penalty: boolean;
 
-      penalty: boolean;
-      answer1: number;
-      answer2: number;
-      answer3: number;
-      answer4: number;
+      answer1: string;
+      answer2: string;
+      answer3: string;
+      answer4: string;
       answer5: string;
       answer6: boolean;
 
