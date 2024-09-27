@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
-import { Button, Input } from "@/entities";
-
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+
+import { Button, Input } from "@/entities";
+import { useProductStore, ProductService } from "@/shared";
 
 interface FormInput {
   question1: string;
@@ -23,6 +25,12 @@ const inputs: {
 ];
 
 const ReviewPage = () => {
+  const setQuestions = useProductStore((state) => state.setQuestions);
+
+  const { createProduct } = ProductService();
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -30,7 +38,10 @@ const ReviewPage = () => {
   } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data);
+    setQuestions(data);
+    createProduct().then(() => {
+      navigate("/home");
+    });
   };
 
   return (
@@ -40,11 +51,11 @@ const ReviewPage = () => {
 
         {inputs.map((element) => (
           <>
-            <Label key={element.id} htmlFor={element.id}>
+            <Label key={element.id + "label"} htmlFor={element.id}>
               {element.label}
             </Label>
             <Input
-              key={element.id}
+              key={element.id + "input"}
               id={element.id}
               placeholder="30자 이내로 입력하세요"
               {...register(element.id, {
@@ -56,7 +67,9 @@ const ReviewPage = () => {
               })}
             />
             {errors[element.id] ? (
-              <Error key={element.id}>{errors[element.id]!.message}</Error>
+              <Error key={element.id + "error"}>
+                {errors[element.id]!.message}
+              </Error>
             ) : null}
           </>
         ))}

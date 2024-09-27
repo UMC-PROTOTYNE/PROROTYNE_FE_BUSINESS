@@ -10,9 +10,8 @@ export {
 export { colors } from "./configs/colors";
 
 export { useCompanyStore } from "./hooks/stores/useCompanyStore";
+export { useProductStore } from "./hooks/stores/useProductStore";
 
 export { AuthService } from "./hooks/services/AuthService";
 export { ReviewService } from "./hooks/services/ReviewService";
-
-export { useProductStore } from "./hooks/stores/useProductStore";
-
+export { ProductService } from "./hooks/services/ProductService";

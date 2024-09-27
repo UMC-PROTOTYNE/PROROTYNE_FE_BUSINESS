@@ -94,7 +94,6 @@ const LaunchDateWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   width: 50%;
-  text-align: ;
 `;
 
 const Form = styled.div`
@@ -194,6 +193,7 @@ const InformationPage = () => {
               <Dropdown
                 items={element.options}
                 setItem={(val) => handleChange(element.id, val)}
+                value={"카테고리를 선택해주세요."}
               />
             )}
             {element.type === "date" && (
