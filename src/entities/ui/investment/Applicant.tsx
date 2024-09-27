@@ -4,24 +4,18 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-interface ApplicantData {
-  id: number;
-  userId: string;
-  applyDate: string;
-  winner: boolean;
-  deliveryStatus: "배송 전" | "배송 후";
-  review: boolean;
-  additionalInfo: string;
-}
-
 const ApplicantItem = ({
   userName,
   event_start,
   prizeStatus,
   deliveryStatus,
   reviewStatus,
-  addInfo,
+  gender,
+  birth,
+  familyMember,
 }: Investment.UserInfo) => {
+  const params = useParams();
+
   const [modal, onModal] = useState<boolean>(false);
   const [deliveryModal, onDeliveryModal] = useState<boolean>(false);
   const [deliveryStatusState, setDeliveryStatus] =
@@ -75,21 +69,33 @@ const ApplicantItem = ({
           <ModalHeader>
             <div>
               <h3>상태</h3>
-              <p>배송 전</p>
+              <p>{deliveryStatus}</p>
             </div>
             <div>
               <h3>당첨자</h3>
-              <p>당첨</p>
+              <p>{prizeStatus}</p>
             </div>
             <div>
               <h3>후기 작성</h3>
-              <p>미작성</p>
+              <p>{reviewStatus}</p>
             </div>
           </ModalHeader>
           <ModalContent>
             <div>
-              <h3>추가 정보</h3>
-              <p>{addInfo}</p>
+              <h3>신청일</h3>
+              <p>{event_start || "없음"}</p>
+            </div>
+            <div>
+              <h3>성별</h3>
+              <p>{gender}</p>
+            </div>
+            <div>
+              <h3>생년월일</h3>
+              <p>{birth || "없음"}</p>
+            </div>
+            <div>
+              <h3>가족 구성원 수</h3>
+              <p>{familyMember || "없음"}명</p>
             </div>
           </ModalContent>
         </Modal>
@@ -99,24 +105,25 @@ const ApplicantItem = ({
   return (
     <>
       <Item onClick={() => onModal(true)}>
-        <p>{userName}</p>
-        <p>{event_start}</p>
-        <p>
-          <div>
-            <Dropdown
-              items={[
-                { item: "당첨", value: "당첨" },
-                { item: "미당첨", value: "미당첨" },
-              ]}
-              setValue={(value) => {
-                setWinnerReview(value);
-              }}
-              selectedItem={winnerState ? "당첨" : "미당첨"}
-            />
-          </div>
-        </p>
-
-        <p>
+        <div className="items">{userName}</div>
+        <div className="items">{event_start}</div>
+        <div className="items">
+          <Dropdown
+            items={[
+              { item: "당첨", value: "당첨" },
+              { item: "미당첨", value: "미당첨" },
+            ]}
+            setValue={(value) => {
+              setWinnerReview(value);
+              InvestmentService().UserPrize(params.investmentId, {
+                userId: "1",
+                isPrize: value === "당첨",
+              });
+            }}
+            selectedItem={winnerState ? "당첨" : "미당첨"}
+          />
+        </div>
+        <div className="items">
           <Dropdown
             items={[
               { item: "배송 전", value: "배송 전" },
@@ -127,9 +134,11 @@ const ApplicantItem = ({
             }}
             selectedItem={deliveryStatusState}
           />
-        </p>
-        <p>{reviewStatus}</p>
-        <p>{addInfo}</p>
+        </div>
+        <div className="items">{reviewStatus}</div>
+        <div style={{ whiteSpace: "break-spaces" }} className="items">
+          {`${gender}\n${birth}\n${familyMember}`}
+        </div>
       </Item>
       {modal && <ApplicationModal />}
       {deliveryModal && <DeliveryModal />}
@@ -146,6 +155,7 @@ export const Applicant = () => {
     InvestmentService()
       .UserList(params.investmentId)
       .then((result) => {
+        // console.log({ result });
         setApplicantData({ result });
       });
   }, []);
@@ -161,9 +171,10 @@ export const Applicant = () => {
           <p key={index}>{item}</p>
         ))}
       </Header>
-      {ApplicantData.map((data, index) => (
-        <ApplicantItem key={data.userName + index} {...data} />
-      ))}
+      {applicantData &&
+        applicantData.result.map((data, index) => (
+          <ApplicantItem key={data.userName + index} {...data} />
+        ))}
     </Container>
   );
 };
@@ -196,7 +207,7 @@ const Item = styled.div`
   &:hover {
     background-color: ${colors.gray[5]};
   }
-  p {
+  .items {
     flex: 1;
     display: flex;
     align-items: center;
@@ -290,55 +301,4 @@ const HeaderItem = [
   "배송 상태",
   "후기 작성",
   "추가 정보",
-];
-
-const ApplicantData: Investment.UserInfo[] = [
-  {
-    userName: "string",
-    event_start: "string",
-    prizeStatus: "string",
-    deliveryStatus: "string",
-    reviewStatus: "string",
-    addInfo: "string",
-  },
-  {
-    userName: "string",
-    event_start: "string",
-    prizeStatus: "string",
-    deliveryStatus: "string",
-    reviewStatus: "string",
-    addInfo: "string",
-  },
-  {
-    userName: "string",
-    event_start: "string",
-    prizeStatus: "string",
-    deliveryStatus: "string",
-    reviewStatus: "string",
-    addInfo: "string",
-  },
-  {
-    userName: "string",
-    event_start: "string",
-    prizeStatus: "string",
-    deliveryStatus: "string",
-    reviewStatus: "string",
-    addInfo: "string",
-  },
-  {
-    userName: "string",
-    event_start: "string",
-    prizeStatus: "string",
-    deliveryStatus: "string",
-    reviewStatus: "string",
-    addInfo: "string",
-  },
-  {
-    userName: "string",
-    event_start: "string",
-    prizeStatus: "string",
-    deliveryStatus: "string",
-    reviewStatus: "string",
-    addInfo: "string",
-  },
 ];

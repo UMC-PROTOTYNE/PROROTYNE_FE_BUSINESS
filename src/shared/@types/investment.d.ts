@@ -32,6 +32,15 @@ declare namespace Investment {
     prizeStatus: string;
     deliveryStatus: string;
     reviewStatus: string;
-    addInfo: string;
+    birth: string;
+    familyMember: string;
+    gender: string;
+  }
+
+  export interface UserPrizeReqDto {
+    result: UserInfo[];
+  }
+  export interface UserDeliveryReqDto {
+    result: UserInfo[];
   }
 }

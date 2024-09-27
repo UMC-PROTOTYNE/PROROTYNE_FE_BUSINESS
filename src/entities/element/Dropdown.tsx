@@ -28,7 +28,7 @@ export const Dropdown = ({ items, selectedItem, setValue }: DropdownProps) => {
       {isDropdownView && (
         <DropdownContents>
           {items.map((li, i) => (
-            <>
+            <main key={i}>
               <div
                 onClick={() => {
                   setItem(li.item);
@@ -40,7 +40,7 @@ export const Dropdown = ({ items, selectedItem, setValue }: DropdownProps) => {
                 <Content selected={item === li.item}>{li.item}</Content>
               </div>
               {i !== items.length - 1 && <hr />}
-            </>
+            </main>
           ))}
         </DropdownContents>
       )}
