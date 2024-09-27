@@ -1,18 +1,17 @@
 export { Container, CenterContainer, ValidAlert } from "./element/Container";
 export { LargeImage } from "./element/Image";
-export { 
-  Button, 
-  BlueBorderButton, 
-  SignButton } from "./element/Button";
+export { Button, BlueBorderButton, SignButton } from "./element/Button";
 export { Dropdown } from "./element/Dropdown";
 export {
   InputDefault,
+  InputTextarea,
   InputButton,
   InputTitle,
   InputDatePicker,
+  InputSpecificDate,
 } from "./element/Input";
 
-export { Input } from "./element/Input"
+export { Input, ImageQuestion } from "./element/Input";
 
 export { Background } from "./screen/Background";
 export { GrayBackground } from "./screen/GrayBackground";

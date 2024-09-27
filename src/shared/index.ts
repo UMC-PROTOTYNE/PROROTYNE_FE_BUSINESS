@@ -13,3 +13,6 @@ export { useCompanyStore } from "./hooks/stores/useCompanyStore";
 
 export { AuthService } from "./hooks/services/AuthService";
 export { ReviewService } from "./hooks/services/ReviewService";
+
+export { useProductStore } from "./hooks/stores/useProductStore";
+
