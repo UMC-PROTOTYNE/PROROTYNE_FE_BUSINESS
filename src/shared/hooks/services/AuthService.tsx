@@ -5,18 +5,23 @@ import { API, setAccess, storeAccess, useCompanyStore } from "@/shared";
 export const AuthService = () => {
   const setCompany = useCompanyStore((state) => state.setCompany);
 
-  const signIn = async (username: string, password: string) => {
-    const {
-      data: { result },
-    } = (await API.post("/login", {
-      username: username,
-      password: password,
-    })) as AxiosResponse<Company.SignInResDto>;
-
-    setAccess(result.access_token);
-    storeAccess(result.access_token);
-    setCompany(result);
+  const signin = async (body: Company.SignInReqDto) => {
+    const { data } = (await API.post(
+      "/login",
+      body
+    )) as AxiosResponse<Company.SignInResDto>;
+    setAccess(data.result.access_token);
+    storeAccess(data.result.access_token);
+    setCompany(data.result);
+    return data;
   };
 
-  return { signIn };
+  const signup = async (body: Company.SignUpReqDto) => {
+    const { data } = (await API.post(
+      "/signup",
+      body
+    )) as AxiosResponse<Company.SignUpResDto>;
+    return data;
+  };
+  return { signin, signup, };
 };
