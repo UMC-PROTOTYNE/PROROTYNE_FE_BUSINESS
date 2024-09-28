@@ -168,10 +168,6 @@ export const Applicant = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(applicantData);
-  }, [applicantData]);
-
   return (
     <Container>
       <Header>
