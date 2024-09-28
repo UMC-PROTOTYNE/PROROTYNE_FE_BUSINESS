@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ApplicantItem = ({
+  userId,
   userName,
   event_start,
   prizeStatus,
@@ -18,8 +19,9 @@ const ApplicantItem = ({
 
   const [modal, onModal] = useState<boolean>(false);
   const [deliveryModal, onDeliveryModal] = useState<boolean>(false);
-  const [deliveryStatusState, setDeliveryStatus] =
-    useState<string>(deliveryStatus);
+  const [deliveryStatusState, setDeliveryStatus] = useState<string>(
+    deliveryStatus ? "배송 후" : "배송 전"
+  );
   const [winnerState, setWinnerReview] = useState<string>(prizeStatus);
 
   const DeliveryModal = () => {
@@ -46,6 +48,11 @@ const ApplicantItem = ({
           />
           <Button
             onClick={() => {
+              InvestmentService().UserDelivery(params.investmentId, {
+                userId,
+                "택배사 이름": deliveryCompany,
+                "운송장 번호": deliveryNumber,
+              });
               setDeliveryStatus("배송 후");
               onDeliveryModal(false);
             }}
@@ -115,12 +122,13 @@ const ApplicantItem = ({
             ]}
             setValue={(value) => {
               setWinnerReview(value);
+              console.log({ value, userId });
               InvestmentService().UserPrize(params.investmentId, {
-                userId: "1",
+                userId,
                 isPrize: value === "당첨",
               });
             }}
-            selectedItem={winnerState ? "당첨" : "미당첨"}
+            selectedItem={winnerState}
           />
         </div>
         <div className="items">
@@ -137,7 +145,7 @@ const ApplicantItem = ({
         </div>
         <div className="items">{reviewStatus}</div>
         <div style={{ whiteSpace: "break-spaces" }} className="items">
-          {`${gender}\n${birth}\n${familyMember}`}
+          {`성별: ${gender}\n생년월일: ${birth}\n가족 구성원 수: ${familyMember}`}
         </div>
       </Item>
       {modal && <ApplicationModal />}

@@ -27,6 +27,7 @@ declare namespace Investment {
     };
   }
   export interface UserInfo {
+    userId: number;
     userName: string;
     event_start: string;
     prizeStatus: string;

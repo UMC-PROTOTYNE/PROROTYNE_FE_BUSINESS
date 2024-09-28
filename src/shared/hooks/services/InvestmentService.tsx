@@ -25,13 +25,14 @@ export const InvestmentService = () => {
 
   const UserPrize = async (
     investmentId: string | undefined,
-    params: { userId: string; isPrize: boolean }
+    params: { userId: number; isPrize: boolean }
   ) => {
     const {
       data: { result },
     } = (await API.patch(
       // `/user/prize/${investmentId}`
       `/user/prize/14`, // 14 is a dummy value (홈 화면 구현 필요)
+      null,
       { params }
     )) as AxiosResponse<Investment.UserPrizeReqDto>;
     return result;
@@ -39,13 +40,14 @@ export const InvestmentService = () => {
 
   const UserDelivery = async (
     investmentId: string | undefined,
-    params: { userId: string; "택배사 이름": string; "운송장 번호": string }
+    params: { userId: number; "택배사 이름": string; "운송장 번호": string }
   ) => {
     const {
       data: { result },
     } = (await API.patch(
       // `/user/delivery/${investmentId}`
       `/user/delivery/14`, // 14 is a dummy value (홈 화면 구현 필요)
+      null,
       { params }
     )) as AxiosResponse<Investment.UserDeliveryReqDto>;
     return result;
