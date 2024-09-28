@@ -17,10 +17,6 @@ const InformationPage = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(info);
-  }, [info]);
-
   return (
     <Wrapper>
       <Title>체험 현황 및 관리</Title>

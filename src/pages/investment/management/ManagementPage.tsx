@@ -13,9 +13,10 @@ import { useEffect } from "react";
 
 const ManagementPage = () => {
   const location = useLocation();
-  const currentPath = location.pathname;
   const navigate = useNavigate();
   const params = useParams();
+
+  const currentPath = location.pathname;
 
   useEffect(() => {
     // 체험 현황 및 관리 페이지 진입 시 신청자 목록으로 이동

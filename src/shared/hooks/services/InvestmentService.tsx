@@ -13,6 +13,16 @@ export const InvestmentService = () => {
     return result;
   };
 
+  const InvestmentProgress = async (investmentId: string | undefined) => {
+    const {
+      data: { result },
+    } = (await API.get(
+      // `/progress/${investmentId}`
+      `/progress/14` // 14 is a dummy value (홈 화면 구현 필요)
+    )) as AxiosResponse<Investment.InvestmentProgressReqDto>;
+    return result;
+  };
+
   const UserList = async (investmentId: string | undefined) => {
     const {
       data: { result },
@@ -53,5 +63,11 @@ export const InvestmentService = () => {
     return result;
   };
 
-  return { UserList, InvestmentInfo, UserPrize, UserDelivery };
+  return {
+    UserList,
+    InvestmentInfo,
+    InvestmentProgress,
+    UserPrize,
+    UserDelivery,
+  };
 };

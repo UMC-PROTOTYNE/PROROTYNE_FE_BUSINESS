@@ -44,4 +44,12 @@ declare namespace Investment {
   export interface UserDeliveryReqDto {
     result: UserInfo[];
   }
+
+  export interface InvestmentProgressReqDto {
+    result: {
+      stage: number;
+      investCount: number;
+      feedbackCount: number;
+    };
+  }
 }
