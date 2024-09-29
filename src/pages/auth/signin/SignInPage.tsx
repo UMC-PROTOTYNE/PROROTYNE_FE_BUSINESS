@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Logo } from "@/widget";
 import { SignButton } from "@/entities";
 import { AuthService } from "@/shared";
+import { useForm } from "react-hook-form";
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -11,11 +12,16 @@ const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   return (
     <SignInContainer>
       <SignInSubContainer>
         <Logo />
-        <Form>
+        <Form onSubmit={handleSubmit((data) => console.log(data))}>
           <Input
             placeholder="아이디"
             onChange={(e) => {
@@ -65,7 +71,7 @@ const SignInSubContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;

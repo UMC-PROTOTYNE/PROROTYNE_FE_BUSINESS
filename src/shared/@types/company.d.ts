@@ -10,6 +10,7 @@ declare namespace Company {
       id: string;
       name: string;
       access_token: string;
+      refresh_token: string;
     };
   }
 
