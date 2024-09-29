@@ -50,13 +50,13 @@ export const Dropdown = ({ items, selectedItem, setValue }: DropdownProps) => {
 
 const DropdownWrapper = styled.div`
   position: relative;
-  min-height: 24px;
-  width: 30%;
+  width: 97%;
+  margin-top: 3px;
 `;
 
 const DropdownButton = styled.button<{ isDropdownView: boolean }>`
   display: flex;
-  min-height: 24px;
+  min-height: 40px;
   width: 100%;
   padding: 0 10px;
   justify-content: space-between;
@@ -65,7 +65,7 @@ const DropdownButton = styled.button<{ isDropdownView: boolean }>`
   color: ${colors.black};
   border: 1px solid ${colors.black};
   border-radius: 5px;
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
   & img {
     transform: ${(props) =>
@@ -87,7 +87,7 @@ const DropdownContents = styled.div`
   justify-content: center;
   border: 1px solid ${colors.gray[3]};
   align-items: center;
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
   background-color: ${colors.back};
   border-radius: 4px;

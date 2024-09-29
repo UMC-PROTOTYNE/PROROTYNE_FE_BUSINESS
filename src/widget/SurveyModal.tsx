@@ -1,10 +1,10 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { useParams } from "react-router";
 
 import { GrayBackground } from "@/entities";
 import { colors, ReviewService } from "@/shared";
 import { Loading } from "@/entities";
+import { useState } from "react";
 
 export const SurveyModal = ({
   id,
@@ -19,7 +19,11 @@ export const SurveyModal = ({
 
   const { useGetReview, grantPenalty } = ReviewService();
 
+  const [clientPenalty, setClientPenalty] = useState(false);
+
   const { data, isLoading } = useGetReview(investmentId!, id);
+
+  console.log(data);
 
   if (isLoading) {
     return <Loading />;
@@ -31,6 +35,8 @@ export const SurveyModal = ({
     data?.result.answer3,
     data?.result.answer4,
   ];
+
+  console.log(objectives);
 
   return (
     <GrayBackground onClose={onClose}>
@@ -45,12 +51,12 @@ export const SurveyModal = ({
               <Label>{index + 1 + ". " + questions[index]}</Label>
               <RadioGroup>
                 {["1", "2", "3", "4", "5"].map((level) => (
-                  <RadioButton key={level} selected={objective === level}>
+                  <RadioButton key={level} selected={objective + "" === level}>
                     <input
                       type="radio"
                       name={index + ""}
                       value={level}
-                      checked={objective === level}
+                      checked={objective + "" === level}
                     />
                     {level}
                   </RadioButton>
@@ -61,7 +67,7 @@ export const SurveyModal = ({
 
           <Question>
             <Label>5. {questions[4]}</Label>
-            <TextArea>몰라요</TextArea>
+            <TextArea>{data?.result.answer5}</TextArea>
           </Question>
 
           <Question>
@@ -91,7 +97,7 @@ export const SurveyModal = ({
           <Question>
             <Label>7. 첨부 이미지</Label>
             <ImgContainer>
-              {data?.result.imageFiles.map((imageUrl, index) => (
+              {data?.result.imagefiles.map((imageUrl, index) => (
                 <ImageBlock key={index} src={imageUrl}></ImageBlock>
               ))}
             </ImgContainer>
@@ -102,16 +108,16 @@ export const SurveyModal = ({
           <Button primary onClick={onClose}>
             확인 완료
           </Button>
-          {!data?.result.penalty ? (
-            <Button>페널티 부여</Button>
+          {clientPenalty || data?.result.penalty ? (
+            <Button penalty>페널티 부여 완료</Button>
           ) : (
             <Button
-              penalty
               onClick={() => {
                 grantPenalty(investmentId!, id);
+                setClientPenalty(true);
               }}
             >
-              페널티 부여 완료
+              페널티 부여
             </Button>
           )}
         </ButtonGroup>
@@ -161,7 +167,7 @@ const ImgContainer = styled.div`
   display: flex;
   flex-direction: row;
 
-  justify-content: space-between;
+  justify-content: start;
 `;
 
 const RadioGroup = styled.div`

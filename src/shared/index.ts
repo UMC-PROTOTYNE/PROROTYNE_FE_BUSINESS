@@ -21,4 +21,5 @@ export { useSignUpStore } from "./hooks/stores/useSignUpStore";
 export { InvestmentService } from "./hooks/services/InvestmentService";
 
 export { AuthService } from "./hooks/services/AuthService";
+
 export { HomeService } from "./hooks/services/HomeService";

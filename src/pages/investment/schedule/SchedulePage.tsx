@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { InputDatePicker, Button } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { InvensmentServiceDump } from "@/shared/hooks/services/InvestmentServece_dump";
 import { useNavigate } from "react-router-dom";
+import { InvestmentService } from "@/shared";
 
 interface FormInput {
   start: string;
@@ -79,8 +79,8 @@ const SchedulePage = () => {
   }, [dates]);
 
   const onSubmit: SubmitHandler<FormInput> = () => {
-    InvensmentServiceDump()
-      .createInvestment("4", {
+    InvestmentService()
+      .createInvestment("1", {
         eventStart: dates.applicationPeriod.start,
         eventEnd: dates.applicationPeriod.end,
         releaseStart: dates.winningPeriod.start,

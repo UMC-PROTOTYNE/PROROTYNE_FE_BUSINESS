@@ -42,7 +42,13 @@ export const Header = () => {
               navigate(PAGE_URL.MyCompany);
             }}
           />
-          <SignOutButton>로그아웃</SignOutButton>
+          <SignOutButton
+            onClick={() => {
+              navigate(PAGE_URL.SignIn);
+            }}
+          >
+            로그아웃
+          </SignOutButton>
         </SubContainer>
       </Background>
 

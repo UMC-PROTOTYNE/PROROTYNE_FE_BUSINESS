@@ -10,9 +10,6 @@ export const API = axios.create({
 
 export const FORMAPI = axios.create({
   baseURL: import.meta.env.VITE_SERVER_URL,
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
 });
 
 const storageAccessKey = "JWT_ACCESS_TOKEN";

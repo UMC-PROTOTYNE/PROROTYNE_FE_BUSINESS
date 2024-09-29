@@ -6,10 +6,10 @@ declare namespace Review {
         question: string;
         answers: number[];
       }[];
-      subjective: {
+      subjectiveList: {
         question: string;
-        answers: { userId: string; answer: string }[];
-      };
+        answers: { userId: string; answer: string };
+      }[];
       repurchase: number[];
       images: { userId: string; imageFiles: string[] }[];
     };
@@ -23,14 +23,14 @@ declare namespace Review {
 
       penalty: boolean;
 
-      answer1: string;
-      answer2: string;
-      answer3: string;
-      answer4: string;
+      answer1: number;
+      answer2: number;
+      answer3: number;
+      answer4: number;
       answer5: string;
       answer6: boolean;
 
-      imageFiles: string[];
+      imagefiles: string[];
     };
   }
 }

@@ -40,8 +40,8 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.patch(
-      // `/user/prize/${investmentId}`
-      `/user/prize/14`, // 14 is a dummy value (홈 화면 구현 필요)
+      `/user/prize/${investmentId}`,
+      // `/user/prize/14`, // 14 is a dummy value (홈 화면 구현 필요)
       null,
       { params }
     )) as AxiosResponse<Investment.UserPrizeReqDto>;
