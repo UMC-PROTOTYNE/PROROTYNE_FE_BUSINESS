@@ -36,4 +36,8 @@ declare namespace Product {
       question5: string,
     }) => void;
   }
+
+  interface createInvestmentReqDto {
+    result: number;
+  }
 }

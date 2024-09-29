@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { InputDatePicker, Button } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { InvestmentService } from "@/shared";
 
 interface FormInput {
   start: string;
@@ -33,6 +35,7 @@ const inputs: {
 ];
 
 const SchedulePage = () => {
+  const navigate = useNavigate();
   const { handleSubmit } = useForm<FormInput>();
   const [dates, setDates] = useState<{
     [key: string]: { start: string; end: string };
@@ -76,7 +79,18 @@ const SchedulePage = () => {
   }, [dates]);
 
   const onSubmit: SubmitHandler<FormInput> = () => {
-    console.log(dates); // 각 질문에 대한 날짜 출력
+    InvestmentService()
+      .createInvestment("1", {
+        eventStart: dates.applicationPeriod.start,
+        eventEnd: dates.applicationPeriod.end,
+        releaseStart: dates.winningPeriod.start,
+        releaseEnd: dates.winningPeriod.end,
+        feedbackStart: dates.reviewPeriod.start,
+        feedbackEnd: dates.reviewPeriod.end,
+      })
+      .then(() => {
+        navigate("/home", { replace: true });
+      });
   };
 
   return (

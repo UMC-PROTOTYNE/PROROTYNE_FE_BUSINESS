@@ -16,12 +16,19 @@ const SignInPage = () => {
       <SignInSubContainer>
         <Logo />
         <Form>
-          <Input placeholder="아이디" onChange={(e) => {
-                setUsername(e.target.value);
-              }}/>
-          <Input placeholder="비밀번호" onChange={(e) => {
-                setPassword(e.target.value);
-              }}/>
+          <Input
+            placeholder="아이디"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="비밀번호"
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
           <SignButton
             onClick={() => {
               signin({
@@ -49,7 +56,7 @@ const SignInContainer = styled.div`
   align-items: center;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 98vh;
 `;
 const SignInSubContainer = styled.div`
   display: flex;
