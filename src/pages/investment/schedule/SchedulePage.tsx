@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { InputDatePicker, Button } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { InvensmentServiceDump } from "@/shared/hooks/services/InvestmentServece_dump";
 
 interface FormInput {
   start: string;
@@ -76,7 +77,22 @@ const SchedulePage = () => {
   }, [dates]);
 
   const onSubmit: SubmitHandler<FormInput> = () => {
-    console.log(dates); // 각 질문에 대한 날짜 출력
+    console.log(dates.applicationPeriod.start); // 각 질문에 대한 날짜 출력
+    InvensmentServiceDump()
+      .createInvestment("4", {
+        eventStart: dates.applicationPeriod.start,
+        eventEnd: dates.applicationPeriod.end,
+        releaseStart: dates.winningPeriod.start,
+        releaseEnd: dates.winningPeriod.end,
+        feedbackStart: dates.reviewPeriod.start,
+        feedbackEnd: dates.reviewPeriod.end,
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
