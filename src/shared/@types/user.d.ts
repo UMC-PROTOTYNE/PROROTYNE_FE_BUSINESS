@@ -10,6 +10,7 @@ declare namespace Company {
       id: number;
       name: string;
       access_token: string;
+      refresh_token: string;
     };
   }
 
@@ -32,9 +33,32 @@ declare namespace Company {
       msg: string;
     };
   }
+
+  export interface ProductsResDto {
+    result: [{
+        productId: number;
+        thumbnailUrl: string;
+        productName: string;
+        reqTickets: number;
+        createdDate: string;
+        category: string;
+        eventCount: number;
+    }];
+  }
+
+  export interface EventsResDto {
+    result: [{
+        eventId: number;
+        thumbnailUrl: string;
+        productName: string;
+        stageAndDate: string;
+        createdDate: string;
+        category: string;
+    }];
+  }
   //Store
   export interface CompanyStore {
-    id: string;
+    id: number;
     name: string;
     setCompany: (data: SignInResDto["result"]) => void;
   }
