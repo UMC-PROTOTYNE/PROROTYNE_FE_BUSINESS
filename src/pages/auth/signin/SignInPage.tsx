@@ -1,24 +1,33 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router";
-
+import { useState } from "react";
 import { Logo } from "@/widget";
 import { SignButton } from "@/entities";
 import { AuthService } from "@/shared";
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const { signIn } = AuthService();
+  const { signin } = AuthService();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <SignInContainer>
       <SignInSubContainer>
         <Logo />
         <Form>
-          <Input placeholder="아이디" />
-          <Input placeholder="비밀번호" />
+          <Input placeholder="아이디" onChange={(e) => {
+                setUsername(e.target.value);
+              }}/>
+          <Input placeholder="비밀번호" onChange={(e) => {
+                setPassword(e.target.value);
+              }}/>
           <SignButton
             onClick={() => {
-              signIn("testid", "testpw").then(() => navigate("/home"));
+              signin({
+                username: username,
+                password: password,
+              }).then(() => navigate("/home"));
             }}
           >
             로그인

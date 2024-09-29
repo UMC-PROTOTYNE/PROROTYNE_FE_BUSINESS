@@ -1,10 +1,21 @@
 import { StatusInfo } from "@/entities";
-import { colors } from "@/shared";
+import { colors, InvestmentService } from "@/shared";
 import styled from "@emotion/styled";
-// import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const InformationPage = () => {
-  // const params = useParams();
+  const params = useParams();
+
+  const [info, setInfo] = useState<Investment.InvestmentInfoReqDto>();
+
+  useEffect(() => {
+    InvestmentService()
+      .InvestmentInfo(params.investmentId)
+      .then((result) => {
+        setInfo({ result });
+      });
+  }, []);
 
   return (
     <Wrapper>
@@ -12,42 +23,49 @@ const InformationPage = () => {
       <StatusInfo />
       <RouteWrapper>
         <AnswerContainer>
-          {images.map((element, index) => (
+          {info?.result.productImages.map((element, index) => (
             <ImageBlock key={index} src={element}></ImageBlock>
           ))}
         </AnswerContainer>
         <div>
           <h3>시제품 명</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.productName}</p>
         </div>
         <div>
           <h3>설명</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.contents}</p>
         </div>
         <div>
           <h3>카테고리</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.category}</p>
         </div>
         <div>
           <h3>티켓 개수</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.reqTickets}개</p>
         </div>
         <div>
           <h3>추가 안내사항</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>{info?.result.productInfo.notes}</p>
         </div>
         <hr />
         <div>
           <h3>체험 모집 기간</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>
+            {info?.result.dates.eventStart} ~ {info?.result.dates.eventEnd}
+          </p>
         </div>
         <div>
           <h3>대상자 발표일</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>
+            {info?.result.dates.releaseStart} ~ {info?.result.dates.releaseEnd}
+          </p>
         </div>
         <div>
           <h3>후기 작성 기간</h3>
-          <p>마라탕후루루루후루루룽</p>
+          <p>
+            {info?.result.dates.feedbackStart} ~{" "}
+            {info?.result.dates.feedbackEnd}
+          </p>
         </div>
       </RouteWrapper>
     </Wrapper>
@@ -110,9 +128,3 @@ const RouteWrapper = styled.div`
     margin: 20px 0;
   }
 `;
-
-const images: string[] = [
-  "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-  "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-  "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
-];
