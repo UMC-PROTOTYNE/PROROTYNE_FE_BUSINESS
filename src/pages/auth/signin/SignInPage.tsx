@@ -14,13 +14,36 @@ interface IFormInput {
 const SignInPage = () => {
   const navigate = useNavigate();
   const { signin } = AuthService();
-  const { register, handleSubmit } = useForm<IFormInput>()
+  const { register, handleSubmit, setError, formState: { errors }, } = useForm<IFormInput>()
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    signin({
-      username: data.username,
-      password: data.password,
-    }).then(() => navigate("/home"));
+    try {
+      onValid(data)
+      signin({
+        username: data.username,
+        password: data.password,
+      }).then(() => navigate("/home"));
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
+
+  const onValid = (data : IFormInput) => {
+    if (data.username === '') {      
+        setError(
+          'username',
+          { message: '아이디가 입력되어 있지 않습니다.' },
+          { shouldFocus: true },
+        );
+      }
+      if (data.password === '') {
+        setError(
+          'password',
+          { message: '비밀번호가 입력되어 있지 않습니다.' },
+          { shouldFocus: true },
+        );
+      }
+    }
 
   return (
     <SignInContainer>
@@ -29,13 +52,21 @@ const SignInPage = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Input
             placeholder="아이디"
-            {...register("username", { required: true, maxLength: 30 })}
+            {...register("username", { required: '아이디를 입력해주세요.', maxLength: 30, minLength: {
+              value: 0,
+              message: '아이디를 입력해주세요.',
+            }, })}
           />
+          {errors?.username?.message ? <ValidAlert>{errors?.username?.message}</ValidAlert> : <Null></Null>}
           <Input
             placeholder="비밀번호"
             type="password"
-            {...register("password", { required: true, maxLength: 30 })}
+            {...register("password", { required: '비밀번호를 입력해주세요.', maxLength: 30, minLength: {
+              value: 0,
+              message: '비밀번호를 입력해주세요.',
+            }, })}
           />
+          {errors?.password?.message ? <ValidAlert>{errors?.password?.message}</ValidAlert> : <Null></Null>}
           <SignButton
             type="submit"
           >
@@ -92,4 +123,12 @@ const Register = styled.div`
 `;
 const SignIn = styled.div`
   cursor: pointer;
+`;
+
+const ValidAlert = styled.div`
+  color: red;
+  font-size: 12px;
+`;
+const Null = styled.div`
+  margin: 6.8px 0px;
 `;
