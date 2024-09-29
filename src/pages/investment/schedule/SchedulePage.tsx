@@ -77,22 +77,14 @@ const SchedulePage = () => {
   }, [dates]);
 
   const onSubmit: SubmitHandler<FormInput> = () => {
-    console.log(dates.applicationPeriod.start); // 각 질문에 대한 날짜 출력
-    InvensmentServiceDump()
-      .createInvestment("4", {
-        eventStart: dates.applicationPeriod.start,
-        eventEnd: dates.applicationPeriod.end,
-        releaseStart: dates.winningPeriod.start,
-        releaseEnd: dates.winningPeriod.end,
-        feedbackStart: dates.reviewPeriod.start,
-        feedbackEnd: dates.reviewPeriod.end,
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    InvensmentServiceDump().createInvestment("4", {
+      eventStart: dates.applicationPeriod.start,
+      eventEnd: dates.applicationPeriod.end,
+      releaseStart: dates.winningPeriod.start,
+      releaseEnd: dates.winningPeriod.end,
+      feedbackStart: dates.reviewPeriod.start,
+      feedbackEnd: dates.reviewPeriod.end,
+    });
   };
 
   return (
