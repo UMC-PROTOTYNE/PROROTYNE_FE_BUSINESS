@@ -3,6 +3,7 @@ import { InputDatePicker, Button } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { InvensmentServiceDump } from "@/shared/hooks/services/InvestmentServece_dump";
+import { useNavigate } from "react-router-dom";
 
 interface FormInput {
   start: string;
@@ -34,6 +35,7 @@ const inputs: {
 ];
 
 const SchedulePage = () => {
+  const navigate = useNavigate();
   const { handleSubmit } = useForm<FormInput>();
   const [dates, setDates] = useState<{
     [key: string]: { start: string; end: string };
@@ -77,14 +79,18 @@ const SchedulePage = () => {
   }, [dates]);
 
   const onSubmit: SubmitHandler<FormInput> = () => {
-    InvensmentServiceDump().createInvestment("4", {
-      eventStart: dates.applicationPeriod.start,
-      eventEnd: dates.applicationPeriod.end,
-      releaseStart: dates.winningPeriod.start,
-      releaseEnd: dates.winningPeriod.end,
-      feedbackStart: dates.reviewPeriod.start,
-      feedbackEnd: dates.reviewPeriod.end,
-    });
+    InvensmentServiceDump()
+      .createInvestment("4", {
+        eventStart: dates.applicationPeriod.start,
+        eventEnd: dates.applicationPeriod.end,
+        releaseStart: dates.winningPeriod.start,
+        releaseEnd: dates.winningPeriod.end,
+        feedbackStart: dates.reviewPeriod.start,
+        feedbackEnd: dates.reviewPeriod.end,
+      })
+      .then(() => {
+        navigate("/home", { replace: true });
+      });
   };
 
   return (
