@@ -6,20 +6,13 @@ import {
   ValidAlert,
   Dropdown,
 } from "@/entities";
-import {
-  BlueBorderButton,
-  SignButton,
-  Input,
-  ValidAlert,
-  Dropdown,
-} from "@/entities";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
 import { AuthService } from "@/shared/hooks/services/AuthService";
-import { useCompanyStore } from "@/shared";
+// import { useCompanyStore } from "@/shared";
+
 const SignUpContainer = styled.div`
-  display: flex;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,11 +46,10 @@ const AddressContainer = styled.div`
 const ComboBoxContainer = styled.div`
   display: flex;
   width: 100%;
+  gap: 20px;
 `;
 const ComboBoxSubContainer = styled.div`
-  margin-right: 50px;
-  width: 152px;
-  margin-right: 50px;
+  margin-right: 20px;
   width: 152px;
 `;
 const AddressDetailBackground = styled.div`
@@ -84,8 +76,6 @@ const AddressDetailContainer = styled.div`
   background: white;
   border: 1px solid #d9d9d9;
   box-shadow: 4px 4px 4px rgba(0.3, 0.3, 0.3, 0.3);
-  border: 1px solid #d9d9d9;
-  box-shadow: 4px 4px 4px rgba(0.3, 0.3, 0.3, 0.3);
 `;
 
 const DropdownContainer = styled.div`
@@ -107,7 +97,7 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const { signup } = AuthService();
-  const companyStore = useCompanyStore();
+  // const companyStore = useCompanyStore();
 
   const [progress, setProgress] = useState(0);
   const [address, setAddress] = useState(false);
@@ -124,9 +114,7 @@ const SignUpPage = () => {
   const [detailedAddress, setDetailedAddress] = useState("");
   const [detailedAddressValid, setDetailedAddressValid] = useState(true);
   const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
-  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
   const [businessTypeValid, setBusinessTypeValid] = useState(true);
-  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
@@ -136,7 +124,6 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
 
-
   const validation = () => {
     const isValid = {
       companyName: companyName !== "",
@@ -144,8 +131,6 @@ const SignUpPage = () => {
       phoneNumber: phoneNumber !== "",
       email: email !== "",
       detailedAddress: inputAddress !== "" && detailedAddress !== "",
-      businessType: businessType !== "업종을 선택해 주세요",
-      businessSize: businessSize !== "기업 규모를 선택해 주세요",
       businessType: businessType !== "업종을 선택해 주세요",
       businessSize: businessSize !== "기업 규모를 선택해 주세요",
     };
@@ -173,6 +158,17 @@ const SignUpPage = () => {
 
     return Object.values(isValid).every((v) => v === true);
   };
+  const handleContinue = () => {
+    if (validation()) {
+      setProgress(progress + 1);
+    }
+  };
+  // const handleSuccess = () => {
+  //   if (signupValid()) {
+  //     alert("회원가입이 완료되었습니다");
+  //     navigate("/signin");
+  //   }
+  // };
 
   return (
     <SignUpContainer>
@@ -180,20 +176,10 @@ const SignUpPage = () => {
         {address && (
           <AddressDetailBackground
             onClick={() => {
-          <AddressDetailBackground
-            onClick={() => {
               setAddress(false);
             }}
           >
-            }}
-          >
             <AddressDetailContainer>
-              <DaumPostcode
-                onComplete={(data) => {
-                  setAddress(false);
-                  setInputAddress(data.address);
-                }}
-              />
               <DaumPostcode
                 onComplete={(data) => {
                   setAddress(false);
@@ -279,16 +265,14 @@ const SignUpPage = () => {
                 <DropdownContainer>
                   <Dropdown
                     items={[
-                      { item: "item1", value: "value1" },
-                      { item: "item2", value: "value2" },
-                      { item: "item3", value: "value3" },
+                      { item: "IT", value: "IT" },
+                      { item: "제조", value: "제조" },
+                      { item: "서비스", value: "서비스" },
                     ]}
-                    setItem={(value) => {
-                      setBusinessType(value);
-                    }}
-                    value={businessType}
+                    setValue={(value) => setBusinessType(value)}
                   />
                 </DropdownContainer>
+                <br />
                 <br />
                 <br />
                 <ValidAlert valid={businessTypeValid}>
@@ -300,16 +284,17 @@ const SignUpPage = () => {
                 <DropdownContainer>
                   <Dropdown
                     items={[
-                      { item: "item1", value: "value1" },
-                      { item: "item2", value: "value2" },
-                      { item: "item3", value: "value3" },
+                      { item: "1~10명", value: "1~10명" },
+                      { item: "11~50명", value: "11~50명" },
+                      { item: "51~100명", value: "51~100명" },
+                      { item: "100명 이상", value: "100명 이상" },
                     ]}
-                    setItem={(value) => {
+                    setValue={(value) => {
                       setBusinessSize(value);
                     }}
-                    value={businessSize}
                   />
                 </DropdownContainer>
+                <br />
                 <br />
                 <br />
                 <ValidAlert valid={businessSizeValid}>
@@ -318,15 +303,7 @@ const SignUpPage = () => {
               </ComboBoxSubContainer>
             </ComboBoxContainer>
             <SignButtonContainer>
-              <SignButton
-                onClick={() => {
-                  if (validation()) {
-                    setProgress(progress + 1);
-                  }
-                }}
-              >
-                계속하기
-              </SignButton>
+              <SignButton onClick={handleContinue}>계속하기</SignButton>
             </SignButtonContainer>
           </>
         ) : (
@@ -364,7 +341,7 @@ const SignUpPage = () => {
             />
             <ValidAlert valid={confirmPasswordValid}>
               * 비밀번호를 확인해주세요
-            </ValidAlert>
+            </ValidAlert>{" "}
             <SignButton
               onClick={() => {
                 if (signupValid()) {

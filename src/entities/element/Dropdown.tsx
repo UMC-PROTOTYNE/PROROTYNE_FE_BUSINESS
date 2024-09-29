@@ -4,11 +4,12 @@ import { colors } from "@/shared/configs/colors";
 
 interface DropdownProps {
   items: { item: string; value: string }[];
-  setItem: (item: string) => void;
-  value: string; // defaultItem 추가
+  setValue: (value: string) => void;
+  selectedItem?: string;
 }
-export const Dropdown = ({ items, setItem, value }: DropdownProps) => {
+export const Dropdown = ({ items, selectedItem, setValue }: DropdownProps) => {
   const [isDropdownView, setDropdownView] = useState(false);
+  const [item, setItem] = useState(selectedItem || items[0].item);
 
   const handleClickContainer = () => {
     setDropdownView(!isDropdownView);
@@ -21,24 +22,25 @@ export const Dropdown = ({ items, setItem, value }: DropdownProps) => {
       }}
     >
       <DropdownButton onClick={handleClickContainer} {...{ isDropdownView }}>
-        {value}
+        {item}
         <img src="/icons/dropdownArr.svg" />
       </DropdownButton>
       {isDropdownView && (
         <DropdownContents>
           {items.map((li, i) => (
-            <>
+            <main key={i}>
               <div
                 onClick={() => {
-                  setItem(li.value);
+                  setItem(li.item);
+                  setValue(li.value);
                   setDropdownView(false);
                 }}
                 key={i}
               >
-                <Content selected={value === li.item}>{li.item}</Content>
+                <Content selected={item === li.item}>{li.item}</Content>
               </div>
               {i !== items.length - 1 && <hr />}
-            </>
+            </main>
           ))}
         </DropdownContents>
       )}
