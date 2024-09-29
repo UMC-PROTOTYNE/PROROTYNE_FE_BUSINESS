@@ -19,14 +19,14 @@ const SignInPage = () => {
           <Input placeholder="아이디" onChange={(e) => {
                 setUsername(e.target.value);
               }}/>
-          <Input placeholder="비밀번호" onChange={(e) => {
+          <Input type="password" placeholder="비밀번호" onChange={(e) => {
                 setPassword(e.target.value);
               }}/>
           <SignButton
             onClick={() => {
               signin({
-                username: username,
-                password: password,
+                username,
+                password,
               }).then(() => navigate("/home"));
             }}
           >

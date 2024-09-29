@@ -6,13 +6,6 @@ import {
   ValidAlert,
   Dropdown,
 } from "@/entities";
-import {
-  BlueBorderButton,
-  SignButton,
-  Input,
-  ValidAlert,
-  Dropdown,
-} from "@/entities";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
@@ -124,9 +117,7 @@ const SignUpPage = () => {
   const [detailedAddress, setDetailedAddress] = useState("");
   const [detailedAddressValid, setDetailedAddressValid] = useState(true);
   const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
-  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
   const [businessTypeValid, setBusinessTypeValid] = useState(true);
-  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
@@ -146,8 +137,6 @@ const SignUpPage = () => {
       detailedAddress: inputAddress !== "" && detailedAddress !== "",
       businessType: businessType !== "업종을 선택해 주세요",
       businessSize: businessSize !== "기업 규모를 선택해 주세요",
-      businessType: businessType !== "업종을 선택해 주세요",
-      businessSize: businessSize !== "기업 규모를 선택해 주세요",
     };
 
     setCompanyNameValid(isValid.companyName);
@@ -165,6 +154,7 @@ const SignUpPage = () => {
       username: username !== "",
       password: password !== "",
       confirmPassword: confirmPassword !== "",
+      passwordMatch: password === confirmPassword,
     };
 
     setUsernameValid(isValid.username);
@@ -180,20 +170,10 @@ const SignUpPage = () => {
         {address && (
           <AddressDetailBackground
             onClick={() => {
-          <AddressDetailBackground
-            onClick={() => {
               setAddress(false);
             }}
           >
-            }}
-          >
             <AddressDetailContainer>
-              <DaumPostcode
-                onComplete={(data) => {
-                  setAddress(false);
-                  setInputAddress(data.address);
-                }}
-              />
               <DaumPostcode
                 onComplete={(data) => {
                   setAddress(false);
