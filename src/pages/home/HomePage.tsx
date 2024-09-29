@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import { BlueBorderButton } from "@/entities";
 import { Prototype } from "@/widget";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { PAGE_URL } from "@/shared";
+import { HomeService } from "@/shared";
 
 const HomePageContainer = styled.div`
   display: flex;
@@ -25,9 +26,65 @@ const Select = styled.div<{ isActive: boolean }>`
   cursor: pointer;
   color: ${(props) => (props.isActive ? "blue" : "black")};
 `;
+interface Product {
+  productId: number;
+  thumbnailUrl: string;
+  productName: string;
+  reqTickets: number;
+  createdDate: string;
+  category: string;
+  eventCount: number;
+}
+interface Event {
+  eventId: number;
+  thumbnailUrl: string;
+  productName: string;
+  stageAndDate: string;
+  createdDate: string;
+  category: string;
+}
 const HomePage = () => {
   const [isPrototype, setIsPrototype] = useState(true);
   const navigate = useNavigate();
+  const [product, setProduct] = useState<[Product]>([
+    {
+      productId: 1,
+      thumbnailUrl: "",
+      productName: "",
+      reqTickets: 0,
+      createdDate: "",
+      category: "",
+      eventCount: 0,
+    },
+  ]);
+  const [event, setEvent] = useState<[Event]>([ 
+    {
+      eventId: 1,
+      thumbnailUrl: "",
+      productName: "",
+      stageAndDate: "",
+      createdDate: "",
+      category: "",
+    },
+  ]);
+  const homeService = HomeService();
+
+  const fetchProducts = async () => {
+    const productArray = await homeService.products();
+    return productArray;
+  };
+
+  useEffect(() => {
+    fetchProducts().then((product) => setProduct(product));
+  }, []);
+
+  const fetchEvents = async () => {
+    const eventArray = await homeService.events();
+    return eventArray;
+  }
+  useEffect(() => {
+    fetchEvents().then((event) => setEvent(event));
+  }, []);
 
   return (
     <HomePageContainer>
@@ -52,28 +109,42 @@ const HomePage = () => {
         ) : (
           <></>
         )}
-        {isPrototype ? (
+        
+        {product.map((product, index) => (
+        isPrototype ? (
           <Prototype
+            key={index}
             isPrototype={isPrototype}
-            image="./temp.svg"
-            name="마라탕후루"
-            ticket={3}
-            regist="2024.02.02"
-            category="식품"
-            ongoing={3}
-            releaseDate="2024.01.01"
+            image={product.thumbnailUrl}
+            name={product.productName}
+            ticket={product.reqTickets}
+            regist={product.createdDate}
+            category={product.category}
+            ongoing={product.eventCount}
+            releaseDate={product.createdDate}
           />
         ) : (
+          <>
+          </>
+        )))}
+        {event.map((event, index) => (
+          !isPrototype ? (
           <Prototype
+            key={index}
             isPrototype={isPrototype}
-            image="./temp.svg"
-            name="마라탕루"
-            step="신청자 모집 기간"
-            regist="2024.02.02"
-            category="식품"
-            terminateDate="2024.05.04"
+            image={event.thumbnailUrl}
+            name={event.productName}
+            step={event.stageAndDate}
+            regist={event.createdDate}
+            category={event.category}
+            terminateDate={event.createdDate}
           />
-        )}
+        ) : (
+          <>
+          </>
+        )
+      ))}
+
       </HomePageSubContainer>
     </HomePageContainer>
   );
