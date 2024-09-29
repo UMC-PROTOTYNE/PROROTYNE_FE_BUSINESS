@@ -58,6 +58,7 @@ interface PrototypeInfo {
   ongoing?: number;
   releaseDate?: string;
   terminateDate?: string;
+  eventId?: number;
 }
 export const Prototype = ({
   isPrototype,
@@ -70,13 +71,16 @@ export const Prototype = ({
   ongoing,
   releaseDate,
   terminateDate,
+  eventId,
 }: PrototypeInfo) => {
   const navigate = useNavigate();
 
   return (
     <PrototypeContainer>
       <Image src={image} />
-      <DescriptionContainer onClick={() => navigate("/investment/1/info")}>
+      <DescriptionContainer
+        onClick={() => navigate(`/investment/${eventId}/info`)}
+      >
         <Name>{name}</Name>
         {isPrototype ? (
           <Description>티켓: {ticket}개</Description>
