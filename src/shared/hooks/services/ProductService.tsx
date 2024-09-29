@@ -6,6 +6,8 @@ export const ProductService = () => {
   const store = useProductStore();
 
   const createProduct = async () => {
+    const data = new FormData();
+
     const body = {
       productInfo: {
         productName: store.productName,
@@ -13,6 +15,7 @@ export const ProductService = () => {
         reqTickets: store.reqTickets,
         notes: store.notes,
         category: store.category,
+        launchedDate: store.launchedDate,
       },
       questions: {
         question1: store.question1,
@@ -22,7 +25,14 @@ export const ProductService = () => {
         question5: store.question5,
       },
     };
-    await FORMAPI.post(URI, body);
+
+    data.append("productRequest", JSON.stringify(body));
+
+    store.images.forEach((image) => {
+      data.append("imageFiles", image);
+    });
+
+    await FORMAPI.post(URI, data);
     store.reset();
   };
 

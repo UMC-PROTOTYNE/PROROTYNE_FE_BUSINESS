@@ -222,12 +222,14 @@ const InputWrapper = styled.div`
 `;
 
 const Textarea = styled.textarea`
-  width: 100%;
+  width: 97%;
   padding: 10px;
   border: 1px solid ${colors.gray[2]};
   border-radius: 4px;
   resize: none; /* 사용자가 크기를 변경할 수 있도록 설정 */
   outline: none;
+
+  margin-right: 20px;
 
   ::placeholder {
     color: ${colors.gray[2]};
@@ -255,7 +257,8 @@ const InputDatePickerWrapper = styled.p`
   margin: 0;
   & input {
     padding: 5px 10px;
-    width: 100px;
+    width: 300px;
+    height: 30px;
     border: 1px solid ${colors.gray[2]};
     border-radius: 5px;
   }

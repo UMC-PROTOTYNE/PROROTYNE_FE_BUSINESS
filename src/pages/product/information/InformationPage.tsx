@@ -90,6 +90,10 @@ const LaunchDateWrapper = styled.div`
   display: flex;
   flex-dirction: row;
   justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+
+  margin-left: -10px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -199,11 +203,11 @@ const InformationPage = () => {
             {element.type === "date" && (
               <LaunchDateWrapper>
                 {scheduleYet ? (
-                  <ButtonWrapper>
-                    <Button onClick={() => setScheduleYet((prev) => !prev)}>
-                      미정
-                    </Button>
-                  </ButtonWrapper>
+                  <BlueBorderButton
+                    onClick={() => setScheduleYet((prev) => !prev)}
+                  >
+                    설정하기
+                  </BlueBorderButton>
                 ) : (
                   <>
                     <InputSpecificDate
@@ -214,7 +218,7 @@ const InformationPage = () => {
                     <BlueBorderButton
                       onClick={() => setScheduleYet((prev) => !prev)}
                     >
-                      미정
+                      미정하기
                     </BlueBorderButton>
                   </>
                 )}

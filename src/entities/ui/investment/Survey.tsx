@@ -16,14 +16,20 @@ export const Survey = () => {
 
   const [modal, onModal] = useState<string | false>(false);
 
+  console.log(data);
+
   if (isLoading) {
     return <Loading />;
   }
 
-  const questions = data!.result.objectives.map(
-    (objective) => objective.question
-  );
-  questions.push(data!.result.subjective.question);
+  const questions = [];
+
+  data?.result.objectives.forEach((objective) => {
+    questions.push(objective.question);
+  });
+
+  if (data?.result.subjectiveList[0].question)
+    questions.push(data?.result.subjectiveList[0].question);
 
   return (
     <>
@@ -54,10 +60,10 @@ export const Survey = () => {
           );
         })}
 
-        <Label>{`5. ${data?.result.subjective.question}`}</Label>
+        <Label>{`5. ${data?.result.subjectiveList[0].question}`}</Label>
         <AnswerContainer>
-          {data?.result.subjective.answers.map((element) => {
-            const copy = element as { answer: string; userId: string };
+          {data?.result.subjectiveList.map((element) => {
+            const copy = element.answers;
             return (
               <Answer key={copy.userId} onClick={() => onModal(copy.userId)}>
                 {copy.answer}
