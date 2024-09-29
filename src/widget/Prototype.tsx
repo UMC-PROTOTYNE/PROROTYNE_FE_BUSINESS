@@ -14,6 +14,8 @@ const PrototypeContainer = styled.div`
 `;
 const Image = styled.img`
   margin: 0px 10px 0px 10px;
+  width: 180px;
+  height: 180px;
 `;
 const DescriptionContainer = styled.div`
   display: flex;
