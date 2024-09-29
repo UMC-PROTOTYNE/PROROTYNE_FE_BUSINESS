@@ -50,7 +50,7 @@ export const InvestmentService = () => {
 
   const UserDelivery = async (
     investmentId: string | undefined,
-    params: { userId: number; "택배사 이름": string; "운송장 번호": string }
+    params: { userId: number; deliveryCompany: string; transportNum: string }
   ) => {
     const {
       data: { result },

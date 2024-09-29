@@ -50,8 +50,8 @@ const ApplicantItem = ({
             onClick={() => {
               InvestmentService().UserDelivery(params.investmentId, {
                 userId,
-                "택배사 이름": deliveryCompany,
-                "운송장 번호": deliveryNumber,
+                deliveryCompany: deliveryCompany,
+                transportNum: deliveryNumber,
               });
               setDeliveryStatus("배송 후");
               onDeliveryModal(false);
