@@ -4,38 +4,40 @@ import { useState } from "react";
 import { Logo } from "@/widget";
 import { SignButton } from "@/entities";
 import { AuthService } from "@/shared";
+import { useForm, SubmitHandler } from "react-hook-form"
+
+interface IFormInput {
+  username: string
+  password: string
+}
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const { signin } = AuthService();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm<IFormInput>()
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    signin({
+      username: data.username,
+      password: data.password,
+    }).then(() => navigate("/home"));
+  }
 
   return (
     <SignInContainer>
       <SignInSubContainer>
         <Logo />
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Input
             placeholder="아이디"
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
+            {...register("username", { required: true, maxLength: 30 })}
           />
           <Input
             placeholder="비밀번호"
             type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            {...register("password", { required: true, maxLength: 30 })}
           />
           <SignButton
-            onClick={() => {
-              signin({
-                username: username,
-                password: password,
-              }).then(() => navigate("/home"));
-            }}
+            type="submit"
           >
             로그인
           </SignButton>
@@ -65,7 +67,7 @@ const SignInSubContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
