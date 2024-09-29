@@ -84,7 +84,6 @@ const Logo = styled.img`
 const Container = styled.main`
   position: fixed;
 
-  height: calc(100vh - 200px);
   width: 100vw;
 
   left: 0;

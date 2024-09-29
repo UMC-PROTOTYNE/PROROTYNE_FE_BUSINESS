@@ -6,10 +6,18 @@ import {
   ValidAlert,
   Dropdown,
 } from "@/entities";
+import {
+  BlueBorderButton,
+  SignButton,
+  Input,
+  ValidAlert,
+  Dropdown,
+} from "@/entities";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
-
+import { AuthService } from "@/shared/hooks/services/AuthService";
+import { useCompanyStore } from "@/shared";
 const SignUpContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -73,6 +81,7 @@ const AddressDetailContainer = styled.div`
   align-items: center;
   background: white;
   border: 1px solid #d9d9d9;
+  box-shadow: 4px 4px 4px rgba(0.3, 0.3, 0.3, 0.3);
 `;
 
 const DropdownContainer = styled.div`
@@ -93,6 +102,9 @@ const SignButtonContainer = styled.div`
 const SignUpPage = () => {
   const navigate = useNavigate();
 
+  const { signup } = AuthService();
+  const companyStore = useCompanyStore();
+
   const [progress, setProgress] = useState(0);
   const [address, setAddress] = useState(false);
   const [inputAddress, setInputAddress] = useState("");
@@ -107,9 +119,11 @@ const SignUpPage = () => {
   const [emailValid, setEmailValid] = useState(true);
   const [detailedAddress, setDetailedAddress] = useState("");
   const [detailedAddressValid, setDetailedAddressValid] = useState(true);
-  const [businessType, setBusinessType] = useState("");
+  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
+  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
   const [businessTypeValid, setBusinessTypeValid] = useState(true);
-  const [businessSize, setBusinessSize] = useState("");
+  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
+  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
   const [usernameValid, setUsernameValid] = useState(true);
@@ -125,8 +139,10 @@ const SignUpPage = () => {
       phoneNumber: phoneNumber !== "",
       email: email !== "",
       detailedAddress: inputAddress !== "" && detailedAddress !== "",
-      businessType: businessType !== "",
-      businessSize: businessSize !== "",
+      businessType: businessType !== "업종을 선택해 주세요",
+      businessSize: businessSize !== "기업 규모를 선택해 주세요",
+      businessType: businessType !== "업종을 선택해 주세요",
+      businessSize: businessSize !== "기업 규모를 선택해 주세요",
     };
 
     setCompanyNameValid(isValid.companyName);
@@ -145,6 +161,7 @@ const SignUpPage = () => {
       password: password !== "",
       confirmPassword: confirmPassword !== "",
     };
+
     setUsernameValid(isValid.username);
     setPasswordValid(isValid.password);
     setConfirmPasswordValid(isValid.confirmPassword);
@@ -224,7 +241,9 @@ const SignUpPage = () => {
             <Input
               placeholder="이메일을 작성해주세요"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             <ValidAlert valid={emailValid}>* 이메일을 작성해주세요</ValidAlert>
             <SubTitle>주소</SubTitle>
@@ -280,7 +299,9 @@ const SignUpPage = () => {
                       { item: "51~100명", value: "51~100명" },
                       { item: "100명 이상", value: "100명 이상" },
                     ]}
-                    setValue={(value) => setBusinessSize(value)}
+                    setItem={(value) => {
+                      setBusinessSize(value);
+                    }}
                   />
                 </DropdownContainer>
                 <br />
@@ -313,6 +334,7 @@ const SignUpPage = () => {
             </ValidAlert>
             <SubTitle>비밀번호</SubTitle>
             <Input
+              type="password"
               placeholder="특수문자 포함 10자 이상"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -322,6 +344,7 @@ const SignUpPage = () => {
             </ValidAlert>
             <SubTitle>비밀번호 확인</SubTitle>
             <Input
+              type="password"
               placeholder="다시 한번 입력해주세요"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
