@@ -10,6 +10,7 @@ export {
 export { colors } from "./configs/colors";
 
 export { useCompanyStore } from "./hooks/stores/useCompanyStore";
+export { useSignUpStore } from "./hooks/stores/useSignUpStore";
 
 export { 
   AuthService

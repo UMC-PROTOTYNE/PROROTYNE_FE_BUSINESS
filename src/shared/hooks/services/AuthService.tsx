@@ -1,8 +1,15 @@
 import { AxiosResponse } from "axios";
 
-import { API, setAccess, storeAccess, useCompanyStore } from "@/shared";
+import {
+  API,
+  setAccess,
+  storeAccess,
+  useSignUpStore,
+  useCompanyStore,
+} from "@/shared";
 
 export const AuthService = () => {
+  const userStore = useSignUpStore((state) => state);
   const setCompany = useCompanyStore((state) => state.setCompany);
 
   const signin = async (body: Company.SignInReqDto) => {

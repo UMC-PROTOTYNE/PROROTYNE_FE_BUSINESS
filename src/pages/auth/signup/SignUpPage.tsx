@@ -6,12 +6,20 @@ import {
   ValidAlert,
   Dropdown,
 } from "@/entities";
+import {
+  BlueBorderButton,
+  SignButton,
+  Input,
+  ValidAlert,
+  Dropdown,
+} from "@/entities";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
 import { AuthService } from "@/shared/hooks/services/AuthService";
 import { useCompanyStore } from "@/shared";
 const SignUpContainer = styled.div`
+  display: flex;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +57,8 @@ const ComboBoxContainer = styled.div`
 const ComboBoxSubContainer = styled.div`
   margin-right: 50px;
   width: 152px;
+  margin-right: 50px;
+  width: 152px;
 `;
 const AddressDetailBackground = styled.div`
   position: fixed;
@@ -72,6 +82,8 @@ const AddressDetailContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: white;
+  border: 1px solid #d9d9d9;
+  box-shadow: 4px 4px 4px rgba(0.3, 0.3, 0.3, 0.3);
   border: 1px solid #d9d9d9;
   box-shadow: 4px 4px 4px rgba(0.3, 0.3, 0.3, 0.3);
 `;
@@ -112,7 +124,9 @@ const SignUpPage = () => {
   const [detailedAddress, setDetailedAddress] = useState("");
   const [detailedAddressValid, setDetailedAddressValid] = useState(true);
   const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
+  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
   const [businessTypeValid, setBusinessTypeValid] = useState(true);
+  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
@@ -122,6 +136,7 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
 
+
   const validation = () => {
     const isValid = {
       companyName: companyName !== "",
@@ -129,6 +144,8 @@ const SignUpPage = () => {
       phoneNumber: phoneNumber !== "",
       email: email !== "",
       detailedAddress: inputAddress !== "" && detailedAddress !== "",
+      businessType: businessType !== "업종을 선택해 주세요",
+      businessSize: businessSize !== "기업 규모를 선택해 주세요",
       businessType: businessType !== "업종을 선택해 주세요",
       businessSize: businessSize !== "기업 규모를 선택해 주세요",
     };
@@ -163,10 +180,20 @@ const SignUpPage = () => {
         {address && (
           <AddressDetailBackground
             onClick={() => {
+          <AddressDetailBackground
+            onClick={() => {
               setAddress(false);
             }}
           >
+            }}
+          >
             <AddressDetailContainer>
+              <DaumPostcode
+                onComplete={(data) => {
+                  setAddress(false);
+                  setInputAddress(data.address);
+                }}
+              />
               <DaumPostcode
                 onComplete={(data) => {
                   setAddress(false);
