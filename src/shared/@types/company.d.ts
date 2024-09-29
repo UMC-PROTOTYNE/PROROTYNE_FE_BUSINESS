@@ -1,7 +1,7 @@
 declare namespace Company {
   //DTO
   export interface SignInReqDto {
-    signId: string;
+    username: string;
     password: string;
   }
 
