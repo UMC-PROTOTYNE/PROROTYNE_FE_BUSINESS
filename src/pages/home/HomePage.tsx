@@ -122,7 +122,7 @@ const HomePage = () => {
               category={product.category}
               ongoing={product.eventCount}
               releaseDate={product.createdDate}
-              eventId={product.productId}
+              productId={product.productId}
             />
           ) : (
             <></>
@@ -139,6 +139,7 @@ const HomePage = () => {
               regist={event.createdDate}
               category={event.category}
               terminateDate={event.createdDate}
+              productId={event.eventId}
             />
           ) : (
             <></>

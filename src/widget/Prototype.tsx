@@ -23,7 +23,7 @@ const DescriptionContainer = styled.div`
   justify-content: center;
   width: 180px;
   margin: 0px;
-  cursor: pointer;
+  /* cursor: pointer; */
 `;
 const Description = styled.div`
   margin: 5px 0px;
@@ -58,7 +58,7 @@ interface PrototypeInfo {
   ongoing?: number;
   releaseDate?: string;
   terminateDate?: string;
-  eventId?: number;
+  productId?: number;
 }
 export const Prototype = ({
   isPrototype,
@@ -71,7 +71,7 @@ export const Prototype = ({
   ongoing,
   releaseDate,
   terminateDate,
-  eventId,
+  productId,
 }: PrototypeInfo) => {
   const navigate = useNavigate();
 
@@ -79,7 +79,7 @@ export const Prototype = ({
     <PrototypeContainer>
       <Image src={image} />
       <DescriptionContainer
-        onClick={() => navigate(`/investment/${eventId}/info`)}
+      // onClick={() => navigate(`/investment/${productId}/info`)}
       >
         <Name>{name}</Name>
         {isPrototype ? (
@@ -105,7 +105,7 @@ export const Prototype = ({
           onClick={() => {
             isPrototype
               ? navigate(PAGE_URL.InvestmentSchedule)
-              : navigate("/investment/1/info");
+              : navigate(`/investment/${productId}/management`);
           }}
         >
           {isPrototype ? "체험 생성" : "체험 관리"}
