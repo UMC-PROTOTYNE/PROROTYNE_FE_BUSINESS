@@ -18,7 +18,7 @@ const SignInPage = () => {
           <Input placeholder="비밀번호" />
           <SignButton
             onClick={() => {
-              signIn("string", "string").then(() => navigate("/home"));
+              signIn("testid", "testpw").then(() => navigate("/home"));
             }}
           >
             로그인

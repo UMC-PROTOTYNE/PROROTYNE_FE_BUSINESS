@@ -19,17 +19,17 @@ export const SurveyModal = ({
 
   const { useGetReview, grantPenalty } = ReviewService();
 
-  /* const { data, isLoading } = useGetReview(investmentId!, id, onPenalty);
+  const { data, isLoading } = useGetReview(investmentId!, id);
 
   if (isLoading) {
     return <Loading />;
-  } */
+  }
 
   const objectives = [
-    result.answer1,
-    result.answer2,
-    result.answer3,
-    result.answer4,
+    data?.result.answer1,
+    data?.result.answer2,
+    data?.result.answer3,
+    data?.result.answer4,
   ];
 
   return (
@@ -67,21 +67,21 @@ export const SurveyModal = ({
           <Question>
             <Label>6. 재구매 의사에 대해 알려주세요.</Label>
             <RadioGroup>
-              <RadioButton selected={result.answer6}>
+              <RadioButton selected={data!.result.answer6}>
                 <input
                   type="radio"
                   name="6"
                   value={1}
-                  checked={result.answer6}
+                  checked={data?.result.answer6}
                 />
                 할래요
               </RadioButton>
-              <RadioButton selected={!result.answer6}>
+              <RadioButton selected={!data?.result.answer6}>
                 <input
                   type="radio"
                   name="6"
                   value={2}
-                  checked={!result.answer6}
+                  checked={!data?.result.answer6}
                 />
                 안할래요
               </RadioButton>
@@ -91,7 +91,7 @@ export const SurveyModal = ({
           <Question>
             <Label>7. 첨부 이미지</Label>
             <ImgContainer>
-              {result.imageFiles.map((imageUrl, index) => (
+              {data?.result.imageFiles.map((imageUrl, index) => (
                 <ImageBlock key={index} src={imageUrl}></ImageBlock>
               ))}
             </ImgContainer>
@@ -102,7 +102,7 @@ export const SurveyModal = ({
           <Button primary onClick={onClose}>
             확인 완료
           </Button>
-          {!result.penalty ? (
+          {!data?.result.penalty ? (
             <Button>페널티 부여</Button>
           ) : (
             <Button
@@ -232,7 +232,7 @@ const ImageBlock = styled.div`
 
 //TEST
 
-const result = {
+/* const result = {
   penalty: false,
 
   answer1: "3",
@@ -248,3 +248,4 @@ const result = {
     "https://prototyne.s3.ap-northeast-2.amazonaws.com/test/f38213c9-3164-4e23-b6a0-2402ea4f96c9.jpg",
   ],
 };
+ */

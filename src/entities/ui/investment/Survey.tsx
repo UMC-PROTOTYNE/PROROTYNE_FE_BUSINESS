@@ -9,18 +9,21 @@ import { Loading } from "@/entities";
 
 export const Survey = () => {
   const param = useParams();
+  const { investmentId } = param;
 
-  /* const { useGetReviews } = ReviewService();
-  const { data, isLoading } = useGetReviews(investmentId); 
-  
-  if (isLoading) {
-  return <Loading />;
-  }*/
+  const { useGetReviews } = ReviewService();
+  const { data, isLoading } = useGetReviews(investmentId!);
 
   const [modal, onModal] = useState<string | false>(false);
 
-  const questions = objectives.map((objective) => objective.question);
-  questions.push(subjective.question);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const questions = data!.result.objectives.map(
+    (objective) => objective.question
+  );
+  questions.push(data!.result.subjective.question);
 
   return (
     <>
@@ -32,7 +35,7 @@ export const Survey = () => {
         />
       ) : null}
       <Container>
-        {objectives.map((objective, index) => {
+        {data?.result.objectives.map((objective, index) => {
           const answers = objective.answers.map((answer, index) => ({
             label: index + 1 + "번 응답",
             num: answer,
@@ -51,9 +54,9 @@ export const Survey = () => {
           );
         })}
 
-        <Label>{`5. ${subjective.question}`}</Label>
+        <Label>{`5. ${data?.result.subjective.question}`}</Label>
         <AnswerContainer>
-          {subjective.answers.map((element) => {
+          {data?.result.subjective.answers.map((element) => {
             const copy = element as { answer: string; userId: string };
             return (
               <Answer key={copy.userId} onClick={() => onModal(copy.userId)}>
@@ -68,8 +71,8 @@ export const Survey = () => {
           width={600}
           height={300}
           data={[
-            { label: "할래요.", num: repurchase[0] },
-            { label: "안할래요.", num: repurchase[1] },
+            { label: "할래요.", num: data?.result.repurchase[0] },
+            { label: "안할래요.", num: data?.result.repurchase[1] },
           ]}
         >
           <XAxis dataKey="label" />
@@ -81,7 +84,7 @@ export const Survey = () => {
 
         <Label>7. 첨부 이미지</Label>
         <AnswerContainer>
-          {images.map((element, index1) => (
+          {data?.result.images.map((element, index1) => (
             <>
               {element.imageFiles.map((imageUrl, index2) => (
                 <ImageBlock
@@ -146,7 +149,7 @@ const ImageBlock = styled.div`
 
 //TEST
 
-const objectives: Review.GetReviewsResDto["result"]["objectives"] = [
+/* const objectives: Review.GetReviewsResDto["result"]["objectives"] = [
   {
     question: "매움의 정도를 기록해주세요",
     answers: [100, 200, 300, 100, 200],
@@ -257,3 +260,4 @@ const images: Review.GetReviewsResDto["result"]["images"] = [
     ],
   },
 ];
+ */
