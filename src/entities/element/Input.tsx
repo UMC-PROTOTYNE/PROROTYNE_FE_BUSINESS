@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { colors } from "@/shared";
+import { colors, useProductStore } from "@/shared";
 import { Button } from "./Button";
 
 export const Input = styled.input`
@@ -10,12 +10,18 @@ export const Input = styled.input`
   border-bottom: 1px solid gray;
 `;
 
-
 interface InputProps {
   value: string;
   setValue: (value: string) => void | ((value: number) => void);
   type?: string;
   placeholder?: string;
+}
+
+interface TextareaProps {
+  value: string;
+  setValue: (value: string) => void | ((value: number) => void);
+  placeholder?: string;
+  rows?: number;
 }
 
 interface InputTitleProps extends InputProps {
@@ -38,6 +44,13 @@ interface InputDatePickerProps {
   placeholder?: string;
 }
 
+interface InputSpecificDateProps {
+  date: string | null;
+  setDate: (date: string) => void;
+  type?: string;
+  placeholder?: string;
+}
+
 export const InputDefault = ({
   value,
   setValue,
@@ -51,6 +64,26 @@ export const InputDefault = ({
           placeholder,
           type: type || "text",
           value,
+          onChange: (e) => setValue(e.target.value),
+        }}
+      />
+    </InputWrapper>
+  );
+};
+
+export const InputTextarea = ({
+  value,
+  setValue,
+  placeholder,
+  rows = 3,
+}: TextareaProps) => {
+  return (
+    <InputWrapper>
+      <Textarea
+        {...{
+          placeholder,
+          value,
+          rows,
           onChange: (e) => setValue(e.target.value),
         }}
       />
@@ -143,6 +176,23 @@ export const InputDatePicker = ({
   );
 };
 
+export const InputSpecificDate = ({
+  date,
+  setDate,
+}: InputSpecificDateProps) => {
+  return (
+    <InputWrapper>
+      <InputDatePickerWrapper>
+        <input
+          type="date"
+          value={date || ""}
+          onChange={(e) => setDate(e.target.value)} // = 뒤에는 중괄호로 감싸줍니다
+        />
+      </InputDatePickerWrapper>
+    </InputWrapper>
+  );
+};
+
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -171,6 +221,19 @@ const InputWrapper = styled.div`
   }
 `;
 
+const Textarea = styled.textarea`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid ${colors.gray[2]};
+  border-radius: 4px;
+  resize: none; /* 사용자가 크기를 변경할 수 있도록 설정 */
+  outline: none;
+
+  ::placeholder {
+    color: ${colors.gray[2]};
+  }
+`;
+
 const Title = styled.h2`
   width: 100%;
   font-size: 16px;
@@ -196,4 +259,80 @@ const InputDatePickerWrapper = styled.p`
     border: 1px solid ${colors.gray[2]};
     border-radius: 5px;
   }
+`;
+
+export const ImageQuestion = () => {
+  const addImage = useProductStore((state) => state.addImage);
+  const images = useProductStore((state) => state.images);
+
+  console.log(images);
+
+  return (
+    <>
+      <ImageContainer>
+        {images.map((image, index) => (
+          <ImageBlock key={index} src={URL.createObjectURL(image)}></ImageBlock>
+        ))}
+        {images.length < 3 ? (
+          <>
+            <AddImageBlock htmlFor="upload">+</AddImageBlock>
+            <input
+              type="file"
+              id="upload"
+              style={{ display: "none" }}
+              name="upload"
+              accept="image/*"
+              capture="environment"
+              onChange={(event) => {
+                console.log("!!");
+                if (event.target.files) addImage(event.target.files[0]);
+              }}
+            ></input>
+          </>
+        ) : null}
+      </ImageContainer>
+    </>
+  );
+};
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+
+  justify-content: flex-start;
+
+  margin-top: 8px;
+`;
+
+const ImageBlock = styled.div`
+  width: 101px;
+  height: 101px;
+
+  background-image: url(${(props: { src: string }) => props.src});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 10px;
+
+  margin-right: 10px;
+`;
+
+const AddImageBlock = styled.label`
+  width: 101px;
+  height: 101px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 50px;
+
+  background-color: #d9d9d9;
+
+  border-radius: 10px;
+
+  color: white;
 `;

@@ -51,7 +51,7 @@ export const Dropdown = ({ items, selectedItem, setValue }: DropdownProps) => {
 const DropdownWrapper = styled.div`
   position: relative;
   min-height: 24px;
-  width: 100%;
+  width: 30%;
 `;
 
 const DropdownButton = styled.button<{ isDropdownView: boolean }>`

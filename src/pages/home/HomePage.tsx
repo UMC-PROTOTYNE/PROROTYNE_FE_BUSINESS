@@ -57,7 +57,7 @@ const HomePage = () => {
       eventCount: 0,
     },
   ]);
-  const [event, setEvent] = useState<[Event]>([ 
+  const [event, setEvent] = useState<[Event]>([
     {
       eventId: 1,
       thumbnailUrl: "",
@@ -81,7 +81,7 @@ const HomePage = () => {
   const fetchEvents = async () => {
     const eventArray = await homeService.events();
     return eventArray;
-  }
+  };
   useEffect(() => {
     fetchEvents().then((event) => setEvent(event));
   }, []);
@@ -109,42 +109,42 @@ const HomePage = () => {
         ) : (
           <></>
         )}
-        
-        {product.map((product, index) => (
-        isPrototype ? (
-          <Prototype
-            key={index}
-            isPrototype={isPrototype}
-            image={product.thumbnailUrl}
-            name={product.productName}
-            ticket={product.reqTickets}
-            regist={product.createdDate}
-            category={product.category}
-            ongoing={product.eventCount}
-            releaseDate={product.createdDate}
-          />
-        ) : (
-          <>
-          </>
-        )))}
-        {event.map((event, index) => (
-          !isPrototype ? (
-          <Prototype
-            key={index}
-            isPrototype={isPrototype}
-            image={event.thumbnailUrl}
-            name={event.productName}
-            step={event.stageAndDate}
-            regist={event.createdDate}
-            category={event.category}
-            terminateDate={event.createdDate}
-          />
-        ) : (
-          <>
-          </>
-        )
-      ))}
 
+        {product.map((product, index) =>
+          isPrototype ? (
+            <Prototype
+              key={index}
+              isPrototype={isPrototype}
+              image={product.thumbnailUrl}
+              name={product.productName}
+              ticket={product.reqTickets}
+              regist={product.createdDate}
+              category={product.category}
+              ongoing={product.eventCount}
+              releaseDate={product.createdDate}
+              productId={product.productId}
+            />
+          ) : (
+            <></>
+          )
+        )}
+        {event.map((event, index) =>
+          !isPrototype ? (
+            <Prototype
+              key={index}
+              isPrototype={isPrototype}
+              image={event.thumbnailUrl}
+              name={event.productName}
+              step={event.stageAndDate}
+              regist={event.createdDate}
+              category={event.category}
+              terminateDate={event.createdDate}
+              productId={event.eventId}
+            />
+          ) : (
+            <></>
+          )
+        )}
       </HomePageSubContainer>
     </HomePageContainer>
   );

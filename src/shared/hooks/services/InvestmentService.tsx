@@ -7,8 +7,8 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.get(
-      // `/events/${investmentId}`
-      `/events/14` // 14 is a dummy value (홈 화면 구현 필요)
+      `/events/${investmentId}`
+      // `/events/14` // 14 is a dummy value (홈 화면 구현 필요)
     )) as AxiosResponse<Investment.InvestmentInfoReqDto>;
     return result;
   };
@@ -17,8 +17,8 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.get(
-      // `/progress/${investmentId}`
-      `/progress/14` // 14 is a dummy value (홈 화면 구현 필요)
+      `/progress/${investmentId}`
+      // `/progress/14` // 14 is a dummy value (홈 화면 구현 필요)
     )) as AxiosResponse<Investment.InvestmentProgressReqDto>;
     return result;
   };
@@ -27,8 +27,8 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.get(
-      // `/user/list/${investmentId}`
-      `/user/list/14` // 14 is a dummy value (홈 화면 구현 필요)
+      `/user/list/${investmentId}`
+      // `/user/list/14` // 14 is a dummy value (홈 화면 구현 필요)
     )) as AxiosResponse<Investment.UserListReqDto>;
     return result;
   };
@@ -55,11 +55,32 @@ export const InvestmentService = () => {
     const {
       data: { result },
     } = (await API.patch(
-      // `/user/delivery/${investmentId}`
-      `/user/delivery/14`, // 14 is a dummy value (홈 화면 구현 필요)
+      `/user/delivery/${investmentId}`,
+      // `/user/delivery/14`, // 14 is a dummy value (홈 화면 구현 필요)
       null,
       { params }
     )) as AxiosResponse<Investment.UserDeliveryReqDto>;
+    return result;
+  };
+
+  const createInvestment = async (
+    productId: string | undefined,
+    data: {
+      eventStart: string;
+      eventEnd: string;
+      releaseStart: string;
+      releaseEnd: string;
+      feedbackStart: string;
+      feedbackEnd: string;
+    }
+  ) => {
+    const {
+      data: { result },
+    } = (await API.post(
+      `/products/${productId}/event`,
+      // `/products/4/event`, // 14 is a dummy value (홈 화면 구현 필요)
+      data
+    )) as AxiosResponse<Product.createInvestmentReqDto>;
     return result;
   };
 
@@ -69,5 +90,6 @@ export const InvestmentService = () => {
     InvestmentProgress,
     UserPrize,
     UserDelivery,
+    createInvestment,
   };
 };

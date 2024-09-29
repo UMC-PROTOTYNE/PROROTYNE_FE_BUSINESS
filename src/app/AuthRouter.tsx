@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { PAGE_URL, getAccess, setAccess } from "@/shared";
+
+const queryClient = new QueryClient();
 
 const AuthRouter = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -15,7 +18,9 @@ const AuthRouter = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  return <>{children}</>;
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
 };
 
 export default AuthRouter;
