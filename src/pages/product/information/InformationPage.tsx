@@ -196,8 +196,8 @@ const InformationPage = () => {
             {element.type === "dropdown" && element.options && (
               <Dropdown
                 items={element.options}
-                setItem={(val) => handleChange(element.id, val)}
-                value={"카테고리를 선택해주세요."}
+                setValue={(val) => handleChange(element.id, val)}
+                selectedItem={"카테고리를 선택해주세요."}
               />
             )}
             {element.type === "date" && (

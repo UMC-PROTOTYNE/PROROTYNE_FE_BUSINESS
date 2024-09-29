@@ -42,7 +42,7 @@ interface Company {
 }
 const MyCompanyPage = () => {
   const [company] = useState<Company>({
-    name: "기업이름",
+    name: "프로토타인",
     businessNumber: "12345abcde",
     phone: "01012345678",
     email: "hs@naver.com",
