@@ -85,7 +85,7 @@ const RouteHeader = styled.div`
   z-index: 10;
 
   & div {
-    width: 100%;
+    padding-left: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
