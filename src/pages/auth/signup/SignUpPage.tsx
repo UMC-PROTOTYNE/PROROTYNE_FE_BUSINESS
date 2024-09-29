@@ -6,18 +6,12 @@ import {
   ValidAlert,
   Dropdown,
 } from "@/entities";
-import {
-  BlueBorderButton,
-  SignButton,
-  Input,
-  ValidAlert,
-  Dropdown,
-} from "@/entities";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router";
 import { AuthService } from "@/shared/hooks/services/AuthService";
-import { useCompanyStore } from "@/shared";
+// import { useCompanyStore } from "@/shared";
+
 const SignUpContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -103,7 +97,7 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const { signup } = AuthService();
-  const companyStore = useCompanyStore();
+  // const companyStore = useCompanyStore();
 
   const [progress, setProgress] = useState(0);
   const [address, setAddress] = useState(false);
@@ -120,9 +114,7 @@ const SignUpPage = () => {
   const [detailedAddress, setDetailedAddress] = useState("");
   const [detailedAddressValid, setDetailedAddressValid] = useState(true);
   const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
-  const [businessType, setBusinessType] = useState("업종을 선택해 주세요");
   const [businessTypeValid, setBusinessTypeValid] = useState(true);
-  const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSize, setBusinessSize] = useState("기업 규모를 선택해 주세요");
   const [businessSizeValid, setBusinessSizeValid] = useState(true);
   const [username, setUsername] = useState("");
@@ -139,8 +131,6 @@ const SignUpPage = () => {
       phoneNumber: phoneNumber !== "",
       email: email !== "",
       detailedAddress: inputAddress !== "" && detailedAddress !== "",
-      businessType: businessType !== "업종을 선택해 주세요",
-      businessSize: businessSize !== "기업 규모를 선택해 주세요",
       businessType: businessType !== "업종을 선택해 주세요",
       businessSize: businessSize !== "기업 규모를 선택해 주세요",
     };
@@ -173,12 +163,12 @@ const SignUpPage = () => {
       setProgress(progress + 1);
     }
   };
-  const handleSuccess = () => {
-    if (signupValid()) {
-      alert("회원가입이 완료되었습니다");
-      navigate("/signin");
-    }
-  };
+  // const handleSuccess = () => {
+  //   if (signupValid()) {
+  //     alert("회원가입이 완료되었습니다");
+  //     navigate("/signin");
+  //   }
+  // };
 
   return (
     <SignUpContainer>
@@ -299,7 +289,7 @@ const SignUpPage = () => {
                       { item: "51~100명", value: "51~100명" },
                       { item: "100명 이상", value: "100명 이상" },
                     ]}
-                    setItem={(value) => {
+                    setValue={(value) => {
                       setBusinessSize(value);
                     }}
                   />
@@ -351,8 +341,29 @@ const SignUpPage = () => {
             />
             <ValidAlert valid={confirmPasswordValid}>
               * 비밀번호를 확인해주세요
-            </ValidAlert>
-            <SignButton onClick={handleSuccess}>회원가입 완료</SignButton>
+            </ValidAlert>{" "}
+            <SignButton
+              onClick={() => {
+                if (signupValid()) {
+                  signup({
+                    username: username,
+                    password: password,
+                    name: companyName,
+                    regNumber: businessNumber,
+                    phone: phoneNumber,
+                    email: email,
+                    address: inputAddress + " " + detailedAddress,
+                    category: businessType,
+                    size: businessSize,
+                    status: "대기",
+                  });
+                  alert("회원가입이 완료되었습니다");
+                  navigate("/signin");
+                }
+              }}
+            >
+              회원가입 완료
+            </SignButton>
           </>
         )}
       </SignUpSubContainer>
