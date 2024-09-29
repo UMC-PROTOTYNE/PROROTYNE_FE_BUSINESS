@@ -1,26 +1,62 @@
-import { colors } from "@/shared";
+import { colors, InvestmentService } from "@/shared";
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const StatusInfo = () => {
+  const params = useParams();
+
+  const [investmentProgress, setInvestmentProgress] =
+    useState<Investment.InvestmentProgressReqDto>();
+
+  useEffect(() => {
+    InvestmentService()
+      .InvestmentProgress(params.investmentId)
+      .then((result) => {
+        setInvestmentProgress({ result });
+      });
+  }, []);
+
   return (
     <Wrapper>
       <InfoWrapper>
-        <InfoTitleBox>시작 전</InfoTitleBox>
+        <InfoTitleBox active={investmentProgress?.result.stage === 1}>
+          시작 전
+        </InfoTitleBox>
       </InfoWrapper>
       <InfoWrapper>
-        <InfoTitleBox>체험 중</InfoTitleBox>
-        <InfoDetailBox>종료</InfoDetailBox>
+        <InfoTitleBox active={investmentProgress?.result.stage === 2}>
+          체험 중
+        </InfoTitleBox>
+        <InfoDetailBox active={investmentProgress?.result.stage === 2}>
+          {investmentProgress?.result.stage &&
+          investmentProgress?.result.stage < 3
+            ? investmentProgress?.result.stage === 1
+              ? "진행 전"
+              : "진행 중"
+            : "진행 완료"}
+        </InfoDetailBox>
       </InfoWrapper>
       <InfoWrapper>
-        <InfoTitleBox active>당첨자 발표</InfoTitleBox>
-        <InfoDetailBox active>20 / 20</InfoDetailBox>
+        <InfoTitleBox active={investmentProgress?.result.stage === 3}>
+          당첨자 발표
+        </InfoTitleBox>
+        <InfoDetailBox active={investmentProgress?.result.stage === 3}>
+          {investmentProgress?.result.investCount} / 20
+        </InfoDetailBox>
       </InfoWrapper>
       <InfoWrapper>
-        <InfoTitleBox>후기 작성</InfoTitleBox>
-        <InfoDetailBox>0 / 20</InfoDetailBox>
+        <InfoTitleBox active={investmentProgress?.result.stage === 4}>
+          후기 작성
+        </InfoTitleBox>
+        <InfoDetailBox active={investmentProgress?.result.stage === 4}>
+          {investmentProgress?.result.feedbackCount} / 20
+        </InfoDetailBox>
       </InfoWrapper>
       <InfoWrapper>
-        <InfoTitleBox>종료</InfoTitleBox>
+        <InfoTitleBox active={investmentProgress?.result.stage === 5}>
+          종료
+        </InfoTitleBox>
       </InfoWrapper>
     </Wrapper>
   );

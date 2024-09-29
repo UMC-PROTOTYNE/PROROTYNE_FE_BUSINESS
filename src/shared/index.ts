@@ -15,3 +15,8 @@ export { useProductStore } from "./hooks/stores/useProductStore";
 export { AuthService } from "./hooks/services/AuthService";
 export { ReviewService } from "./hooks/services/ReviewService";
 export { ProductService } from "./hooks/services/ProductService";
+export { useSignUpStore } from "./hooks/stores/useSignUpStore";
+
+export { InvestmentService } from "./hooks/services/InvestmentService";
+
+export { HomeService } from "./hooks/services/HomeService";

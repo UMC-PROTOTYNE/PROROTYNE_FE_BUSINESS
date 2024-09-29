@@ -70,7 +70,7 @@ export const SignButton = styled.button`
   position: relative;
   display: flex;
   justify-content: center;
-  margin: 40px 0px;
+  margin: 30px 0px;
   padding: 10px 0px;
   border-radius: 10px;
   width: 100%;
