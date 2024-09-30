@@ -44,8 +44,9 @@ API.interceptors.response.use(
 
 FORMAPI.interceptors.response.use(
   (response) => response,
-  async () => {
-    resetAccess();
-    location.href = PAGE_URL.SignIn;
+  async (e) => {
+    console.log(e);
+    // resetAccess();
+    // location.href = PAGE_URL.SignIn;
   }
 );

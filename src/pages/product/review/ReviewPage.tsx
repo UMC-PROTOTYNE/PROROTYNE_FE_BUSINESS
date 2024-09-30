@@ -40,7 +40,7 @@ const ReviewPage = () => {
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     setQuestions(data);
     createProduct().then(() => {
-      navigate("/home");
+      // navigate("/home");
     });
   };
 

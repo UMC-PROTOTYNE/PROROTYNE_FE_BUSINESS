@@ -26,14 +26,17 @@ export const ProductService = () => {
       },
     };
 
-    data.append("productRequest", JSON.stringify(body));
+    data.append(
+      "productRequest",
+      new Blob([JSON.stringify(body)], { type: "application/json" })
+    );
 
     store.images.forEach((image) => {
       data.append("imageFiles", image);
     });
 
     await FORMAPI.post(URI, data);
-    store.reset();
+    // store.reset();
   };
 
   return { createProduct };
