@@ -59,12 +59,12 @@ const inputs: {
     label: "카테고리",
     type: "dropdown",
     options: [
-      { item: "뷰티", value: "beauty" },
-      { item: "스포츠", value: "sports" },
-      { item: "식품", value: "food" },
-      { item: "의류", value: "clothes" },
-      { item: "전자기기", value: "electronic" },
-      { item: "장난감", value: "toy" },
+      { item: "뷰티", value: "뷰티" },
+      { item: "스포츠", value: "스포츠" },
+      { item: "식품", value: "식품" },
+      { item: "의류", value: "의류" },
+      { item: "전자기기", value: "전자기기" },
+      { item: "장난감", value: "장난감" },
     ],
   },
   {
@@ -142,7 +142,6 @@ const InformationPage = () => {
     const { productName, contents, reqTickets, notes, category, launchedDate } =
       formData;
 
-    console.log(formData);
     setInfo(productName, contents, reqTickets, notes, category, launchedDate);
 
     if (formData.images instanceof File) addImage(formData.images);
@@ -182,7 +181,7 @@ const InformationPage = () => {
                 id={element.id}
                 type="number"
                 placeholder={element.placeholder}
-                value={formData[element.id] as string}
+                value={formData[element.id] as number}
                 onChange={(e) => handleChange(element.id, e.target.value)}
               />
             )}

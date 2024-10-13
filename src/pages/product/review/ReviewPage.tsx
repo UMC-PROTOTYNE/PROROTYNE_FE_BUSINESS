@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-
+import { useState } from "react";
 import { Button, Input } from "@/entities";
 import { useProductStore, ProductService } from "@/shared";
 
@@ -26,7 +26,6 @@ const inputs: {
 
 const ReviewPage = () => {
   const setQuestions = useProductStore((state) => state.setQuestions);
-
   const { createProduct } = ProductService();
 
   const navigate = useNavigate();
@@ -38,11 +37,11 @@ const ReviewPage = () => {
   } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    setQuestions(data);
-    createProduct().then(() => {
+    createProduct(data).then(() => {
       navigate("/home");
     });
   };
+
 
   return (
     <Container>
