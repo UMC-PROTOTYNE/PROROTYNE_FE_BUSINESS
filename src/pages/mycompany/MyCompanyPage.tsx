@@ -1,5 +1,7 @@
+import { MyCompanyService } from "@/shared/hooks/services/MyCompanyService";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 const CompanyContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -32,24 +34,39 @@ const Contact = styled.div`
   font-size: 14px;
 `;
 interface Company {
-  name: string;
-  businessNumber: string;
-  phone: string;
-  email: string;
-  address: string;
-  industry: string;
-  scale: string;
+  id: 0,
+  name: string,
+  regNumber: string,
+  phone: string,
+  email: string,
+  address: string,
+  category: string,
+  size: string
 }
+
 const MyCompanyPage = () => {
-  const [company] = useState<Company>({
-    name: "prototyne",
-    businessNumber: "12345abcde",
-    phone: "01012345678",
-    email: "hs@naver.com",
-    address: "서울시 동작구 흑석동 123-12",
-    industry: "식품",
-    scale: "규모",
+  const myCompany = MyCompanyService();
+
+  const [company, setCompany] = useState<Company>({
+    id: 0,
+    name: "",
+    regNumber: "",
+    phone: "",
+    email: "",
+    address: "",
+    category: "",
+    size: ""
   });
+
+  const fetchInfo = async () => {
+    const myInfo = await myCompany.myCompany();
+    return myInfo;
+  };
+
+  useEffect(() => {
+    fetchInfo().then((info) => setCompany(info));
+  }, []);
+
   return (
     <CompanyContainer>
       <CompanySubContainer>
@@ -57,7 +74,7 @@ const MyCompanyPage = () => {
         <CompanyBorder>
           <Description>
             <Title>사업자 등록 번호</Title>
-            <div>{company.businessNumber}</div>
+            <div>{company.regNumber}</div>
           </Description>
           <Description>
             <Title>전화번호</Title>
@@ -73,11 +90,11 @@ const MyCompanyPage = () => {
           </Description>
           <Description>
             <Title>업종</Title>
-            <div>{company.industry}</div>
+            <div>{company.category}</div>
           </Description>
           <Description>
             <Title>기업 규모</Title>
-            <div>{company.scale}</div>
+            <div>{company.size}</div>
           </Description>
         </CompanyBorder>
         <Contact>

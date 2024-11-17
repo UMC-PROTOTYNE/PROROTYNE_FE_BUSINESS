@@ -29,6 +29,25 @@ export const HomeService = () => {
         })) as AxiosResponse<Company.EventsResDto>;
       return events;
     };
-  return { products, events };
+
+    const deleteProduct = async (productId: number) => {
+      console.log(productId);
+        const data = (await API.delete(`/products/${productId}`, {
+            headers: {
+                "Authorization": getAccess(),
+            },
+        })) as AxiosResponse<Company.DeleteProductResDto>;
+        return data;
+    }
+    
+    const deleteInvestment = async (investmentId: number) => {
+        const data = (await API.delete(`/events/${investmentId}`, {
+            headers: {
+                "Authorization": getAccess(),
+            },
+        })) as AxiosResponse<Company.DeleteInvestmentResDto>;
+        return data;
+    }
+  return { products, events, deleteProduct, deleteInvestment };
 
 };

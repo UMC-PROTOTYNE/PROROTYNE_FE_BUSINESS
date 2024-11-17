@@ -13,7 +13,27 @@ declare namespace Company {
       refresh_token: string;
     };
   }
+  
+  export interface DeleteProductResDto {
+    result: string;
+  }
 
+  export interface DeleteInvestmentResDto {
+    result: string;
+  }
+
+  export interface MyCompanyResDto {
+    result: {
+      id: 0,
+      name: string,
+      regNumber: string,
+      phone: string,
+      email: string,
+      address: string,
+      category: string,
+      size: string
+    };
+  }
   export interface BasicInfo {
     username: string;
     password: string;

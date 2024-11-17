@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { BlueBorderButton } from "@/entities";
 import { useNavigate } from "react-router";
-import { PAGE_URL } from "@/shared";
+import { HomeService, PAGE_URL } from "@/shared";
 
 const PrototypeContainer = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ interface PrototypeInfo {
   ongoing?: number;
   releaseDate?: string;
   terminateDate?: string;
-  productId?: number;
+  productId: number;
 }
 export const Prototype = ({
   isPrototype,
@@ -74,6 +74,20 @@ export const Prototype = ({
   productId,
 }: PrototypeInfo) => {
   const navigate = useNavigate();
+  const deleteProduct = HomeService().deleteProduct;
+  const deleteInv = HomeService().deleteInvestment;
+
+  const handleDelete = (productId: number) => {
+    deleteProduct(productId).then(() => {
+      navigate(PAGE_URL.Home);
+    });
+  };
+
+  const handleDeleteInv = (productId: number) => {
+    deleteInv(productId).then(() => {
+      navigate(PAGE_URL.Home);
+    });
+  }
 
   return (
     <PrototypeContainer>
@@ -109,8 +123,10 @@ export const Prototype = ({
           }}
         >
           {isPrototype ? "체험 생성" : "체험 관리"}
-        </BlueBorderButton>
-        <DeleteButton>삭제하기</DeleteButton>
+        </BlueBorderButton> 
+        <DeleteButton onClick={() => {
+          isPrototype ? handleDelete(productId) : handleDeleteInv(productId);
+        }}>삭제하기</DeleteButton>
       </ButtonContainer>
     </PrototypeContainer>
   );

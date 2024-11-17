@@ -34,18 +34,18 @@ export const getAccess = (): string | null => {
   return localStorage.getItem(storageAccessKey);
 };
 
-API.interceptors.response.use(
-  (response) => response,
-  async () => {
-    resetAccess();
-    location.href = PAGE_URL.SignIn;
-  }
-);
+// API.interceptors.response.use(
+//   (response) => response,
+//   async () => {
+//     resetAccess();
+//     location.href = PAGE_URL.SignIn;
+//   }
+// );
 
-FORMAPI.interceptors.response.use(
-  (response) => response,
-  async () => {
-    resetAccess();
-    location.href = PAGE_URL.SignIn;
-  }
-);
+// FORMAPI.interceptors.response.use(
+//   (response) => response,
+//   async () => {
+//     resetAccess();
+//     location.href = PAGE_URL.SignIn;
+//   }
+// );
