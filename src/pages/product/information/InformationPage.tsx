@@ -21,12 +21,13 @@ interface FormInput {
   category: string;
   launchedDate: string | null;
   images: File[];
+  speed: number;
 }
 
 const inputs: {
   id: keyof FormInput;
   label: string;
-  type: "text" | "textarea" | "number" | "dropdown" | "date" | "file";
+  type: "text" | "textarea" | "number" | "dropdown" | "date" | "file" | "input";
   placeholder?: string;
   options?: { item: string; value: string }[];
 }[] = [
@@ -73,6 +74,11 @@ const inputs: {
     type: "date",
   },
   { id: "images", label: "제품 사진", type: "file" },
+  {
+    id: "speed",
+    label: "속도",
+    type: "input",
+  }
 ];
 
 //뷰티, 스포츠, 식품, 의류, 전자기기, 장난감
@@ -109,6 +115,43 @@ const Form = styled.div`
   width: 40%;
 `;
 
+const Slider = styled.input`
+  width: 100%;
+  -webkit-appearance: none;
+  height: 4px;
+  background: #d9d9d9;
+  outline: none;
+  border-radius: 2px;
+  position: relative;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 17px;
+    height: 17px;
+    background: blue;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: blue;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+`;
+
+const SpeedContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: blue;
+`;
+
 const InformationPage = () => {
   //Import Store
   const setInfo = useProductStore((state) => state.setInfo);
@@ -123,6 +166,7 @@ const InformationPage = () => {
     category: "",
     launchedDate: "",
     images: [],
+    speed: 0,
   });
 
   const [scheduleYet, setScheduleYet] = useState(false);
@@ -149,6 +193,13 @@ const InformationPage = () => {
     navigate("/product/review", { state: formData });
   };
 
+  const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      speed: Number(value),
+    }));
+  }
   const handleChange = (
     field: keyof FormInput,
     value: string | number | File | null
@@ -184,6 +235,20 @@ const InformationPage = () => {
                 value={formData[element.id] as number}
                 onChange={(e) => handleChange(element.id, e.target.value)}
               />
+            )}
+            {element.type === "input" && (
+              <>
+                <SpeedContainer>
+                  {formData.speed}m/s
+                </SpeedContainer>
+                <Slider 
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={formData[element.id] as number}
+                  onChange={handleSpeedChange}
+                />
+              </>
             )}
             {element.type === "textarea" && (
               <InputTextarea
