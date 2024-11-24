@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { InputDatePicker, Button } from "@/entities";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { InvestmentService } from "@/shared";
 
 interface FormInput {
@@ -36,6 +36,7 @@ const inputs: {
 
 const SchedulePage = () => {
   const navigate = useNavigate();
+  const locate = useLocation();
   const { handleSubmit } = useForm<FormInput>();
   const [dates, setDates] = useState<{
     [key: string]: { start: string; end: string };
@@ -46,6 +47,7 @@ const SchedulePage = () => {
   });
   const [isInvalid, setIsinvalid] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { productId } = locate.state || {};
 
   const handleDateChange = (
     id: string,
@@ -80,7 +82,7 @@ const SchedulePage = () => {
 
   const onSubmit: SubmitHandler<FormInput> = () => {
     InvestmentService()
-      .createInvestment("1", {
+      .createInvestment(productId, {
         eventStart: dates.applicationPeriod.start,
         eventEnd: dates.applicationPeriod.end,
         releaseStart: dates.winningPeriod.start,

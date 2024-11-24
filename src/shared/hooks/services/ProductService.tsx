@@ -36,9 +36,7 @@ export const ProductService = () => {
     await FORMAPI.post(URI, data, {
       headers: {
         "Authorization": getAccess(),
-        "Content-Type": "multipart/form-data",
       },
-      
     });
     store.reset();
   };

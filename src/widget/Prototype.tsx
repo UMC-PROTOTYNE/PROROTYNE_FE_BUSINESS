@@ -118,7 +118,7 @@ export const Prototype = ({
         <BlueBorderButton
           onClick={() => {
             isPrototype
-              ? navigate(PAGE_URL.InvestmentSchedule)
+              ? navigate(PAGE_URL.InvestmentSchedule, { state: { productId } })
               : navigate(`/investment/${productId}/management`);
           }}
         >
